@@ -1093,9 +1093,7 @@ color: #F7EFFF !important;
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .preview-card:nth-child(n+4) {
-    display: none;
-  }
+  
 
   .card-detail {
     grid-template-columns: 280px 1fr;
