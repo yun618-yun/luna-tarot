@@ -8058,3 +8058,136 @@ html[data-time-theme='night'] body::before {
     flex-basis: 100% !important;
   }
 }
+/* =========================================================
+   Luna Tarot｜手機底部選單
+   ========================================================= */
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 800px) {
+
+  .mobile-bottom-nav {
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    bottom: 12px !important;
+
+    height: 68px !important;
+
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+
+    align-items: center !important;
+
+    padding: 6px !important;
+    box-sizing: border-box !important;
+
+    z-index: 9999 !important;
+
+    border-radius: 22px !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+
+    transition:
+      background 0.6s ease,
+      border-color 0.6s ease,
+      box-shadow 0.6s ease !important;
+  }
+
+  .mobile-bottom-nav button {
+    height: 56px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 3px !important;
+
+    border: 0 !important;
+    background: transparent !important;
+
+    border-radius: 16px !important;
+
+    cursor: pointer !important;
+
+    transition:
+      background 0.25s ease,
+      transform 0.2s ease,
+      color 0.4s ease !important;
+  }
+
+  .mobile-bottom-nav button span {
+    font-size: 21px !important;
+    line-height: 1 !important;
+  }
+
+  .mobile-bottom-nav button small {
+    font-size: 10px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  .mobile-bottom-nav button:active {
+    transform: scale(0.94) !important;
+  }
+
+  /* ☀️ 白天 */
+
+  html[data-time-theme='day'] .mobile-bottom-nav {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(255, 250, 238, 0.88),
+        rgba(224, 235, 238, 0.82)
+      ) !important;
+
+    border: 1px solid rgba(181, 145, 91, 0.38) !important;
+
+    box-shadow:
+      0 10px 30px rgba(73, 65, 48, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+  }
+
+  html[data-time-theme='day'] .mobile-bottom-nav button {
+    color: #5b5260 !important;
+  }
+
+  html[data-time-theme='day'] .mobile-bottom-nav button:hover {
+    background: rgba(255, 255, 255, 0.48) !important;
+  }
+
+  /* 🌙 夜晚 */
+
+  html[data-time-theme='night'] .mobile-bottom-nav {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(39, 30, 68, 0.92),
+        rgba(25, 23, 52, 0.94)
+      ) !important;
+
+    border: 1px solid rgba(214, 180, 112, 0.38) !important;
+
+    box-shadow:
+      0 12px 34px rgba(8, 4, 24, 0.42),
+      inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+  }
+
+  html[data-time-theme='night'] .mobile-bottom-nav button {
+    color: #eee5f3 !important;
+  }
+
+  html[data-time-theme='night'] .mobile-bottom-nav button:hover {
+    background: rgba(150, 119, 190, 0.18) !important;
+  }
+
+  /* 避免底部選單蓋住最後一段內容 */
+
+  .main {
+    padding-bottom: 92px !important;
+  }
+}

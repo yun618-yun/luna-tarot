@@ -403,7 +403,27 @@ function App() {
             onCard={openCard}
           />
         )}
+<nav className="mobile-bottom-nav">
+  <button onClick={() => setPage("home")}>
+    <span>⌂</span>
+    <small>首頁</small>
+  </button>
 
+  <button onClick={goLibrary}>
+    <span>▣</span>
+    <small>牌庫</small>
+  </button>
+
+  <button onClick={goSpreads}>
+    <span>🔮</span>
+    <small>占卜</small>
+  </button>
+
+  <button onClick={goHistory}>
+    <span>▤</span>
+    <small>我的</small>
+  </button>
+</nav>
       </main>
 
     </div>
