@@ -2209,12 +2209,87 @@ function SpreadReading({
   }
 
 
+  const detectQuestionCategory =
+    (rawQuestion) => {
+
+      if (!rawQuestion) {
+        return null
+      }
+
+      const text = rawQuestion
+
+      const hasAny =
+        (words) =>
+          words.some(
+            (word) => text.includes(word)
+          )
+
+      if (
+        hasAny([
+          '會不會', '能不能', '是不是',
+          '可不可以', '有沒有機會', '值不值得',
+        ])
+      ) {
+        return 'yesNo'
+      }
+
+      if (
+        hasAny([
+          '什麼時候', '多久', '何時', '幾時',
+        ])
+      ) {
+        return 'timing'
+      }
+
+      if (
+        hasAny([
+          '錢', '財運', '投資', '賺錢',
+          '理財', '收入', '股票', '買房',
+        ])
+      ) {
+        return 'money'
+      }
+
+      if (
+        hasAny([
+          '工作', '事業', '升遷', '跳槽',
+          '面試', '老闆', '同事', '創業',
+          '考試', '學業',
+        ])
+      ) {
+        return 'career'
+      }
+
+      if (
+        hasAny([
+          '他', '她', '男友', '女友',
+          '老公', '老婆', '伴侶', '分手',
+          '復合', '吵架',
+        ])
+      ) {
+        return 'relationship'
+      }
+
+      if (
+        hasAny([
+          '愛情', '感情', '戀愛', '喜歡',
+          '追求', '告白', '脫單', '心動', '曖昧',
+        ])
+      ) {
+        return 'love'
+      }
+
+      return null
+    }
+
+
   const buildInterpretation =
     (
       card,
       orientation,
       positionName,
-      positionDescription
+      positionDescription,
+      category
     ) => {
 
       if (!card) {
@@ -2310,6 +2385,101 @@ function SpreadReading({
 
       }
 
+
+      if (category && card[category]) {
+
+        text +=
+          ` 從你問的方向來看：${card[category]}`
+
+      }
+
+
+      return text
+    }
+
+
+  const buildOverallInterpretation =
+    (question, category) => {
+
+      const drawnCards =
+        slots
+          .map(
+            (slot) => ({
+              card: getCardById(slot.cardId),
+              orientation: slot.orientation,
+            })
+          )
+          .filter(
+            (item) => item.card
+          )
+
+      if (!drawnCards.length) {
+        return ''
+      }
+
+      const allKeywords =
+        drawnCards.flatMap(
+          ({ card, orientation }) =>
+            (
+              orientation === '正位'
+                ? card.upright
+                : card.reversed
+            ).slice(0, 2)
+        )
+
+      const keywordCount = {}
+
+      allKeywords.forEach(
+        (word) => {
+          keywordCount[word] =
+            (keywordCount[word] || 0) + 1
+        }
+      )
+
+      const repeatedKeywords =
+        Object.keys(keywordCount)
+          .filter(
+            (word) => keywordCount[word] > 1
+          )
+
+      let text =
+        '這個牌陣可以先從各個位置的訊息分開理解，再把不同牌面的共同主題串起來。'
+
+      if (repeatedKeywords.length) {
+
+        text +=
+          `這次牌陣裡「${repeatedKeywords.slice(0, 3).join('、')}」重複出現，可能是目前特別需要注意的主題。`
+
+      } else {
+
+        text +=
+          '建議特別留意重複出現的關鍵字、相似元素，以及正逆位之間形成的差異。'
+
+      }
+
+      if (question) {
+
+        const categoryTexts =
+          drawnCards
+            .map(
+              ({ card }) =>
+                category ? card[category] : ''
+            )
+            .filter(Boolean)
+
+        if (categoryTexts.length) {
+
+          text +=
+            ` 針對你問的「${question}」，綜合這幾張牌來看：${categoryTexts.join('；')}`
+
+        } else {
+
+          text +=
+            ` 針對你問的「${question}」，可以把上面每個位置的重點，對照你問題裡實際在意的部分，看看哪一張牌最貼近你現在的心情。`
+
+        }
+
+      }
 
       return text
     }
@@ -2810,6 +2980,12 @@ function SpreadReading({
                 }
 
 
+                const questionCategory =
+                  detectQuestionCategory(
+                    question
+                  )
+
+
                 const interpretation =
                   buildInterpretation(
                     card,
@@ -2817,7 +2993,8 @@ function SpreadReading({
                     spread.positions[index],
                     spread.positionDescriptions
                       ? spread.positionDescriptions[index]
-                      : ''
+                      : '',
+                    questionCategory
                   )
 
 
@@ -2878,10 +3055,10 @@ function SpreadReading({
 
 
             <p>
-              這個牌陣可以先從各個位置的訊息分開理解，
-              再把不同牌面的共同主題串起來。
-              建議特別留意重複出現的關鍵字、相似元素，
-              以及正逆位之間形成的差異。
+              {buildOverallInterpretation(
+                question,
+                detectQuestionCategory(question)
+              )}
             </p>
 
           </div>
