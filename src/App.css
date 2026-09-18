@@ -226,7 +226,7 @@ button {
       rgba(25, 18, 55, 0.48),
       rgba(25, 18, 55, 0.12)
     ),
-    url("/luna-hero.png") center center / cover no-repeat !important;
+    url("/luna-hero.webp") center center / cover no-repeat !important;
   border: 1px solid rgba(255,255,255,0.07);
   box-shadow: 0 25px 70px rgba(0,0,0,0.22);
 }
@@ -5244,7 +5244,7 @@ color: #F7EFFF !important;
     rgba(25, 18, 55, 0.48),
     rgba(25, 18, 55, 0.12)
   ),
-  url("/luna-hero.png") center center / cover no-repeat !important;
+  url("/luna-hero.webp") center center / cover no-repeat !important;
 
   border: 1px solid rgba(199, 165, 106, 0.55) !important;
 
@@ -5495,7 +5495,7 @@ body {
     rgba(25, 18, 55, 0.48),
     rgba(25, 18, 55, 0.12)
   ),
-  url("/luna-hero.png") center center / cover no-repeat !important;
+  url("/luna-hero.webp") center center / cover no-repeat !important;
 
   border: 1px solid rgba(201, 168, 110, 0.48) !important;
 
@@ -5794,7 +5794,7 @@ hr {
 ========================================= */
 
 .page {
-  background-image: url("luna-cover.png") !important;
+  background-image: url("luna-cover.webp") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -5812,7 +5812,7 @@ body,
 }
 
 body {
-  background-image: url("luna-cover.png") !important;
+  background-image: url("luna-cover.webp") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -6379,7 +6379,7 @@ body {
 }
 
 body {
-  background-image: url("/luna-cover-night.png") !important;
+  background-image: url("/luna-cover-night.webp") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -6398,7 +6398,7 @@ body {
 }
 
 body {
- background-image: url("luna-cover.png") !important;
+ background-image: url("luna-cover.webp") !important;
   background-size: cover !important;
   background-position: center center !important;
   background-repeat: no-repeat !important;
@@ -7859,11 +7859,11 @@ body {
 /* =========================================
    LUNA TAROT｜依本機時間切換全站背景
    06:00–17:59 白天；18:00–05:59 夜晚
-   Hero 的 luna-hero.png 不在此規則中，因此保持原樣。
+   Hero 的 luna-hero.webp 不在此規則中，因此保持原樣。
 ========================================= */
 
 html[data-time-theme='night'] body {
-  background-image: url('/luna-cover-night.png') !important;
+  background-image: url('/luna-cover-night.webp') !important;
   background-color: #120e25 !important;
   background-blend-mode: normal !important;
 }
@@ -7876,7 +7876,7 @@ html[data-time-theme='night'] body {
       rgba(239, 231, 205, 0.76) 42%,
       rgba(190, 218, 235, 0.78) 100%
     ),
-    url('/luna-cover-day.png') !important;
+    url('/luna-cover-day.webp') !important;
   background-color: #ece7dc !important;
   background-blend-mode: screen, normal !important;
 }
@@ -7895,7 +7895,7 @@ body {
       rgba(25, 18, 55, 0.20),
       rgba(25, 18, 55, 0.05)
     ),
-    url("/luna-cover-day.png") center center / cover no-repeat !important;
+    url("/luna-cover-day.webp") center center / cover no-repeat !important;
 }
 
 html[data-time-theme='night'] .hero {
@@ -7905,7 +7905,7 @@ html[data-time-theme='night'] .hero {
       rgba(10, 18, 45, 0.30),
       rgba(10, 18, 45, 0.08)
     ),
-    url("/luna-cover-night.png") center center / cover no-repeat !important;
+    url("/luna-cover-night.webp") center center / cover no-repeat !important;
 }
 /* =========================================
    Luna Tarot｜全站背景柔焦
@@ -7924,7 +7924,7 @@ body::before {
   z-index: -2;
   pointer-events: none;
 
-  background-image: url("/luna-cover-night.png");
+  background-image: url("/luna-cover-night.webp");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -7944,11 +7944,11 @@ body::after {
 }
 
 .app[data-time-theme='day']::before {
-  background-image: url("/luna-cover-day.png");
+  background-image: url("/luna-cover-day.webp");
 }
 
 html[data-time-theme='night'] body::before {
-  background-image: url("/luna-cover-night.png");
+  background-image: url("/luna-cover-night.webp");
 }
 /* =========================================
    Luna Tarot｜牌陣頁頂部橫向 Banner
@@ -9800,4 +9800,38 @@ html[data-time-theme='night'] body::before {
 
 .app[data-time-theme='night'] .home-recent-action:hover {
   border-color: rgba(225, 193, 117, 0.42) !important;
+}
+/* =====================================
+   手機版牌陣結果｜改為直向堆疊
+   原本每張牌用絕對定位（position: absolute）
+   模擬桌上排開的樣子，手機寬度不夠時會擠成一排。
+   這裡在手機寬度下改成一般直向排列，一次一張牌。
+===================================== */
+
+@media (max-width: 700px) {
+
+  .spread-board {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 30px !important;
+    min-height: auto !important;
+  }
+
+  .spread-position {
+    position: static !important;
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+
+  .spread-position-name {
+    width: 100% !important;
+    max-width: 260px !important;
+  }
+
+  .spread-drawn-info {
+    width: 100% !important;
+    max-width: 260px !important;
+  }
+
 }
