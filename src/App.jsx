@@ -530,6 +530,7 @@ function App() {
             onCard={openCard}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
+            onBack={() => goBack(goHome)}
           />
         )}
 
@@ -540,12 +541,13 @@ function App() {
             favorites={favorites}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
+            onBack={() => goBack(goHome)}
           />
         )}
 
 
         {page === 'history' && (
-          <ReadingHistory />
+          <ReadingHistory onBack={() => goBack(goHome)} />
         )}
 
 
@@ -559,12 +561,13 @@ function App() {
         )}
 
 {page === 'stats' && (
-  <AccuracyStats />
+  <AccuracyStats onBack={() => goBack(goHome)} />
 )}
 
         {page === 'spreads' && (
           <SpreadLibrary
             onSpread={openSpread}
+            onBack={() => goBack(goHome)}
           />
         )}
 
@@ -581,6 +584,7 @@ function App() {
         {page === 'daily' && (
           <Daily
             onCard={openCard}
+            onBack={() => goBack(goHome)}
           />
         )}
 <nav className="mobile-bottom-nav">
@@ -1010,6 +1014,7 @@ function Library({
   onCard,
   isFavorite,
   toggleFavorite,
+  onBack,
 }) {
 
   const [search, setSearch] = useState('')
@@ -1052,6 +1057,14 @@ function Library({
 
   return (
     <div className="page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <header className="topbar library-topbar-glass">
 
@@ -1207,6 +1220,7 @@ function Favorites({
   favorites,
   isFavorite,
   toggleFavorite,
+  onBack,
 }) {
 
   const favoriteCards =
@@ -1218,6 +1232,14 @@ function Favorites({
 
   return (
     <div className="page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <header className="topbar">
 
@@ -1517,7 +1539,7 @@ function CardDetail({
         className="back-button"
         onClick={onBack}
       >
-        ← 返回牌庫
+        ← 上一頁
       </button>
 
 
@@ -1764,7 +1786,8 @@ function CardDetail({
 ===================================== */
 
 function SpreadLibrary({
-  onSpread
+  onSpread,
+  onBack,
 }) {
 
   const drawSpreads =
@@ -1860,6 +1883,14 @@ function SpreadLibrary({
 
   return (
     <div className="page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <header className="topbar spread-topbar-glass">
 
@@ -2420,7 +2451,7 @@ function SpreadReading({
         className="back-button"
         onClick={onBack}
       >
-        ← 返回牌陣
+        ← 上一頁
       </button>
 
 
@@ -2918,7 +2949,7 @@ function SpreadReading({
    📜 占卜紀錄
 ===================================== */
 
-function ReadingHistory() {
+function ReadingHistory({ onBack }) {
 
   const [records, setRecords] =
     useState(() => {
@@ -3008,6 +3039,14 @@ function ReadingHistory() {
     return (
       <div className="page">
 
+        <button
+          className="back-button"
+          onClick={onBack}
+        >
+          ← 上一頁
+        </button>
+
+
         <header className="topbar">
 
           <div>
@@ -3049,6 +3088,14 @@ function ReadingHistory() {
 
   return (
     <div className="page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <header className="topbar">
 
@@ -3352,7 +3399,8 @@ function ReadingHistory() {
 ===================================== */
 
 function Daily({
-  onCard
+  onCard,
+  onBack,
 }) {
 
   const [drawnCard, setDrawnCard] =
@@ -3389,6 +3437,14 @@ function Daily({
 
   return (
     <div className="page daily-page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <div className="daily-header">
 
@@ -3534,7 +3590,7 @@ function Daily({
    📊 準確度統計
 ===================================== */
 
-function AccuracyStats() {
+function AccuracyStats({ onBack }) {
 
   const [records] = useState(() => {
 
@@ -3612,6 +3668,14 @@ function AccuracyStats() {
 
   return (
     <div className="page">
+
+      <button
+        className="back-button"
+        onClick={onBack}
+      >
+        ← 上一頁
+      </button>
+
 
       <header className="topbar">
 
