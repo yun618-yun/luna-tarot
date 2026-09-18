@@ -659,16 +659,44 @@ filter: blur(0.8px);
    ================================ */
 
 .back-button {
-  background: none;
-  border: 0;
-  color: #9588a2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(35, 25, 70, 0.68),
+      rgba(55, 35, 85, 0.56)
+    );
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(235, 215, 255, 0.30);
+  border-radius: 999px;
+
+  box-shadow:
+    0 12px 32px rgba(20, 10, 55, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13);
+
+  color: #f1e9ff;
   font-size: 13px;
-  padding: 0;
-  margin-bottom: 35px;
+  font-weight: 500;
+  padding: 10px 20px;
+  margin-bottom: 24px;
+
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, color 0.15s ease;
 }
 
 .back-button:hover {
-  color: #d1b4ed;
+  color: #ffffff;
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 16px 36px rgba(20, 10, 55, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 
