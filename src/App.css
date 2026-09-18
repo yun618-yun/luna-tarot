@@ -7840,7 +7840,7 @@ html[data-time-theme='night'] body {
   background-blend-mode: normal !important;
 }
 
-html[data-time-theme='day'] body {
+.app[data-time-theme='day'] {
   background-image:
     linear-gradient(
       135deg,
@@ -7860,7 +7860,7 @@ body {
    Hero｜日夜切換測試
    ========================================= */
 
-html[data-time-theme='day'] .hero {
+.app[data-time-theme='day'] .hero {
   background:
     linear-gradient(
       90deg,
@@ -7915,7 +7915,7 @@ body::after {
   background: rgba(10, 8, 28, 0.30);
 }
 
-html[data-time-theme='day'] body::before {
+.app[data-time-theme='day']::before {
   background-image: url("/luna-cover-day.png");
 }
 
@@ -8137,7 +8137,7 @@ html[data-time-theme='night'] body::before {
 
   /* ☀️ 白天 */
 
-  html[data-time-theme='day'] .mobile-bottom-nav {
+  .app[data-time-theme='day'] .mobile-bottom-nav {
     background:
       linear-gradient(
         135deg,
@@ -8152,11 +8152,11 @@ html[data-time-theme='night'] body::before {
       inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
   }
 
-  html[data-time-theme='day'] .mobile-bottom-nav button {
+  .app[data-time-theme='day'] .mobile-bottom-nav button {
     color: #5b5260 !important;
   }
 
-  html[data-time-theme='day'] .mobile-bottom-nav button:hover {
+  .app[data-time-theme='day'] .mobile-bottom-nav button:hover {
     background: rgba(255, 255, 255, 0.48) !important;
   }
 
@@ -8190,4 +8190,1586 @@ html[data-time-theme='night'] body::before {
   .main {
     padding-bottom: 92px !important;
   }
+}
+/* =========================================================
+   Luna Tarot｜首頁框框・白天／夜晚輪調
+   ========================================================= */
+
+/* ☀️ 白天 */
+
+.app[data-time-theme='day'] .home-quick-card,
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card,
+.app[data-time-theme='day'] .preview-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 239, 0.88),
+      rgba(224, 235, 239, 0.82)
+    ) !important;
+
+  border-color:
+    rgba(181, 145, 91, 0.38) !important;
+
+  box-shadow:
+    0 14px 35px rgba(82, 71, 52, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.82) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease,
+    color 0.6s ease !important;
+}
+
+
+/* ☀️ 白天文字 */
+
+.app[data-time-theme='day'] .home-quick-card strong,
+.app[data-time-theme='day'] .home-guidance-card h2,
+.app[data-time-theme='day'] .home-recent-card h2,
+.app[data-time-theme='day'] .preview-card h3 {
+
+  color: #4f4650 !important;
+}
+
+.app[data-time-theme='day'] .home-quick-card span,
+.app[data-time-theme='day'] .home-guidance-card p,
+.app[data-time-theme='day'] .home-recent-card p,
+.app[data-time-theme='day'] .preview-card p {
+
+  color: #6d6570 !important;
+}
+
+
+/* 🌙 夜晚 */
+
+.app[data-time-theme='night'] .home-quick-card,
+.app[data-time-theme='night'] .home-guidance-card,
+.app[data-time-theme='night'] .home-recent-card,
+.app[data-time-theme='night'] .preview-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52, 43, 83, 0.86),
+      rgba(31, 27, 59, 0.92)
+    ) !important;
+
+  border-color:
+    rgba(214, 180, 112, 0.30) !important;
+
+  box-shadow:
+    0 16px 38px rgba(10, 6, 28, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease,
+    color 0.6s ease !important;
+}
+
+
+/* 🌙 夜晚文字 */
+
+.app[data-time-theme='night'] .home-quick-card strong,
+.app[data-time-theme='night'] .home-guidance-card h2,
+.app[data-time-theme='night'] .home-recent-card h2,
+.app[data-time-theme='night'] .preview-card h3 {
+
+  color: #f3ebf5 !important;
+}
+
+.app[data-time-theme='night'] .home-quick-card span,
+.app[data-time-theme='night'] .home-guidance-card p,
+.app[data-time-theme='night'] .home-recent-card p,
+.app[data-time-theme='night'] .preview-card p {
+
+  color: #d8cedf !important;
+}
+
+
+/* ✨ 五張探索牌・日夜共用細緻金邊 */
+
+.app[data-time-theme='day'] .preview-card,
+.app[data-time-theme='night'] .preview-card {
+
+  border-radius: 18px !important;
+
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s ease !important;
+}
+
+
+/* ✨ 探索牌 Hover */
+
+.app[data-time-theme='day'] .preview-card:hover {
+  box-shadow:
+    0 16px 34px rgba(82, 71, 52, 0.22),
+    0 0 0 1px rgba(181, 145, 91, 0.22) !important;
+
+  transform: translateY(-5px) !important;
+}
+
+.app[data-time-theme='night'] .preview-card:hover {
+  box-shadow:
+    0 18px 40px rgba(10, 5, 30, 0.42),
+    0 0 0 1px rgba(214, 180, 112, 0.24) !important;
+
+  transform: translateY(-5px) !important;
+}
+/* =========================================================
+   Luna Tarot｜首頁框框・最終日夜玻璃版
+   ========================================================= */
+
+
+/* ☀️━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   白天｜奶油米白 × 霧藍 × 淡金
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.app[data-time-theme='day'] .home-quick-card,
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card,
+.app[data-time-theme='day'] .preview-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(250, 246, 232, 0.78),
+      rgba(221, 232, 234, 0.70)
+    ) !important;
+
+  border: 1px solid rgba(174, 143, 91, 0.34) !important;
+
+  box-shadow:
+    0 14px 35px rgba(65, 58, 45, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease,
+    color 0.6s ease !important;
+}
+
+
+/* ☀️ 白天｜主要文字 */
+
+.app[data-time-theme='day'] .home-quick-card strong,
+.app[data-time-theme='day'] .home-guidance-card h2,
+.app[data-time-theme='day'] .home-recent-card h2,
+.app[data-time-theme='day'] .preview-card strong,
+.app[data-time-theme='day'] .preview-card h3 {
+
+  color: #514958 !important;
+}
+
+
+/* ☀️ 白天｜今日指引牌名 */
+.app[data-time-theme='day'] .home-guidance-card-name strong {
+
+  color: #4b4250 !important;
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.55) !important;
+}
+
+
+/* ☀️ 白天｜英文牌名 */
+.app[data-time-theme='day'] .home-guidance-card-name span {
+
+  color: #766b78 !important;
+}
+
+
+/* ☀️ 白天｜關鍵字 */
+.app[data-time-theme='day'] .home-guidance-keywords {
+
+  color: #665d68 !important;
+}
+
+
+/* ☀️ 白天｜一般說明文字 */
+
+.app[data-time-theme='day'] .home-quick-card span,
+.app[data-time-theme='day'] .home-guidance-card p,
+.app[data-time-theme='day'] .home-recent-card p,
+.app[data-time-theme='day'] .preview-card small {
+
+  color: #6d6670 !important;
+}
+
+
+/* ☀️ 白天｜最近紀錄內的兩個操作 */
+
+.app[data-time-theme='day'] .home-recent-action {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(245, 239, 222, 0.78),
+      rgba(215, 226, 230, 0.68)
+    ) !important;
+
+  border-color:
+    rgba(174, 143, 91, 0.24) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.55) !important;
+
+  color: #514958 !important;
+
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+}
+
+
+/* ☀️ 操作列文字 */
+
+.app[data-time-theme='day'] .home-recent-action strong {
+
+  color: #514958 !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action span {
+
+  color: #77707a !important;
+}
+
+
+/* ☀️ 箭頭 */
+
+.app[data-time-theme='day'] .home-recent-action-arrow {
+
+  color: #8d7250 !important;
+}
+
+
+/* ☀️ 探索牌 */
+
+.app[data-time-theme='day'] .preview-card {
+
+  border-radius: 18px !important;
+}
+
+
+/* ☀️ 探索牌 Hover */
+
+.app[data-time-theme='day'] .preview-card:hover {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 250, 238, 0.88),
+      rgba(215, 230, 233, 0.78)
+    ) !important;
+
+  border-color:
+    rgba(174, 143, 91, 0.46) !important;
+
+  box-shadow:
+    0 18px 38px rgba(65, 58, 45, 0.20),
+    inset 0 1px 0 rgba(255,255,255,0.75) !important;
+
+  transform: translateY(-5px) !important;
+}
+
+
+/* 🌙━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   夜晚｜深藍紫 × 月光金
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.app[data-time-theme='night'] .home-quick-card,
+.app[data-time-theme='night'] .home-guidance-card,
+.app[data-time-theme='night'] .home-recent-card,
+.app[data-time-theme='night'] .preview-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52, 43, 83, 0.86),
+      rgba(31, 27, 59, 0.92)
+    ) !important;
+
+  border-color:
+    rgba(214, 180, 112, 0.30) !important;
+
+  box-shadow:
+    0 16px 38px rgba(10, 6, 28, 0.34),
+    inset 0 1px 0 rgba(255,255,255,0.10) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+
+/* 🌙 夜晚文字 */
+
+.app[data-time-theme='night'] .home-quick-card strong,
+.app[data-time-theme='night'] .home-guidance-card h2,
+.app[data-time-theme='night'] .home-recent-card h2,
+.app[data-time-theme='night'] .preview-card strong,
+.app[data-time-theme='night'] .preview-card h3 {
+
+  color: #f3ebf5 !important;
+}
+
+
+/* 🌙 今日指引牌名 */
+
+.app[data-time-theme='night'] .home-guidance-card-name strong {
+
+  color: #f5edf5 !important;
+}
+
+.app[data-time-theme='night'] .home-guidance-card-name span {
+
+  color: #cfc2d7 !important;
+}
+
+.app[data-time-theme='night'] .home-guidance-keywords {
+
+  color: #ddd1e2 !important;
+}
+
+
+/* 🌙 最近紀錄操作 */
+
+.app[data-time-theme='night'] .home-recent-action {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(67, 54, 101, 0.74),
+      rgba(39, 33, 69, 0.84)
+    ) !important;
+
+  border-color:
+    rgba(214, 180, 112, 0.20) !important;
+
+  color: #f3ebf5 !important;
+}
+
+
+/* 🌙 夜晚 Hover */
+
+.app[data-time-theme='night'] .preview-card:hover {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(67, 55, 101, 0.90),
+      rgba(36, 30, 66, 0.94)
+    ) !important;
+
+  border-color:
+    rgba(214, 180, 112, 0.42) !important;
+
+  box-shadow:
+    0 18px 40px rgba(10, 5, 30, 0.42),
+    0 0 0 1px rgba(214, 180, 112, 0.18) !important;
+
+  transform: translateY(-5px) !important;
+}
+/* =========================================================
+   Luna Tarot｜白天首頁統一玻璃質感
+   少裝飾・淡金邊・霧藍光
+   ========================================================= */
+
+
+/* ☀️ 最上方｜早安／午安／晚安 Banner */
+
+.app[data-time-theme='day'] .topbar {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(248, 244, 232, 0.72),
+      rgba(218, 228, 232, 0.58)
+    ) !important;
+
+  border: 1px solid rgba(166, 140, 99, 0.42) !important;
+
+  box-shadow:
+    0 10px 28px rgba(72, 64, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+
+/* ☀️ Banner 小標 */
+
+.app[data-time-theme='day'] .topbar .eyebrow {
+  color: #8d72a2 !important;
+}
+
+
+/* ☀️ Banner 主標 */
+
+.app[data-time-theme='day'] .topbar h1 {
+  color: #514957 !important;
+}
+
+
+/* ☀️ Banner 右側 Luna Tarot */
+
+.app[data-time-theme='day'] .topbar-date {
+  color: #786d78 !important;
+}
+
+
+/* ☀️ 四張快捷功能卡 */
+
+.app[data-time-theme='day'] .home-quick-card {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(249, 246, 235, 0.68),
+      rgba(222, 231, 232, 0.58)
+    ) !important;
+
+  border: 1px solid rgba(166, 140, 99, 0.30) !important;
+
+  box-shadow:
+    0 9px 24px rgba(65, 59, 48, 0.10),
+    inset 0 1px 0 rgba(255,255,255,0.65) !important;
+
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+
+/* ☀️ 快捷卡 Hover */
+
+.app[data-time-theme='day'] .home-quick-card:hover {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 250, 238, 0.78),
+      rgba(218, 231, 233, 0.68)
+    ) !important;
+
+  border-color: rgba(166, 140, 99, 0.42) !important;
+
+  box-shadow:
+    0 14px 30px rgba(65, 59, 48, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.72) !important;
+
+  transform: translateY(-3px) !important;
+}
+
+
+/* ☀️ 今日指引／最近占卜 */
+
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card {
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(248, 245, 234, 0.74),
+      rgba(219, 229, 231, 0.64)
+    ) !important;
+
+  border: 1px solid rgba(166, 140, 99, 0.34) !important;
+
+  box-shadow:
+    0 14px 32px rgba(65, 59, 48, 0.12),
+    inset 0 1px 0 rgba(255,255,255,0.68) !important;
+
+  backdrop-filter: blur(17px) !important;
+  -webkit-backdrop-filter: blur(17px) !important;
+}
+
+
+/* ☀️ 今日指引／最近占卜標題 */
+
+.app[data-time-theme='day'] .home-guidance-card h2,
+.app[data-time-theme='day'] .home-recent-card h2 {
+
+  color: #514957 !important;
+}
+
+
+/* ☀️ 準確度／牌陣功能入口
+   不再使用突兀的紫色 */
+
+.app[data-time-theme='day'] .home-recent-action {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(244, 240, 226, 0.58),
+      rgba(214, 226, 229, 0.52)
+    ) !important;
+
+  border: 1px solid rgba(166, 140, 99, 0.22) !important;
+
+  color: #514957 !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.52) !important;
+
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+
+/* ☀️ 功能入口 Hover */
+
+.app[data-time-theme='day'] .home-recent-action:hover {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 246, 233, 0.72),
+      rgba(214, 229, 232, 0.64)
+    ) !important;
+
+  border-color: rgba(166, 140, 99, 0.34) !important;
+}
+
+
+/* ☀️ 功能入口文字 */
+
+.app[data-time-theme='day'] .home-recent-action strong {
+  color: #514957 !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action span {
+  color: #77707a !important;
+}
+
+
+/* ☀️ 箭頭 */
+
+.app[data-time-theme='day'] .home-recent-action-arrow {
+  color: #927856 !important;
+}
+
+
+/* ☀️ 今日指引牌名
+   解決「權杖國王太淡」 */
+
+.app[data-time-theme='day'] .home-guidance-card-name strong {
+
+  color: #49414c !important;
+
+  text-shadow:
+    0 1px 0 rgba(255,255,255,0.65) !important;
+}
+
+.app[data-time-theme='day'] .home-guidance-card-name span {
+  color: #706773 !important;
+}
+
+
+/* ☀️ 今日指引內容 */
+
+.app[data-time-theme='day'] .home-guidance-keywords {
+  color: #5e5662 !important;
+}
+
+.app[data-time-theme='day'] .home-guidance-text,
+.app[data-time-theme='day'] .home-guidance-card p {
+  color: #68616b !important;
+}
+/* ☀️ 白天首頁｜暖金霧藍精修 */
+
+.app[data-time-theme='day'] .topbar {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 246, 235, 0.68),
+      rgba(221, 231, 233, 0.54)
+    ) !important;
+
+  border-color: rgba(169, 139, 91, 0.52) !important;
+
+  box-shadow:
+    0 10px 30px rgba(72, 61, 45, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+
+/* ☀️ 快捷卡｜不要整片白 */
+
+.app[data-time-theme='day'] .home-quick-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 246, 234, 0.62),
+      rgba(215, 227, 229, 0.52)
+    ) !important;
+
+  border-color: rgba(169, 139, 91, 0.34) !important;
+
+  box-shadow:
+    0 10px 26px rgba(65, 58, 45, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.66) !important;
+}
+
+
+/* ☀️ 今日指引／最近占卜
+   比快捷卡稍微有份量 */
+
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(248, 244, 231, 0.70),
+      rgba(215, 227, 229, 0.60)
+    ) !important;
+
+  border-color: rgba(169, 139, 91, 0.40) !important;
+
+  box-shadow:
+    0 15px 34px rgba(65, 58, 45, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+
+/* ☀️ 準確度／牌陣
+   融進卡片，不再像紫色按鈕 */
+
+.app[data-time-theme='day'] .home-recent-action {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(239, 235, 220, 0.42),
+      rgba(205, 220, 223, 0.38)
+    ) !important;
+
+  border-color: rgba(169, 139, 91, 0.18) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48) !important;
+}
+
+
+/* ☀️ 功能入口 Hover */
+
+.app[data-time-theme='day'] .home-recent-action:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(247, 242, 227, 0.58),
+      rgba(211, 226, 228, 0.52)
+    ) !important;
+
+  border-color: rgba(169, 139, 91, 0.30) !important;
+}
+
+
+/* ☀️ 少量淡金點綴 */
+
+.app[data-time-theme='day'] .home-recent-action-arrow {
+  color: #917452 !important;
+}
+
+
+/* ☀️ 今日指引牌名 */
+
+.app[data-time-theme='day'] .home-guidance-card-name strong {
+  color: #463f49 !important;
+}
+
+.app[data-time-theme='day'] .home-guidance-card-name span {
+  color: #766d77 !important;
+}
+/* ☀️ 白天｜Banner＋快捷卡 最終精修 */
+
+.app[data-time-theme='day'] .topbar {
+  background:
+    linear-gradient(
+      110deg,
+      rgba(250, 246, 233, 0.58),
+      rgba(229, 235, 233, 0.46),
+      rgba(214, 226, 231, 0.50)
+    ) !important;
+
+  border: 1px solid rgba(168, 140, 96, 0.48) !important;
+
+  box-shadow:
+    0 10px 28px rgba(73, 64, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+
+/* ☀️ Banner 文字 */
+
+.app[data-time-theme='day'] .topbar h1 {
+  color: #514955 !important;
+}
+
+.app[data-time-theme='day'] .topbar .eyebrow {
+  color: #8b719b !important;
+}
+
+
+/* ☀️ 四張快捷卡｜更透明、更融入背景 */
+
+.app[data-time-theme='day'] .home-quick-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(250, 247, 237, 0.50),
+      rgba(216, 228, 231, 0.42)
+    ) !important;
+
+  border: 1px solid rgba(168, 140, 96, 0.28) !important;
+
+  box-shadow:
+    0 8px 22px rgba(70, 62, 49, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58) !important;
+
+  backdrop-filter: blur(13px) !important;
+  -webkit-backdrop-filter: blur(13px) !important;
+}
+
+
+/* ☀️ 快捷卡文字 */
+
+.app[data-time-theme='day'] .home-quick-card strong {
+  color: #514955 !important;
+}
+
+.app[data-time-theme='day'] .home-quick-card span {
+  color: #777078 !important;
+}
+
+
+/* ☀️ 快捷卡 Hover */
+
+.app[data-time-theme='day'] .home-quick-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 250, 238, 0.64),
+      rgba(215, 229, 232, 0.54)
+    ) !important;
+
+  border-color: rgba(168, 140, 96, 0.38) !important;
+
+  box-shadow:
+    0 12px 28px rgba(70, 62, 49, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+
+  transform: translateY(-3px) !important;
+}
+/* =========================================================
+   ☀️🌙 首頁資訊卡｜日夜裝飾元素
+   裝飾只在背景，不遮文字
+   ========================================================= */
+
+
+/* 讓裝飾可以定位 */
+
+.app .home-guidance-card,
+.app .home-recent-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+
+/* =========================================
+   ☀️ 白天｜今日指引
+   ========================================= */
+
+.app[data-time-theme='day'] .home-guidance-card::before {
+  content: "✦   ·   ✧";
+  position: absolute;
+  top: 12px;
+  left: 24px;
+
+  color: rgba(177, 139, 82, 0.38);
+  font-size: 13px;
+  letter-spacing: 8px;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* 白天｜中央太陽 */
+
+.app[data-time-theme='day'] .home-guidance-card::after {
+  content: "☼";
+  position: absolute;
+
+  top: 2px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  color: rgba(181, 143, 82, 0.34);
+  font-size: 34px;
+  font-weight: 300;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* =========================================
+   ☀️ 白天｜右下植物感
+   ========================================= */
+
+.app[data-time-theme='day'] .home-guidance-card {
+  background-image:
+    radial-gradient(
+      ellipse at 88% 96%,
+      rgba(111, 133, 112, 0.13) 0%,
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 8% 8%,
+      rgba(194, 158, 96, 0.10) 0%,
+      transparent 25%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(248, 244, 231, 0.70),
+      rgba(215, 227, 229, 0.60)
+    ) !important;
+}
+
+
+/* =========================================
+   🌙 白天｜最近占卜的小月相
+   ========================================= */
+
+.app[data-time-theme='day'] .home-recent-card::before {
+  content: "☾  ◐  ●  ◑  ☽";
+
+  position: absolute;
+  top: 12px;
+  right: 26px;
+
+  color: rgba(150, 123, 159, 0.30);
+  font-size: 16px;
+  letter-spacing: 5px;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* =========================================
+   🌿 白天｜最近占卜的淡淡植物／霧氣
+   ========================================= */
+
+.app[data-time-theme='day'] .home-recent-card::after {
+  content: "⌁  ❧";
+
+  position: absolute;
+  right: 22px;
+  bottom: 8px;
+
+  color: rgba(117, 139, 131, 0.24);
+  font-size: 28px;
+  letter-spacing: 6px;
+
+  transform: rotate(-8deg);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* =========================================
+  
+/* =========================================================
+
+
+/* ─────────────────────────
+   「未填寫問題」區域縮小
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-card > div:first-of-type {
+  min-height: 0 !important;
+}
+
+
+/* ─────────────────────────
+   準確度／牌陣稍微放大
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-action {
+  min-height: 54px !important;
+  padding: 10px 14px !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action strong {
+  font-size: 14px !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action span {
+  font-size: 12px !important;
+}
+/* =========================================================
+   ☀️ 白天首頁｜精緻線稿裝飾
+   ========================================================= */
+
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+
+/* ─────────────────────────
+   ☀️ 今日指引｜中央太陽線稿
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-guidance-card::before {
+  content: "";
+  position: absolute;
+
+  width: 54px;
+  height: 54px;
+
+  top: -25px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  border: 1px solid rgba(178, 139, 75, 0.28);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 8px rgba(178, 139, 75, 0.035),
+    0 0 0 16px rgba(178, 139, 75, 0.025);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ☀️ 太陽光線 */
+
+.app[data-time-theme='day'] .home-guidance-card::after {
+  content: "✦     ✧     ✦";
+
+  position: absolute;
+
+  top: 12px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 180px;
+
+  text-align: center;
+
+  color: rgba(178, 139, 75, 0.30);
+
+  font-size: 10px;
+  letter-spacing: 13px;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ─────────────────────────
+   🌿 今日指引｜右下植物線稿
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-guidance-card {
+  background-image:
+    radial-gradient(
+      ellipse at 94% 100%,
+      rgba(91, 122, 103, 0.16) 0%,
+      rgba(91, 122, 103, 0.06) 18%,
+      transparent 38%
+    ),
+    radial-gradient(
+      ellipse at 5% 5%,
+      rgba(194, 156, 91, 0.10),
+      transparent 25%
+    ) !important;
+}
+
+
+/* ─────────────────────────
+   🌙 最近占卜｜月相線稿
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-card::before {
+  content: "☾   ◐   ○   ◑   ☽";
+
+  position: absolute;
+
+  top: 10px;
+  right: 24px;
+
+  color: rgba(126, 101, 143, 0.30);
+
+  font-size: 14px;
+  letter-spacing: 4px;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ─────────────────────────
+   ⛰️ 最近占卜｜淡山巒
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-card::after {
+  content: "";
+
+  position: absolute;
+
+  right: -15px;
+  bottom: -18px;
+
+  width: 230px;
+  height: 90px;
+
+  background:
+    linear-gradient(
+      135deg,
+      transparent 48%,
+      rgba(113, 139, 147, 0.16) 49%,
+      rgba(113, 139, 147, 0.16) 50%,
+      transparent 51%
+    ),
+    linear-gradient(
+      155deg,
+      transparent 48%,
+      rgba(113, 139, 147, 0.11) 49%,
+      rgba(113, 139, 147, 0.11) 50%,
+      transparent 51%
+    );
+
+  transform: skewX(-12deg);
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ─────────────────────────
+   🌿 最近占卜｜淡淡植物光影
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-card {
+  background-image:
+    radial-gradient(
+      ellipse at 100% 100%,
+      rgba(104, 137, 126, 0.14) 0%,
+      rgba(104, 137, 126, 0.05) 20%,
+      transparent 40%
+    ),
+    radial-gradient(
+      ellipse at 92% 8%,
+      rgba(157, 128, 177, 0.11),
+      transparent 30%
+    ) !important;
+}
+
+
+/* ─────────────────────────
+   ✦ 卡片內容永遠在裝飾上面
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-guidance-card > *,
+.app[data-time-theme='day'] .home-recent-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ─────────────────────────
+   功能入口圖示稍微放大
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-recent-action-icon {
+  transform: scale(1.08);
+}
+
+
+/* ─────────────────────────
+   白天｜卡片內部增加一點柔和光暈
+   ───────────────────────── */
+
+.app[data-time-theme='day'] .home-guidance-card {
+  background-image:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(231, 190, 113, 0.10),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(126, 155, 150, 0.12),
+      transparent 30%
+    ) !important;
+}
+
+.app[data-time-theme='day'] .home-recent-card {
+  background-image:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(170, 145, 189, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 100% 100%,
+      rgba(125, 157, 165, 0.12),
+      transparent 32%
+    ) !important;
+}
+/* =========================================================
+   🌙 Luna Tarot｜夜晚資訊卡・電腦版同步手機新版
+   ========================================================= */
+
+.app[data-time-theme='night'] .home-guidance-card,
+.app[data-time-theme='night'] .home-recent-card {
+  position: relative !important;
+  overflow: hidden !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(31, 31, 72, 0.90),
+      rgba(25, 27, 61, 0.88)
+    ) !important;
+
+  border: 1px solid rgba(218, 184, 105, 0.72) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 16px 38px rgba(5, 8, 28, 0.42),
+    inset 0 1px 0 rgba(255, 235, 180, 0.10),
+    inset 0 0 0 1px rgba(255, 218, 130, 0.06) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+
+/* 🌙 卡片內側細金線 */
+
+.app[data-time-theme='night'] .home-guidance-card::marker,
+.app[data-time-theme='night'] .home-recent-card::marker {
+  display: none !important;
+}
+
+
+/* 🌙 夜晚｜今日指引左上月光 */
+
+.app[data-time-theme='night'] .home-guidance-card::before {
+  content: "☾";
+
+  position: absolute;
+  top: 13px;
+  left: 20px;
+
+  color: rgba(235, 202, 125, 0.72);
+  font-size: 25px;
+  line-height: 1;
+
+  text-shadow:
+    0 0 10px rgba(235, 202, 125, 0.25);
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* ✦ 夜晚｜今日指引右上星芒 */
+
+.app[data-time-theme='night'] .home-guidance-card::after {
+  content: "✦";
+
+  position: absolute;
+  top: 13px;
+  right: 22px;
+
+  color: rgba(235, 202, 125, 0.70);
+  font-size: 22px;
+
+  text-shadow:
+    0 0 12px rgba(235, 202, 125, 0.30);
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* 🌙 夜晚｜最近占卜月相 */
+
+.app[data-time-theme='night'] .home-recent-card::before {
+  content: "☾   ◐   ○   ◑   ☽";
+
+  position: absolute;
+  top: 13px;
+  right: 22px;
+
+  color: rgba(229, 198, 123, 0.68);
+  font-size: 15px;
+  letter-spacing: 4px;
+
+  text-shadow:
+    0 0 8px rgba(229, 198, 123, 0.18);
+
+  pointer-events: none;
+  z-index: 2;
+}
+
+
+/* ⛰️ 最近占卜｜底部山巒 */
+
+.app[data-time-theme='night'] .home-recent-card::after {
+  content: "";
+
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -5px;
+
+  height: 95px;
+
+  background:
+    linear-gradient(
+      145deg,
+      transparent 48%,
+      rgba(142, 161, 190, 0.12) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      125deg,
+      transparent 48%,
+      rgba(142, 161, 190, 0.10) 49%,
+      transparent 50%
+    ),
+    linear-gradient(
+      160deg,
+      transparent 51%,
+      rgba(142, 161, 190, 0.08) 52%,
+      transparent 53%
+    );
+
+  opacity: 0.9;
+
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* 🌙 內容保持在裝飾上方 */
+
+.app[data-time-theme='night'] .home-guidance-card > *,
+.app[data-time-theme='night'] .home-recent-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* 🌙 標題 */
+
+.app[data-time-theme='night'] .home-guidance-card h2,
+.app[data-time-theme='night'] .home-recent-card h2 {
+  color: #f4edf7 !important;
+}
+
+
+/* 🌙 TODAY / RECENT 小標 */
+
+.app[data-time-theme='night'] .home-guidance-card .eyebrow,
+.app[data-time-theme='night'] .home-recent-card .eyebrow {
+  color: #cda7e8 !important;
+}
+
+
+/* 🌙 今日指引牌名 */
+
+.app[data-time-theme='night'] .home-guidance-card-name strong {
+  color: #fff5dc !important;
+
+  text-shadow:
+    0 0 12px rgba(233, 194, 111, 0.12) !important;
+}
+
+.app[data-time-theme='night'] .home-guidance-card-name span {
+  color: #d6c9d9 !important;
+}
+
+
+/* 🌙 今日指引文字 */
+
+.app[data-time-theme='night'] .home-guidance-keywords,
+.app[data-time-theme='night'] .home-guidance-text,
+.app[data-time-theme='night'] .home-guidance-card p {
+  color: #ddd3df !important;
+}
+
+
+/* 🌙 最近占卜內部兩個入口 */
+
+.app[data-time-theme='night'] .home-recent-action {
+  min-height: 54px !important;
+  padding: 10px 14px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(49, 48, 91, 0.72),
+      rgba(39, 41, 78, 0.62)
+    ) !important;
+
+  border: 1px solid rgba(215, 186, 112, 0.24) !important;
+  border-radius: 11px !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 232, 178, 0.06) !important;
+}
+
+
+/* 🌙 入口 Hover */
+
+.app[data-time-theme='night'] .home-recent-action:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(67, 58, 106, 0.82),
+      rgba(48, 49, 88, 0.72)
+    ) !important;
+
+  border-color: rgba(222, 190, 117, 0.42) !important;
+}
+
+
+/* 🌙 入口文字 */
+
+.app[data-time-theme='night'] .home-recent-action strong {
+  color: #f5edf7 !important;
+}
+
+.app[data-time-theme='night'] .home-recent-action span {
+  color: #c8bdce !important;
+}
+
+.app[data-time-theme='night'] .home-recent-action-arrow {
+  color: #d8b66d !important;
+}
+/* =========================================================
+  /* =========================================================
+   🌙 Luna Tarot｜夜晚資訊卡・背景裝飾版
+   ========================================================= */
+
+.app.night .home-guidance-card {
+  position: relative !important;
+  overflow: hidden !important;
+
+  background:
+    /* ✦ 星光 */
+    radial-gradient(circle at 78% 16%, rgba(255, 225, 150, 0.75) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 28%, rgba(255, 235, 180, 0.60) 0 1px, transparent 2px),
+    radial-gradient(circle at 66% 30%, rgba(255, 225, 150, 0.50) 0 1px, transparent 2px),
+
+    /* 🌙 左上淡月 */
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(238, 202, 125, 0.72) 0 13px,
+      transparent 14px
+    ),
+
+    /* 🌙 月亮陰影，形成月牙 */
+    radial-gradient(
+      circle at 11% 9%,
+      rgba(35, 36, 79, 1) 0 12px,
+      transparent 13px
+    ),
+
+    /* ⛰️ 底部淡山巒 */
+    linear-gradient(
+      145deg,
+      transparent 0 72%,
+      rgba(123, 145, 181, 0.12) 72.5%,
+      transparent 73%
+    ),
+    linear-gradient(
+      25deg,
+      transparent 0 76%,
+      rgba(123, 145, 181, 0.10) 76.5%,
+      transparent 77%
+    ),
+
+    /* 🌌 夜晚底色 */
+    linear-gradient(
+      145deg,
+      rgba(38, 39, 82, 0.96),
+      rgba(25, 28, 65, 0.94)
+    ) !important;
+
+  border: 1px solid rgba(218, 184, 105, 0.68) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 16px 36px rgba(4, 7, 25, 0.42),
+    inset 0 1px 0 rgba(255, 231, 174, 0.10),
+    inset 0 0 0 1px rgba(220, 185, 105, 0.06) !important;
+
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+
+/* 🌙 最近占卜｜月相＋星光＋淡山巒 */
+
+.app[data-time-theme='night'] .home-recent-card {
+  position: relative !important;
+  overflow: hidden !important;
+
+  background:
+    /* ✦ 小星星 */
+    radial-gradient(circle at 16% 18%, rgba(255, 225, 150, 0.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 30% 13%, rgba(255, 235, 180, 0.50) 0 1px, transparent 2px),
+    radial-gradient(circle at 76% 31%, rgba(255, 225, 150, 0.45) 0 1px, transparent 2px),
+
+    /* 🌙 月相 */
+    radial-gradient(
+      circle at 84% 15%,
+      rgba(229, 198, 123, 0.62) 0 8px,
+      transparent 9px
+    ),
+    radial-gradient(
+      circle at 88% 15%,
+      rgba(38, 39, 82, 0.98) 0 8px,
+      transparent 9px
+    ),
+
+    /* ⛰️ 底部山巒 */
+    linear-gradient(
+      150deg,
+      transparent 0 73%,
+      rgba(123, 145, 181, 0.13) 73.5%,
+      transparent 74%
+    ),
+    linear-gradient(
+      125deg,
+      transparent 0 78%,
+      rgba(123, 145, 181, 0.10) 78.5%,
+      transparent 79%
+    ),
+
+    /* 🌌 夜晚底色 */
+    linear-gradient(
+      145deg,
+      rgba(38, 39, 82, 0.96),
+      rgba(25, 28, 65, 0.94)
+    ) !important;
+
+  border: 1px solid rgba(218, 184, 105, 0.68) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 16px 36px rgba(4, 7, 25, 0.42),
+    inset 0 1px 0 rgba(255, 231, 174, 0.10),
+    inset 0 0 0 1px rgba(220, 185, 105, 0.06) !important;
+
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+
+/* ✨ 夜晚卡片內容保持清楚 */
+
+.app[data-time-theme='night'] .home-guidance-card > *,
+.app[data-time-theme='night'] .home-recent-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* 🌙 夜晚標題 */
+
+.app[data-time-theme='night'] .home-guidance-card h2,
+.app[data-time-theme='night'] .home-recent-card h2 {
+  color: #f5eef8 !important;
+}
+
+.app[data-time-theme='night'] .home-guidance-card .eyebrow,
+.app[data-time-theme='night'] .home-recent-card .eyebrow {
+  color: #cda4e8 !important;
+}
+
+
+/* ✨ 今日牌名 */
+
+.app[data-time-theme='night'] .home-guidance-card-name strong {
+  color: #fff1cf !important;
+}
+
+.app[data-time-theme='night'] .home-guidance-card-name span {
+  color: #d6cbdc !important;
+}
+
+
+/* 🌙 今日指引文字 */
+
+.app[data-time-theme='night'] .home-guidance-card p,
+.app[data-time-theme='night'] .home-guidance-keywords {
+  color: #ddd4e2 !important;
+}
+
+
+/* ─────────────────────────
+   📊 準確度／牌陣
+   ───────────────────────── */
+
+.app[data-time-theme='night'] .home-recent-action {
+  min-height: 54px !important;
+  padding: 10px 14px !important;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(51, 52, 92, 0.78),
+      rgba(38, 41, 78, 0.70)
+    ) !important;
+
+  border: 1px solid rgba(215, 185, 112, 0.26) !important;
+  border-radius: 11px !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 231, 177, 0.07) !important;
+}
+
+.app[data-time-theme='night'] .home-recent-action strong {
+  color: #f7eff8 !important;
+}
+
+.app[data-time-theme='night'] .home-recent-action span {
+  color: #c9bfd1 !important;
+}
+
+.app[data-time-theme='night'] .home-recent-action:hover {
+  border-color: rgba(225, 193, 117, 0.42) !important;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import { tarotCards } from './data/tarotCards'
 
@@ -215,6 +215,74 @@ const getTimeTheme = () => {
   return hour >= 6 && hour < 18 ? 'day' : 'night'
 }
 
+
+/* =====================================
+   🧭 瀏覽器上一頁 / 下一頁支援
+
+   把目前頁面（page / selectedCard / selectedSpread）
+   對應到網址的 hash，讓瀏覽器（含手機）的
+   上一頁、下一頁可以正確在頁面之間切換。
+===================================== */
+
+const NAV_KNOWN_PAGES = [
+  'home',
+  'library',
+  'favorites',
+  'history',
+  'spreads',
+  'daily',
+  'stats',
+]
+
+const buildNavHash = (targetPage, { cardId, spreadId } = {}) => {
+
+  if (targetPage === 'card' && cardId !== null && cardId !== undefined) {
+    return `#card/${cardId}`
+  }
+
+  if (targetPage === 'spread' && spreadId) {
+    return `#spread/${spreadId}`
+  }
+
+  return `#${targetPage}`
+}
+
+const parseNavHash = (rawHash) => {
+
+  const hash = (rawHash || '').replace(/^#/, '')
+
+  if (hash.startsWith('card/')) {
+    return {
+      page: 'card',
+      cardId: hash.slice('card/'.length),
+      spreadId: null,
+    }
+  }
+
+  if (hash.startsWith('spread/')) {
+    return {
+      page: 'spread',
+      cardId: null,
+      spreadId: hash.slice('spread/'.length),
+    }
+  }
+
+  if (NAV_KNOWN_PAGES.includes(hash)) {
+    return {
+      page: hash,
+      cardId: null,
+      spreadId: null,
+    }
+  }
+
+  return {
+    page: 'home',
+    cardId: null,
+    spreadId: null,
+  }
+}
+
+
 function App() {
 
   const [page, setPage] = useState('home')
@@ -253,57 +321,165 @@ function App() {
   }, [timeTheme])
 
 
-  const openCard = (card) => {
+  // 這個 session 裡，App 是否已經自己 push 過至少一筆瀏覽紀錄。
+  // 用來判斷「← 返回」按鈕可不可以安全地呼叫瀏覽器上一頁。
+  const hasNavigatedRef = useRef(false)
+
+
+  const applyNavState = (state) => {
+
+    const nextCard =
+      state.cardId !== null && state.cardId !== undefined
+        ? tarotCards.find(
+            (card) => String(card.id) === String(state.cardId)
+          )
+        : null
+
+    const nextSpread =
+      state.spreadId !== null && state.spreadId !== undefined
+        ? spreads.find(
+            (spread) => spread.id === state.spreadId
+          )
+        : null
+
+    if (state.page === 'card' && !nextCard) {
+      setSelectedCard(null)
+      setSelectedSpread(null)
+      setPage('home')
+      return
+    }
+
+    if (state.page === 'spread' && !nextSpread) {
+      setSelectedCard(null)
+      setSelectedSpread(null)
+      setPage('home')
+      return
+    }
+
+    setSelectedCard(nextCard)
+    setSelectedSpread(nextSpread)
+    setPage(state.page)
+  }
+
+
+  // 讓瀏覽器（含手機）的上一頁／下一頁可以正確切換畫面：
+  // 進站時先把目前畫面同步成一筆瀏覽紀錄，
+  // 之後每次瀏覽器觸發 popstate（按上一頁／下一頁）就照紀錄還原畫面。
+  useEffect(() => {
+
+    const initial = parseNavHash(window.location.hash)
+
+    window.history.replaceState(
+      {
+        page: initial.page,
+        cardId: initial.cardId,
+        spreadId: initial.spreadId,
+      },
+      '',
+      buildNavHash(initial.page, initial)
+    )
+
+    if (initial.page !== 'home') {
+      applyNavState(initial)
+    }
+
+    const handlePopState = (event) => {
+      const state =
+        event.state || parseNavHash(window.location.hash)
+
+      applyNavState(state)
+    }
+
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [])
+
+
+  const navigate = (targetPage, options = {}) => {
+
+    const { card = null, spread = null } = options
+
     setSelectedCard(card)
-    setPage('card')
+    setSelectedSpread(spread)
+    setPage(targetPage)
+
+    hasNavigatedRef.current = true
+
+    window.history.pushState(
+      {
+        page: targetPage,
+        cardId: card ? card.id : null,
+        spreadId: spread ? spread.id : null,
+      },
+      '',
+      buildNavHash(targetPage, {
+        cardId: card ? card.id : null,
+        spreadId: spread ? spread.id : null,
+      })
+    )
+  }
+
+
+  // 給頁面內「← 返回」按鈕用：
+  // 如果這個 session 已經有 App 自己 push 的瀏覽紀錄，
+  // 就用真正的瀏覽器上一頁（跟返回鍵行為一致）；
+  // 如果是重新整理或直接進到內頁（沒有上一筆紀錄可退），
+  // 才退回原本固定的目的地，避免直接離開網站。
+  const goBack = (fallback) => {
+
+    if (hasNavigatedRef.current) {
+      window.history.back()
+    } else {
+      fallback()
+    }
+  }
+
+
+  const openCard = (card) => {
+    navigate('card', { card })
   }
 
 
   const goHome = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('home')
+    navigate('home')
   }
 
 
   const goLibrary = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('library')
+    navigate('library')
   }
 
 
   const goFavorites = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('favorites')
+    navigate('favorites')
   }
 
 
   const goHistory = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('history')
+    navigate('history')
   }
 
 
   const goSpreads = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('spreads')
+    navigate('spreads')
   }
 
 
   const goDaily = () => {
-    setSelectedCard(null)
-    setSelectedSpread(null)
-    setPage('daily')
+    navigate('daily')
   }
 
 
   const openSpread = (spread) => {
-    setSelectedSpread(spread)
-    setPage('spread')
+    navigate('spread', { spread })
+  }
+
+
+  const goStats = () => {
+    navigate('stats')
   }
 
 
@@ -328,7 +504,10 @@ function App() {
 
 
   return (
-    <div className="app" data-time-theme={timeTheme}>
+    <div
+  className={`app ${timeTheme}`}
+  data-time-theme={timeTheme}
+>
 
 
 
@@ -341,6 +520,7 @@ function App() {
   onCard={openCard}
   onSpreads={goSpreads}
   onHistory={goHistory}
+  onStats={goStats}
 />
         )}
 
@@ -372,7 +552,7 @@ function App() {
         {page === 'card' && selectedCard && (
           <CardDetail
             card={selectedCard}
-            onBack={goLibrary}
+            onBack={() => goBack(goLibrary)}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
           />
@@ -392,7 +572,7 @@ function App() {
         {page === 'spread' && selectedSpread && (
           <SpreadReading
             spread={selectedSpread}
-            onBack={goSpreads}
+            onBack={() => goBack(goSpreads)}
             onCard={openCard}
           />
         )}
@@ -404,7 +584,7 @@ function App() {
           />
         )}
 <nav className="mobile-bottom-nav">
-  <button onClick={() => setPage("home")}>
+  <button onClick={goHome}>
     <span>⌂</span>
     <small>首頁</small>
   </button>
@@ -441,6 +621,7 @@ function Home({
   onCard,
   onSpreads,
   onHistory,
+  onStats,
 }) {
 
   const previewCards = [
@@ -500,7 +681,19 @@ const recentRecords = JSON.parse(
           </div>
 
           <h1>
-            晚安，來看看今天的指引吧 ✦
+            {(() => {
+  const hour = new Date().getHours();
+
+  if (hour >= 6 && hour < 12) {
+    return "早安，來看看今天的指引吧 ✦";
+  }
+
+  if (hour >= 12 && hour < 18) {
+    return "午安，來看看今天的指引吧 ✦";
+  }
+
+  return "晚安，來看看今天的指引吧 ✦";
+})()}
           </h1>
         </div>
 
@@ -703,7 +896,7 @@ const recentRecords = JSON.parse(
 
   <button
     className="home-recent-action"
-    onClick={() => setPage("stats")}
+    onClick={onStats}
   >
     <span className="home-recent-action-icon">📊</span>
 
