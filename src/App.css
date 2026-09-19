@@ -10731,3 +10731,35 @@ html[data-time-theme='day'] body {
   background-repeat: no-repeat, no-repeat !important;
   background-attachment: fixed, fixed !important;
 }
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜牌陣分類標題：靠左、區塊間留白
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .spread-section {
+  margin-bottom: 44px;
+}
+
+.app[data-time-theme='day'] .spread-section-heading {
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+  text-align: left !important;
+  margin-bottom: 20px !important;
+}
+
+.app[data-time-theme='day'] .spread-section-heading > div {
+  text-align: left !important;
+}
+
+.app[data-time-theme='day'] .spread-section-heading h2 {
+  margin: 4px 0 0 !important;
+}
+
+.app[data-time-theme='day'] .spread-section-heading .eyebrow {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important;
+  margin: 0 !important;
+}

@@ -1989,7 +1989,7 @@ function SpreadLibrary({
 
           <div>
 
-            <div className="spread-section-heading spread-heading-glass">
+            <div className="eyebrow">
               PRIVATE
             </div>
 
