@@ -577,13 +577,13 @@ function App() {
         {page === 'card' && selectedCard && (
           <CardDetail
             card={selectedCard}
-            onBack={() => goBack(goLibrary)}
+            onBack={goHome}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
             prevCard={prevCard}
             nextCard={nextCard}
             onOpenCard={openSiblingCard}
-            onLibrary={() => goBack(goLibrary)}
+            onLibrary={goLibrary}
           />
         )}
 
@@ -1445,7 +1445,7 @@ function TarotCard({
 
 /* =====================================
    🃏 單張牌詳情｜中央牌卡（正位＋逆位）＋左右資訊卡
-   頂部＝牌名／返回牌庫／加入收藏
+   頂部＝牌名／返回首頁／加入收藏
    左＝正位資訊、中＝正位牌圖｜逆位牌圖＋牌卡故事、右＝逆位資訊
    底部＝上一張／回到牌庫／下一張
    （目前只有「愚者」有逆位牌義、牌卡故事、核心句的完整資料）
@@ -1492,7 +1492,7 @@ function CardDetail({
           className="study-top-btn study-top-back"
           onClick={onBack}
         >
-          ← 返回牌庫
+          ← 返回首頁
         </button>
 
         <div className="study-heading">
