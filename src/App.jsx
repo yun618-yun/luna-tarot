@@ -442,6 +442,29 @@ function App() {
     navigate('card', { card })
   }
 
+  // 牌庫順序（依資料檔）中的上一張／下一張
+  const selectedCardIndex = selectedCard
+    ? tarotCards.findIndex(
+        (item) => item.id === selectedCard.id
+      )
+    : -1
+
+  const prevCard =
+    selectedCardIndex > 0
+      ? tarotCards[selectedCardIndex - 1]
+      : null
+
+  const nextCard =
+    selectedCardIndex >= 0 &&
+    selectedCardIndex < tarotCards.length - 1
+      ? tarotCards[selectedCardIndex + 1]
+      : null
+
+  const openSiblingCard = (card) => {
+    openCard(card)
+    window.scrollTo(0, 0)
+  }
+
 
   const goHome = () => {
     navigate('home')
@@ -557,6 +580,10 @@ function App() {
             onBack={() => goBack(goLibrary)}
             isFavorite={isFavorite}
             toggleFavorite={toggleFavorite}
+            prevCard={prevCard}
+            nextCard={nextCard}
+            onOpenCard={openSiblingCard}
+            onLibrary={() => goBack(goLibrary)}
           />
         )}
 
@@ -1416,34 +1443,228 @@ function TarotCard({
    📖 詳細牌義
 ===================================== */
 
+/* =====================================
+   🃏 單張牌詳情｜中央牌卡（正位＋逆位）＋左右資訊卡
+   頂部＝牌名／返回牌庫／加入收藏
+   左＝正位資訊、中＝正位牌圖｜逆位牌圖＋牌卡故事、右＝逆位資訊
+   底部＝上一張／回到牌庫／下一張
+   （目前只有「愚者」有逆位牌義、牌卡故事、核心句的完整資料）
+===================================== */
+const PENDING_TEXT = '逆位牌義整理中……'
+
 function CardDetail({
   card,
   onBack,
   isFavorite,
   toggleFavorite,
+  prevCard,
+  nextCard,
+  onOpenCard,
+  onLibrary,
 }) {
+
+  const uprightMeaning = {
+    love: card.love,
+    career: card.career,
+    money: card.money,
+    relationship: card.relationship,
+    yesNo: card.yesNo,
+    timing: card.timing,
+  }
+
+  const reversedMeaning =
+    card.reversedMeaning || {}
 
   const favorite =
     isFavorite(card.id)
 
+  const tagline =
+    card.tagline ||
+    card.upright.slice(0, 3).join('・')
 
-  const noteStorageKey =
-    `luna-tarot-note-history-${card.id}`
 
+  return (
+    <div className="page">
+
+      <div className="study-topbar">
+
+        <button
+          className="study-top-btn study-top-back"
+          onClick={onBack}
+        >
+          ← 返回牌庫
+        </button>
+
+        <div className="study-heading">
+          <h1>
+            <span className="study-heading-no">
+              {card.number}
+            </span>
+            {card.name}
+          </h1>
+          <div className="study-heading-en">
+            {card.english.toUpperCase()}
+          </div>
+          <p>
+            ✦ {tagline} ✦
+          </p>
+        </div>
+
+        <button
+          className={
+            favorite
+              ? 'study-top-btn study-top-fav active'
+              : 'study-top-btn study-top-fav'
+          }
+          onClick={() =>
+            toggleFavorite(card.id)
+          }
+        >
+          {favorite
+            ? '★ 已收藏'
+            : '☆ 加入收藏'}
+        </button>
+
+      </div>
+
+
+      <div
+        className="card-study"
+        key={card.id}
+      >
+
+        <OrientationColumn
+          side="upright"
+          icon="☀"
+          title="正位"
+          subtitle="UPRIGHT"
+          keywords={card.upright}
+          meaning={uprightMeaning}
+          noteKey={`luna-tarot-note-history-${card.id}`}
+        />
+
+
+        <div className="study-center">
+
+          <div className="study-pair">
+
+            <div
+              className="study-halo"
+              aria-hidden="true"
+            />
+
+            <figure className="study-fig">
+              <div className="detail-card-frame">
+                <img
+                  src={card.image}
+                  alt={`${card.name}・正位`}
+                />
+              </div>
+              <figcaption>
+                ☀ 正位
+              </figcaption>
+            </figure>
+
+            <figure className="study-fig">
+              <div className="detail-card-frame">
+                <img
+                  src={card.image}
+                  alt={`${card.name}・逆位`}
+                  data-reversed="true"
+                />
+              </div>
+              <figcaption>
+                ☾ 逆位
+              </figcaption>
+            </figure>
+
+          </div>
+
+          <div className="study-story">
+            <div className="study-story-label">
+              ✦ 牌卡故事
+            </div>
+            <p>
+              {card.story || '牌卡故事整理中……'}
+            </p>
+          </div>
+
+        </div>
+
+
+        <OrientationColumn
+          side="reversed"
+          icon="☾"
+          title="逆位"
+          subtitle="REVERSED"
+          keywords={card.reversed}
+          meaning={reversedMeaning}
+          noteKey={`luna-tarot-note-history-${card.id}-reversed`}
+        />
+
+      </div>
+
+
+      <nav
+        className="study-nav"
+        aria-label="牌卡導覽"
+      >
+
+        <button
+          className="study-nav-btn study-nav-prev"
+          disabled={!prevCard}
+          title={prevCard ? prevCard.name : ''}
+          onClick={() =>
+            prevCard && onOpenCard(prevCard)
+          }
+        >
+          ← 上一張
+        </button>
+
+        <button
+          className="study-nav-btn study-nav-library"
+          onClick={onLibrary}
+        >
+          ▦ 回到牌庫
+        </button>
+
+        <button
+          className="study-nav-btn study-nav-next"
+          disabled={!nextCard}
+          title={nextCard ? nextCard.name : ''}
+          onClick={() =>
+            nextCard && onOpenCard(nextCard)
+          }
+        >
+          下一張 →
+        </button>
+
+      </nav>
+
+    </div>
+  )
+}
+
+
+function OrientationColumn({
+  side,
+  icon,
+  title,
+  subtitle,
+  keywords,
+  meaning,
+  noteKey,
+}) {
 
   const [noteHistory, setNoteHistory] =
     useState(() => {
 
       const saved =
-        localStorage.getItem(
-          noteStorageKey
-        )
-
+        localStorage.getItem(noteKey)
 
       if (!saved) {
         return []
       }
-
 
       try {
         return JSON.parse(saved)
@@ -1452,7 +1673,6 @@ function CardDetail({
       }
 
     })
-
 
   const [currentNote, setCurrentNote] =
     useState('')
@@ -1463,22 +1683,15 @@ function CardDetail({
     const content =
       currentNote.trim()
 
-
     if (!content) {
       return
     }
 
-
-    const now =
-      new Date()
-
+    const now = new Date()
 
     const newNote = {
-
       id: Date.now(),
-
       content,
-
       date:
         now.toLocaleDateString(
           'zh-TW',
@@ -1488,7 +1701,6 @@ function CardDetail({
             day: '2-digit',
           }
         ),
-
       time:
         now.toLocaleTimeString(
           'zh-TW',
@@ -1497,286 +1709,165 @@ function CardDetail({
             minute: '2-digit',
           }
         ),
-
     }
-
 
     const updatedHistory = [
       newNote,
       ...noteHistory,
     ]
 
-
-    setNoteHistory(
-      updatedHistory
-    )
-
+    setNoteHistory(updatedHistory)
 
     localStorage.setItem(
-      noteStorageKey,
+      noteKey,
       JSON.stringify(updatedHistory)
     )
 
-
     setCurrentNote('')
+
   }
 
 
-  const loadOldNote =
-    (note) => {
-
-      setCurrentNote(
-        note.content
-      )
-
-    }
+  const items = [
+    ['♡', '感情', 'love'],
+    ['♧', '工作', 'career'],
+    ['◇', '金錢', 'money'],
+    ['♢', '人際', 'relationship'],
+    ['?', '是非題', 'yesNo'],
+    ['◷', '時間', 'timing'],
+  ]
 
 
   return (
-    <div className="page">
-
-      <button
-        className="back-button"
-        onClick={onBack}
-      >
-        ← 上一頁
-      </button>
-
-
-      <div className="card-detail">
-
-        <div className="detail-image-section">
-
-          <div className="detail-card-frame">
-
-            <img
-              src={card.image}
-              alt={card.name}
-            />
-
-          </div>
- <div className="meaning-block">
-
-            <div className="meaning-title">
-              <span>☀</span>
-              正位關鍵字
-            </div>
-
-
-            <div className="keyword-list">
-
-              {card.upright.map(
-                (word, index) => (
-               <span
-  className="keyword-tag"
-  key={index}
-  
->
-  {word}
-</span>
-                )
-              )}
-
-            </div>
-
-          </div>
-
-
-          <div className="meaning-block reversed-block">
-
-            <div className="meaning-title">
-              <span>☾</span>
-              逆位關鍵字
-            </div>
-
-
-            <div className="keyword-list">
-
-              {card.reversed.map(
-                (word, index) => (
-                  <span key={index}>
-                    {word}
-                  </span>
-                )
-              )}
-
-            </div>
-         </div>
-        
-
-   </div>
-    
-        <div className="detail-content">
-
-          <div className="eyebrow">
-            CARD MEANING
-          </div>
-
-
-          <h2>
-            {card.name}
-          </h2>
-
-
-          <p className="detail-description">
-            這張牌在不同問題中，會呈現不同的訊息。
-            你也可以在最下面留下自己的理解。
-          </p>
-
-
-         
-
-        
-
-
-          <div className="meaning-grid">
-
-            <MeaningItem
-              icon="♡"
-              title="感情"
-              text={card.love}
-            />
-
-            <MeaningItem
-              icon="♧"
-              title="工作"
-              text={card.career}
-            />
-
-            <MeaningItem
-              icon="◇"
-              title="金錢"
-              text={card.money}
-            />
-
-            <MeaningItem
-              icon="♢"
-              title="人際"
-              text={card.relationship}
-            />
-
-            <MeaningItem
-              icon="?"
-              title="是非題"
-              text={card.yesNo}
-            />
-
-            <MeaningItem
-              icon="◷"
-              title="時間"
-              text={card.timing}
-            />
-
-          </div>
-
-
-          <div className="personal-note">
-
-            <div className="meaning-title">
-              <span>✎</span>
-              我的理解
-            </div>
-
-
-            <textarea
-              value={currentNote}
-              onChange={(e) =>
-                setCurrentNote(
-                  e.target.value
-                )
-              }
-              placeholder="寫下你現在對這張牌的理解、實戰經驗或特殊記憶……"
-            />
-
-
-            <div className="note-actions">
-
-              <button
-                className="primary-button"
-                onClick={saveNote}
-              >
-                ✦ 儲存這次修改
-              </button>
-
-            </div>
-
-
-            {noteHistory.length > 0 && (
-
-              <div className="note-history">
-
-                <div className="note-history-title">
-
-                  <span>
-                    ◷
-                  </span>
-
-                  修改紀錄
-
-                  <small>
-                    {noteHistory.length} 筆
-                  </small>
-
-                </div>
-
-
-                <div className="note-history-list">
-
-                  {noteHistory.map(
-                    (note, index) => (
-
-                      <div
-                        className="note-history-item"
-                        key={note.id}
-                        onClick={() =>
-                          loadOldNote(note)
-                        }
-                      >
-
-                        <div className="note-history-date">
-
-                          <span>
-                            {index === 0
-                              ? '最新版本'
-                              : `第 ${noteHistory.length - index} 次`
-                            }
-                          </span>
-
-
-                          <time>
-                            {note.date} {note.time}
-                          </time>
-
-                        </div>
-
-
-                        <div className="note-history-content">
-                          {note.content}
-                        </div>
-
-
-                        <div className="note-history-hint">
-                          點擊載入此版本
-                        </div>
-
-                      </div>
-
-                    )
-                  )}
-
-                </div>
-
-              </div>
-
-            )}
-
-          </div>
-
+    <section
+      className={`study-col study-col-${side}`}
+    >
+
+      <header className="study-col-header">
+
+        <div className="study-col-title">
+          <span>{icon}</span>
+          {title}
+          <small>{subtitle}</small>
         </div>
+
+        <div className="study-keywords">
+          {keywords.map(
+            (word, index) => (
+              <span key={index}>
+                {word}
+              </span>
+            )
+          )}
+        </div>
+
+      </header>
+
+
+      <div className="study-meanings">
+
+        {items.map(
+          ([itemIcon, itemTitle, field]) => (
+            <div
+              className="study-row"
+              key={field}
+            >
+              <div className="study-row-label">
+                <span>{itemIcon}</span>
+                {itemTitle}
+              </div>
+              <p>
+                {meaning[field] ||
+                  PENDING_TEXT}
+              </p>
+            </div>
+          )
+        )}
 
       </div>
 
-    </div>
+
+      <div className="study-note">
+
+        <div className="study-note-label">
+          <span>✎</span>
+          我的理解・{title}
+        </div>
+
+        <textarea
+          value={currentNote}
+          onChange={(e) =>
+            setCurrentNote(
+              e.target.value
+            )
+          }
+          placeholder={`寫下你對${title}的理解……`}
+        />
+
+        <button
+          className="study-note-save"
+          onClick={saveNote}
+        >
+          ✦ 儲存
+        </button>
+
+        {noteHistory.length > 0 && (
+
+          <details className="study-note-history">
+
+            <summary>
+              修改紀錄・{noteHistory.length} 筆
+            </summary>
+
+            <div className="note-history-list">
+
+              {noteHistory.map(
+                (note, index) => (
+
+                  <div
+                    className="note-history-item"
+                    key={note.id}
+                    onClick={() =>
+                      setCurrentNote(
+                        note.content
+                      )
+                    }
+                  >
+
+                    <div className="note-history-date">
+                      <span>
+                        {index === 0
+                          ? '最新版本'
+                          : `第 ${noteHistory.length - index} 次`
+                        }
+                      </span>
+                      <time>
+                        {note.date} {note.time}
+                      </time>
+                    </div>
+
+                    <div className="note-history-content">
+                      {note.content}
+                    </div>
+
+                    <div className="note-history-hint">
+                      點擊載入此版本
+                    </div>
+
+                  </div>
+
+                )
+              )}
+
+            </div>
+
+          </details>
+
+        )}
+
+      </div>
+
+    </section>
   )
 }
 
@@ -4183,34 +4274,5 @@ function AccuracyStats({ onBack }) {
     </div>
   )
 }
-
-function MeaningItem({
-  icon,
-  title,
-  text
-}) {
-
-  return (
-    <div className="meaning-item">
-
-      <div className="meaning-item-title">
-
-        <span>
-          {icon}
-        </span>
-
-        {title}
-
-      </div>
-
-
-      <p>
-        {text}
-      </p>
-
-    </div>
-  )
-}
-
 
 export default App
