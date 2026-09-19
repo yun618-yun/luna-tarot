@@ -2090,6 +2090,13 @@ function SpreadReading({
     spread.mode === 'blank'
 
 
+  // 愚者的 id 是 0，不能用真假值判斷是否已選牌
+  const hasCard =
+    (slot) =>
+      slot.cardId !== '' &&
+      slot.cardId !== null &&
+      slot.cardId !== undefined
+
   const getCardById =
     (cardId) => {
 
@@ -2144,7 +2151,7 @@ function SpreadReading({
         slots
           .filter(
             (slot) =>
-              slot.cardId
+              hasCard(slot)
           )
           .map(
             (slot) =>
@@ -2609,7 +2616,7 @@ function SpreadReading({
   const allFilled =
     slots.every(
       (slot) =>
-        slot.cardId
+        hasCard(slot)
     )
 
 
