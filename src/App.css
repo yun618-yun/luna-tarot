@@ -10895,3 +10895,60 @@ html[data-time-theme='day'] body {
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
 }
+
+
+/* -----------------------------------------------------
+   占卜紀錄卡片：補上版面（圓角／內距／間距）
+----------------------------------------------------- */
+
+.reading-history-card {
+  box-sizing: border-box;
+  padding: 26px 28px 20px;
+  margin-bottom: 28px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+/* 🌙 夜晚：紀錄卡片內的色調 */
+
+.app[data-time-theme='night'] .reading-history-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(32, 41, 85, 0.82),
+      rgba(26, 27, 58, 0.78)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.26) !important;
+
+  box-shadow:
+    0 14px 34px rgba(8, 10, 30, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.app[data-time-theme='night'] .reading-history-question {
+  background: rgba(212, 136, 149, 0.10) !important;
+  border-left: 3px solid rgba(212, 136, 149, 0.7) !important;
+}
+
+.app[data-time-theme='night'] .reading-history-item {
+  background: rgba(20, 22, 50, 0.5) !important;
+  border-color: rgba(212, 136, 149, 0.2) !important;
+}
+
+.app[data-time-theme='night'] .history-section textarea {
+  background: rgba(20, 22, 50, 0.7) !important;
+  border-color: rgba(212, 136, 149, 0.25) !important;
+}
+
+.app[data-time-theme='night'] .history-section {
+  background: rgba(20, 22, 50, 0.32) !important;
+  border-color: rgba(212, 136, 149, 0.2) !important;
+}
+
+.reading-history-question {
+  margin-bottom: 20px;
+}
