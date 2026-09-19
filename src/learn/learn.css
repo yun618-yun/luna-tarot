@@ -1,0 +1,852 @@
+/* =====================================
+   📖 塔羅學習中心
+   預設為夜間配色，日間用 [data-time-theme='day'] 覆蓋變數
+===================================== */
+
+.learn {
+  --l-card: var(--paper);
+  --l-card-soft: rgba(122, 90, 166, 0.07);
+  --l-border: var(--gold-line);
+  --l-text: var(--ink);
+  --l-muted: var(--ink-soft);
+  --l-accent: #8a5cc0;
+  --l-chip-bg: rgba(122, 90, 166, 0.12);
+  --l-chip-text: #4a3f55;
+  --l-btn-bg: linear-gradient(135deg, var(--wine), var(--wine-deep));
+  --l-btn-text: #fff8ea;
+  --l-input-bg: rgba(255, 253, 247, 0.96);
+
+  color: var(--l-text);
+  max-width: 1000px;
+  text-align: left;
+}
+
+/* 直接放在背景上的標題與說明 */
+.learn .learn-header h1,
+.learn .learn-header p {
+  color: var(--page-ink);
+}
+
+.learn .learn-header .learn-source,
+.learn p.learn-footer {
+  color: var(--page-ink-soft);
+}
+
+.learn .learn-header .learn-source {
+  border-color: var(--gold-line);
+}
+
+.learn h3,
+.learn h4 {
+  color: var(--l-text);
+}
+
+.learn p,
+.learn li,
+.learn span,
+.learn small,
+.learn label {
+  color: inherit;
+}
+
+.learn-header {
+  margin-bottom: 24px;
+}
+
+.learn-header h1 {
+  margin: 4px 0 8px;
+  font-size: 30px;
+}
+
+.learn-header p {
+  margin: 0 0 10px;
+  color: var(--l-muted);
+  line-height: 1.7;
+}
+
+.learn-source {
+  display: inline-block;
+  font-size: 12px;
+  color: var(--l-muted);
+  border: 1px dashed var(--l-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.learn-footer {
+  margin: 28px 0 0;
+  font-size: 12px;
+  text-align: center;
+  color: var(--l-muted);
+}
+
+
+/* ---------- 入口 ---------- */
+
+.learn-hub {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.learn-hub-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px 18px 18px;
+  text-align: left;
+  color: var(--l-text);
+  background: var(--l-card);
+  border: 1px solid var(--l-border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.learn-hub-card:hover {
+  transform: translateY(-2px);
+}
+
+.learn-hub-card strong {
+  font-size: 17px;
+}
+
+.learn-hub-card small {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--l-muted);
+}
+
+.learn-hub-icon {
+  font-size: 26px;
+}
+
+.learn-hub-no {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--l-accent);
+}
+
+.learn-hub-practice {
+  grid-column: 1 / -1;
+}
+
+
+/* ---------- 區塊 ---------- */
+
+.learn-block {
+  margin-bottom: 18px;
+  padding: 22px 22px 20px;
+  background: var(--l-card);
+  border: 1px solid var(--l-border);
+  border-radius: 16px;
+  line-height: 1.85;
+  font-size: 14px;
+}
+
+.learn-block h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.learn-block p {
+  margin: 0 0 10px;
+}
+
+.learn-quote {
+  padding: 10px 14px;
+  border-left: 3px solid var(--l-accent);
+  background: var(--l-card-soft);
+  border-radius: 0 10px 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.learn-formula {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--l-accent);
+  margin: 6px 0 16px !important;
+}
+
+.learn-formula-soft {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-sub {
+  margin: 14px 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--l-accent);
+}
+
+.learn-tip {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--l-muted);
+}
+
+.learn-list {
+  margin: 4px 0 10px;
+  padding-left: 22px;
+}
+
+.learn-list li {
+  margin-bottom: 4px;
+}
+
+.learn-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 10px;
+}
+
+.learn-chips span {
+  padding: 5px 12px;
+  font-size: 12px;
+  border-radius: 999px;
+  background: var(--l-chip-bg);
+  color: var(--l-chip-text);
+  border: 1px solid var(--l-border);
+}
+
+
+/* ---------- 網格 ---------- */
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 10px 0;
+}
+
+.learn-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.learn-element {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-element p {
+  margin: 0 0 6px;
+}
+
+.learn-element-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 16px;
+}
+
+
+/* ---------- 王冠比較 / 列表 ---------- */
+
+.learn-compare {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.learn-compare-row {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-compare-row strong {
+  color: var(--l-accent);
+}
+
+
+/* ---------- 案例 ---------- */
+
+.learn-case-list {
+  display: grid;
+  gap: 10px;
+}
+
+.learn-case {
+  border: 1px solid var(--l-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--l-card-soft);
+}
+
+.learn-case-head {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 700;
+  background: transparent;
+  border: 0;
+  color: var(--l-text);
+  cursor: pointer;
+}
+
+.learn-case-body {
+  padding: 4px 16px 16px;
+}
+
+.learn-case-top {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.learn-case-top > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.learn-think {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--l-muted);
+}
+
+.learn-card-img {
+  width: 120px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: block;
+}
+
+.learn-card-img-reversed {
+  transform: rotate(180deg);
+}
+
+.learn-answer {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--l-card-soft);
+  border: 1px dashed var(--l-accent);
+}
+
+.learn-answer p {
+  margin: 0 0 8px;
+}
+
+.learn-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: baseline;
+  margin-top: 8px;
+}
+
+.learn-result span {
+  color: var(--l-muted);
+  font-size: 12px;
+}
+
+.learn-result strong {
+  color: var(--l-accent);
+  font-size: 16px;
+}
+
+.learn-note-inline {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--l-card-soft);
+  font-size: 13px;
+}
+
+
+/* ---------- 按鈕、選擇 ---------- */
+
+.learn-btn {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--l-btn-text);
+  background: var(--l-btn-bg);
+  cursor: pointer;
+}
+
+.learn-btn-ghost {
+  background: transparent;
+  color: var(--l-text);
+  border: 1px solid var(--l-border);
+}
+
+.learn-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.learn-picker-label {
+  margin: 12px 0 6px;
+  font-size: 12px;
+  color: var(--l-muted);
+}
+
+.learn-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.learn-pick {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--l-text);
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.learn-pick-on {
+  color: #fff;
+  background: linear-gradient(135deg, #a979d2, #6d45a3);
+  border-color: transparent;
+}
+
+.learn-select {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--l-text);
+  background: var(--l-input-bg);
+  border: 1px solid var(--l-border);
+  border-radius: 10px;
+}
+
+.learn-select option {
+  color: #222;
+}
+
+
+/* ---------- 元素計數 ---------- */
+
+.learn-counters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.learn-counter {
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-counter-label {
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.learn-counter-ctrl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.learn-counter-ctrl button {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+  color: var(--l-text);
+  background: var(--l-chip-bg);
+  border: 1px solid var(--l-border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.learn-counter-ctrl span {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.learn-bar {
+  height: 6px;
+  margin-top: 10px;
+  border-radius: 6px;
+  background: var(--l-card-soft);
+  overflow: hidden;
+}
+
+.learn-bar div {
+  height: 100%;
+  background: linear-gradient(90deg, #a979d2, #d48895);
+  transition: width 0.25s ease;
+}
+
+
+/* ---------- 宮廷牌 ---------- */
+
+.learn-court {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-court .learn-card-img {
+  width: 92px;
+}
+
+.learn-court-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.learn-court-body h4 {
+  margin: 0 0 2px;
+  font-size: 17px;
+}
+
+.learn-court-formula {
+  font-size: 12px;
+  color: var(--l-accent);
+  margin-bottom: 8px;
+}
+
+.learn-court-mix {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.learn-court-mix > div {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--l-chip-bg);
+}
+
+.learn-court-mix small {
+  display: block;
+  color: var(--l-muted);
+}
+
+.learn-court-data {
+  font-size: 12px;
+  color: var(--l-muted);
+}
+
+
+/* ---------- 大阿爾克那 ---------- */
+
+.learn-major-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.learn-major {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 4px 8px;
+  font-size: 12px;
+  color: var(--l-text);
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.learn-major img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.learn-major-on {
+  border-color: var(--l-accent);
+  box-shadow: 0 0 0 2px var(--l-accent);
+}
+
+.learn-major-detail .learn-card-img {
+  width: 150px;
+}
+
+.learn-story {
+  margin-top: 10px;
+}
+
+
+/* ---------- 正逆位 ---------- */
+
+.learn-compare-pos,
+.learn-practice-cards {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 14px 0;
+}
+
+.learn-pos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 140px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.learn-pos .learn-card-img {
+  width: 120px;
+  margin-bottom: 4px;
+}
+
+.learn-pos strong {
+  font-size: 14px;
+}
+
+.learn-pos span,
+.learn-pos small {
+  color: var(--l-muted);
+}
+
+
+/* ---------- 流程 ---------- */
+
+.learn-steps {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.learn-step {
+  padding: 18px 20px;
+  background: var(--l-card);
+  border: 1px solid var(--l-border);
+  border-left: 4px solid var(--l-accent);
+  border-radius: 14px;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.learn-step h3 {
+  margin: 2px 0 4px;
+  font-size: 18px;
+}
+
+.learn-step p {
+  margin: 0 0 8px;
+  color: var(--l-muted);
+}
+
+.learn-step-no {
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--l-accent);
+}
+
+.learn-checks {
+  display: grid;
+  gap: 6px;
+}
+
+.learn-checks label {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.learn-checks input {
+  margin-top: 6px;
+  accent-color: #a979d2;
+}
+
+
+/* ---------- 練習 ---------- */
+
+.learn-question {
+  margin: 8px 0 4px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  background: var(--l-card-soft);
+  border: 1px solid var(--l-border);
+}
+
+.learn-field {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.learn-field span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--l-accent);
+}
+
+.learn-ref-card {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--l-card-soft);
+}
+
+.learn-ref-card small {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--l-muted);
+}
+
+.learn-ref-card p {
+  margin: 0 0 4px;
+}
+
+
+/* ---------- 我的理解 ---------- */
+
+.learn textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--l-text);
+  background: var(--l-input-bg);
+  border: 1px solid var(--l-border);
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.learn textarea::placeholder {
+  color: var(--l-muted);
+  opacity: 0.8;
+}
+
+.learn-note {
+  margin: 14px 0 0;
+}
+
+.learn-note-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.learn-note-head span {
+  font-size: 11px;
+  color: var(--l-muted);
+}
+
+.learn > .learn-note {
+  padding: 18px 20px;
+  background: var(--l-card);
+  border: 1px solid var(--l-border);
+  border-radius: 16px;
+}
+
+
+/* ---------- 手機 ---------- */
+
+@media (max-width: 800px) {
+
+  .learn {
+    padding-bottom: 110px;
+  }
+
+  .learn-hub {
+    grid-template-columns: 1fr;
+  }
+
+  .learn-header h1 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .learn-block {
+    padding: 18px 16px;
+  }
+
+  .learn-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .learn-counters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .learn-compare-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .learn-case-top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .learn-case-top > div {
+    width: 100%;
+  }
+
+  .learn-court .learn-card-img {
+    width: 72px;
+  }
+
+  .learn-compare-pos,
+  .learn-practice-cards {
+    gap: 8px;
+  }
+
+  .learn-pos {
+    width: 30%;
+  }
+
+  .learn-pos .learn-card-img {
+    width: 100%;
+  }
+
+  .learn-major-detail .learn-card-img {
+    width: 130px;
+  }
+}
+
+
+
+.learn p.learn-footer {
+  text-align: center;
+}

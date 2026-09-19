@@ -1,0 +1,794 @@
+/* =====================================
+   基礎：設計變數、背景、Sidebar、通用元件
+===================================== */
+
+.app {
+  /* 卡片（奶油紙） */
+  --paper: rgba(253, 248, 238, 0.94);
+  --paper-soft: rgba(248, 240, 226, 0.9);
+  --paper-tint: rgba(122, 90, 166, 0.07);
+  --ink: #3b3441;
+  --ink-soft: #6f6578;
+  --gold: #c9a76a;
+  --gold-line: rgba(201, 167, 106, 0.6);
+  --gold-soft: rgba(201, 167, 106, 0.28);
+  --violet: #7a5aa6;
+  --wine: #7b2d4e;
+  --wine-deep: #5b1f3a;
+
+  /* 直接放在背景上的文字 */
+  --page-ink: #f6f0e4;
+  --page-ink-soft: rgba(246, 240, 228, 0.78);
+
+  /* Sidebar */
+  --side-bg: rgba(12, 16, 42, 0.84);
+  --side-ink: #efe8d8;
+  --side-ink-soft: rgba(239, 232, 216, 0.66);
+  --side-active-bg: rgba(233, 214, 170, 0.16);
+
+  --radius: 18px;
+  --radius-sm: 12px;
+  --shadow: 0 14px 34px rgba(6, 8, 28, 0.28);
+  --serif: "Noto Serif TC", "Source Han Serif TC", "Songti TC", "PMingLiU", "Georgia", serif;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+
+  --side-width: 250px;
+
+  min-height: 100vh;
+  color: var(--page-ink);
+  font-family: var(--sans);
+  background:
+    linear-gradient(rgba(8, 12, 36, 0.5), rgba(8, 12, 36, 0.68)),
+    url('/luna-cover-night.webp') center / cover fixed no-repeat;
+  background-color: #0d1233;
+  display: grid;
+  grid-template-columns: var(--side-width) minmax(0, 1fr);
+}
+
+.app[data-time-theme='day'] {
+  --paper: rgba(255, 251, 242, 0.9);
+  --paper-soft: rgba(252, 245, 232, 0.88);
+  --page-ink: #3b3441;
+  --page-ink-soft: #62586b;
+  --side-bg: rgba(255, 250, 240, 0.86);
+  --side-ink: #3b3441;
+  --side-ink-soft: #6f6578;
+  --side-active-bg: rgba(201, 167, 106, 0.22);
+  --shadow: 0 12px 30px rgba(86, 70, 50, 0.16);
+
+  background:
+    linear-gradient(rgba(255, 250, 240, 0.5), rgba(255, 250, 240, 0.66)),
+    url('/luna-cover-day.webp') center / cover fixed no-repeat;
+  background-color: #efe6d6;
+}
+
+
+/* ---------- Sidebar ---------- */
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 16px 22px;
+  color: var(--side-ink);
+  background:
+    radial-gradient(circle at 30% 0%, rgba(120, 132, 220, 0.16), transparent 55%),
+    linear-gradient(180deg, rgba(20, 30, 78, 0.6), rgba(14, 20, 58, 0.5) 55%, rgba(18, 26, 68, 0.66));
+  border-right: 1px solid var(--gold-line);
+  box-shadow: inset -1px 0 0 rgba(233, 208, 150, 0.16), 6px 0 30px rgba(6, 8, 28, 0.22);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  overflow-y: auto;
+  isolation: isolate;
+}
+
+.app[data-time-theme='day'] .sidebar {
+  background:
+    radial-gradient(circle at 30% 0%, rgba(255, 236, 200, 0.5), transparent 60%),
+    linear-gradient(180deg, rgba(255, 251, 242, 0.68), rgba(252, 244, 228, 0.6) 55%, rgba(250, 240, 222, 0.7));
+  box-shadow: inset -1px 0 0 rgba(201, 167, 106, 0.3), 6px 0 26px rgba(86, 70, 50, 0.12);
+}
+
+/* 觀星書房裝飾：星星、星座連線、月相（頂部）／月桂枝與月相（底部）。
+   只畫在文字後面，透明度很低 */
+.sidebar::before,
+.sidebar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.sidebar::before {
+  top: 0;
+  height: 330px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20250%20330%22%20width%3D%22250%22%20height%3D%22330%22%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2214%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2270%22%20cy%3D%2230%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%2212%22%20r%3D%221.2%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22180%22%20cy%3D%2226%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22236%22%20cy%3D%2240%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2264%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2258%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22214%22%20cy%3D%2272%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22150%22%20cy%3D%2262%22%20r%3D%220.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%22150%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22210%22%20cy%3D%22168%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22236%22%20cy%3D%22210%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%22236%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22188%22%20cy%3D%22250%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22120%22%20cy%3D%22300%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22226%22%20cy%3D%22286%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%22318%22%20r%3D%220.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%22322%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Cpath%20d%3D%22M52%2039.5L53.26%2042.74L56.5%2044L53.26%2045.26L52%2048.5L50.74%2045.26L47.5%2044L50.74%2042.74Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Cpath%20d%3D%22M196%2092.4L197.008%2094.992L199.6%2096L197.008%2097.008L196%2099.6L194.992%2097.008L192.4%2096L194.992%2094.992Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Cpath%20d%3D%22M140%20222L141.12%20224.88L144%20226L141.12%20227.12L140%20230L138.88%20227.12L136%20226L138.88%20224.88Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.4)%22%2F%3E%3Cpolyline%20points%3D%22170%2C132%20196%2C150%20214%2C138%20228%2C176%20200%2C196%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.38)%22%20stroke-width%3D%22.8%22%20stroke-dasharray%3D%222%203%22%2F%3E%3Ccircle%20cx%3D%22170%22%20cy%3D%22132%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22196%22%20cy%3D%22150%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22214%22%20cy%3D%22138%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22228%22%20cy%3D%22176%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22196%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Cpolyline%20points%3D%2234%2C262%2064%2C280%2092%2C270%20112%2C300%2086%2C318%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.38)%22%20stroke-width%3D%22.8%22%20stroke-dasharray%3D%222%203%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%22262%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%22280%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2292%22%20cy%3D%22270%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22112%22%20cy%3D%22300%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22318%22%20r%3D%221.7%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M45%2093A5%205%200%200%201%2045%20103A2.4%205%200%200%200%2045%2093Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22205%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%22205%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22rgba(233%2C208%2C150%2C0.4)%22%2F%3E%3Ccircle%20cx%3D%22228%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M228%2093A5%205%200%200%200%20228%20103A2.4%205%200%200%201%20228%2093Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.5)%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.sidebar::after {
+  bottom: 0;
+  height: 220px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20250%20220%22%20width%3D%22250%22%20height%3D%22220%22%3E%3Cpath%20d%3D%22M14%20214C16%20174%2026%20132%2066%2078%22%20fill%3D%22none%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2226%22%20cy%3D%22196%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-70%2026%20196)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2234%22%20cy%3D%22178%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-60%2034%20178)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2224%22%20cy%3D%22166%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-100%2024%20166)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%22152%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-55%2038%20152)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2230%22%20cy%3D%22138%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-95%2030%20138)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2246%22%20cy%3D%22126%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-45%2046%20126)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2240%22%20cy%3D%22112%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-90%2040%20112)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2256%22%20cy%3D%22102%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-35%2056%20102)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2252%22%20cy%3D%2290%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-80%2052%2090)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2268%22%20cy%3D%2284%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-25%2068%2084)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2278%22%20r%3D%221.6%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3Cg%20transform%3D%22translate(250%200)%20scale(-1%201)%22%3E%3Cpath%20d%3D%22M14%20214C16%20174%2026%20132%2066%2078%22%20fill%3D%22none%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2226%22%20cy%3D%22196%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-70%2026%20196)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2234%22%20cy%3D%22178%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-60%2034%20178)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2224%22%20cy%3D%22166%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-100%2024%20166)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%22152%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-55%2038%20152)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2230%22%20cy%3D%22138%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-95%2030%20138)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2246%22%20cy%3D%22126%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-45%2046%20126)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2240%22%20cy%3D%22112%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-90%2040%20112)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2256%22%20cy%3D%22102%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-35%2056%20102)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2252%22%20cy%3D%2290%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-80%2052%2090)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2268%22%20cy%3D%2284%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-25%2068%2084)%22%20fill%3D%22rgba(196%2C214%2C168%2C0.3)%22%20stroke%3D%22rgba(196%2C214%2C168%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2278%22%20r%3D%221.6%22%20fill%3D%22rgba(233%2C208%2C150%2C0.55)%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2297%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M97%2021A5%205%200%200%201%2097%2031A2.4%205%200%200%200%2097%2021Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22rgba(233%2C208%2C150%2C0.35)%22%2F%3E%3Ccircle%20cx%3D%22153%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(233%2C208%2C150%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M153%2021A5%205%200%200%200%20153%2031A2.4%205%200%200%201%20153%2021Z%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22120%22%20cy%3D%22120%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%220.9%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22196%22%20cy%3D%2254%22%20r%3D%221%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22234%22%20cy%3D%22120%22%20r%3D%220.8%22%20fill%3D%22rgba(233%2C208%2C150%2C0.45)%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.app[data-time-theme='day'] .sidebar::before {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20250%20330%22%20width%3D%22250%22%20height%3D%22330%22%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2214%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2270%22%20cy%3D%2230%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22128%22%20cy%3D%2212%22%20r%3D%221.2%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22180%22%20cy%3D%2226%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22236%22%20cy%3D%2240%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2264%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2258%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22214%22%20cy%3D%2272%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22150%22%20cy%3D%2262%22%20r%3D%220.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%22150%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22210%22%20cy%3D%22168%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22236%22%20cy%3D%22210%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2224%22%20cy%3D%22236%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22188%22%20cy%3D%22250%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22120%22%20cy%3D%22300%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22226%22%20cy%3D%22286%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%22318%22%20r%3D%220.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22160%22%20cy%3D%22322%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Cpath%20d%3D%22M52%2039.5L53.26%2042.74L56.5%2044L53.26%2045.26L52%2048.5L50.74%2045.26L47.5%2044L50.74%2042.74Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Cpath%20d%3D%22M196%2092.4L197.008%2094.992L199.6%2096L197.008%2097.008L196%2099.6L194.992%2097.008L192.4%2096L194.992%2094.992Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Cpath%20d%3D%22M140%20222L141.12%20224.88L144%20226L141.12%20227.12L140%20230L138.88%20227.12L136%20226L138.88%20224.88Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.4)%22%2F%3E%3Cpolyline%20points%3D%22170%2C132%20196%2C150%20214%2C138%20228%2C176%20200%2C196%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.38)%22%20stroke-width%3D%22.8%22%20stroke-dasharray%3D%222%203%22%2F%3E%3Ccircle%20cx%3D%22170%22%20cy%3D%22132%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22196%22%20cy%3D%22150%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22214%22%20cy%3D%22138%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22228%22%20cy%3D%22176%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22196%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Cpolyline%20points%3D%2234%2C262%2064%2C280%2092%2C270%20112%2C300%2086%2C318%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.38)%22%20stroke-width%3D%22.8%22%20stroke-dasharray%3D%222%203%22%2F%3E%3Ccircle%20cx%3D%2234%22%20cy%3D%22262%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2264%22%20cy%3D%22280%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2292%22%20cy%3D%22270%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%22112%22%20cy%3D%22300%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2286%22%20cy%3D%22318%22%20r%3D%221.7%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%2245%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M45%2093A5%205%200%200%201%2045%20103A2.4%205%200%200%200%2045%2093Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3Ccircle%20cx%3D%22205%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%22205%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22rgba(160%2C122%2C52%2C0.4)%22%2F%3E%3Ccircle%20cx%3D%22228%22%20cy%3D%2298%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.4)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M228%2093A5%205%200%200%200%20228%20103A2.4%205%200%200%201%20228%2093Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.5)%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.app[data-time-theme='day'] .sidebar::after {
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20250%20220%22%20width%3D%22250%22%20height%3D%22220%22%3E%3Cpath%20d%3D%22M14%20214C16%20174%2026%20132%2066%2078%22%20fill%3D%22none%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2226%22%20cy%3D%22196%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-70%2026%20196)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2234%22%20cy%3D%22178%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-60%2034%20178)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2224%22%20cy%3D%22166%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-100%2024%20166)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%22152%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-55%2038%20152)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2230%22%20cy%3D%22138%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-95%2030%20138)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2246%22%20cy%3D%22126%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-45%2046%20126)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2240%22%20cy%3D%22112%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-90%2040%20112)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2256%22%20cy%3D%22102%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-35%2056%20102)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2252%22%20cy%3D%2290%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-80%2052%2090)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2268%22%20cy%3D%2284%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-25%2068%2084)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2278%22%20r%3D%221.6%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3Cg%20transform%3D%22translate(250%200)%20scale(-1%201)%22%3E%3Cpath%20d%3D%22M14%20214C16%20174%2026%20132%2066%2078%22%20fill%3D%22none%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%221.1%22%20stroke-linecap%3D%22round%22%2F%3E%3Cellipse%20cx%3D%2226%22%20cy%3D%22196%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-70%2026%20196)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2234%22%20cy%3D%22178%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-60%2034%20178)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2224%22%20cy%3D%22166%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-100%2024%20166)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2238%22%20cy%3D%22152%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-55%2038%20152)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2230%22%20cy%3D%22138%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-95%2030%20138)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2246%22%20cy%3D%22126%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-45%2046%20126)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2240%22%20cy%3D%22112%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-90%2040%20112)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2256%22%20cy%3D%22102%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-35%2056%20102)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2252%22%20cy%3D%2290%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-80%2052%2090)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Cellipse%20cx%3D%2268%22%20cy%3D%2284%22%20rx%3D%228%22%20ry%3D%222.8%22%20transform%3D%22rotate(-25%2068%2084)%22%20fill%3D%22rgba(118%2C138%2C86%2C0.3)%22%20stroke%3D%22rgba(118%2C138%2C86%2C0.4)%22%20stroke-width%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2278%22%20r%3D%221.6%22%20fill%3D%22rgba(160%2C122%2C52%2C0.55)%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2297%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M97%2021A5%205%200%200%201%2097%2031A2.4%205%200%200%200%2097%2021Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22rgba(160%2C122%2C52%2C0.35)%22%2F%3E%3Ccircle%20cx%3D%22153%22%20cy%3D%2226%22%20r%3D%225%22%20fill%3D%22none%22%20stroke%3D%22rgba(160%2C122%2C52%2C0.35)%22%20stroke-width%3D%22.8%22%2F%3E%3Cpath%20d%3D%22M153%2021A5%205%200%200%200%20153%2031A2.4%205%200%200%201%20153%2021Z%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22120%22%20cy%3D%22120%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%220.9%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22196%22%20cy%3D%2254%22%20r%3D%221%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3Ccircle%20cx%3D%22234%22%20cy%3D%22120%22%20r%3D%220.8%22%20fill%3D%22rgba(160%2C122%2C52%2C0.45)%22%2F%3E%3C%2Fsvg%3E");
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 8px 10px;
+  background: none;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar-moon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+  color: #f3dfae;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(243, 223, 174, 0.28), transparent 70%);
+}
+
+.sidebar-brand-text strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  letter-spacing: 0.06em;
+}
+
+.sidebar-brand-text small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--side-ink-soft);
+}
+
+.sidebar-stars {
+  position: relative;
+  margin: 4px 0 26px;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: var(--gold);
+  opacity: 0.85;
+  padding-bottom: 16px;
+}
+
+/* 分隔線：左右兩段漸隱的淡金線，中間留給小月相 */
+.sidebar-stars::before,
+.sidebar-stars::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  height: 1px;
+  width: 40%;
+}
+
+.sidebar-stars::before {
+  left: 0;
+  background: linear-gradient(90deg, transparent, rgba(201, 167, 106, 0.5));
+}
+
+.sidebar-stars::after {
+  right: 0;
+  background: linear-gradient(270deg, transparent, rgba(201, 167, 106, 0.5));
+}
+
+.sidebar-nav {
+  position: relative;
+}
+
+/* 選單旁的極淡金色垂直線（塔羅手冊書籤的書脊） */
+.sidebar-nav::before {
+  content: '';
+  position: absolute;
+  left: -11px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent, rgba(201, 167, 106, 0.44) 12%, rgba(201, 167, 106, 0.44) 88%, transparent);
+  pointer-events: none;
+}
+
+.sidebar-nav {
+  display: grid;
+  gap: 6px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--side-ink-soft);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar-link-icon {
+  width: 22px;
+  text-align: center;
+  filter: drop-shadow(0 0 3px rgba(233, 208, 150, 0.28));
+}
+
+.sidebar-link.active .sidebar-link-icon,
+.sidebar-link:hover .sidebar-link-icon {
+  filter: drop-shadow(0 0 4px rgba(233, 208, 150, 0.45)) drop-shadow(0 0 6px rgba(190, 165, 255, 0.28));
+}
+
+.app[data-time-theme='day'] .sidebar-link-icon {
+  filter: drop-shadow(0 0 3px rgba(201, 167, 106, 0.4));
+}
+
+.sidebar-link:hover {
+  color: var(--side-ink);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.app[data-time-theme='day'] .sidebar-link:hover {
+  background: rgba(201, 167, 106, 0.14);
+}
+
+.sidebar-link.active {
+  color: var(--side-ink);
+  font-weight: 600;
+  background: var(--side-active-bg);
+  border-color: var(--gold-line);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+/* 分隔線中間的小月相 */
+.sidebar-nav::after {
+  content: '☾';
+  position: absolute;
+  left: 50%;
+  top: -33px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* active：垂直線上的小書籤 */
+.sidebar-link.active::after {
+  content: '';
+  position: absolute;
+  left: -13px;
+  top: 50%;
+  width: 5px;
+  height: 24px;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, #e6cd92, #c9a76a);
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 0 8px rgba(233, 208, 150, 0.45);
+}
+
+/* 今日塔羅：純視覺的小型資訊卡 */
+.sidebar-today {
+  position: relative;
+  margin: 18px 4px 0;
+  padding: 12px 14px 13px;
+  text-align: left;
+  color: var(--side-ink);
+  background: linear-gradient(145deg, rgba(74, 86, 172, 0.32), rgba(28, 36, 100, 0.4));
+  border: 1px solid rgba(201, 167, 106, 0.42);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 6px 16px rgba(6, 8, 28, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.sidebar-today::after {
+  content: '☾ ✧';
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  opacity: 0.4;
+}
+
+.sidebar-today-label {
+  margin-bottom: 6px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  color: var(--gold);
+}
+
+.sidebar-today-date {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+.sidebar-today-date small {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--side-ink-soft);
+}
+
+.sidebar-today p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--side-ink-soft);
+}
+
+.app[data-time-theme='day'] .sidebar-today {
+  background: linear-gradient(145deg, rgba(255, 251, 242, 0.7), rgba(250, 240, 222, 0.6));
+  border-color: rgba(201, 167, 106, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 14px rgba(86, 70, 50, 0.1);
+}
+
+.app[data-time-theme='day'] .sidebar-today-label {
+  color: #8a6a2a;
+}
+
+/* 視窗太矮時不顯示，避免壓到選單與底部裝飾 */
+@media (max-height: 780px) {
+  .sidebar-today {
+    display: none;
+  }
+}
+
+.sidebar-foot::before {
+  content: '☾ ✦ ✧';
+  display: block;
+  margin-bottom: 10px;
+  font-size: 11px;
+  letter-spacing: 8px;
+  text-indent: 8px;
+  color: var(--gold);
+  opacity: 0.55;
+}
+
+.sidebar-foot {
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0.08em;
+  color: var(--side-ink-soft);
+}
+
+
+/* ---------- 主區與頁面 ---------- */
+
+.main {
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.page {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 34px 40px 90px;
+  text-align: left;
+}
+
+
+/* ---------- 標題列 ---------- */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 26px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--gold-soft);
+}
+
+.topbar h1,
+.study-heading h1 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--page-ink);
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  color: var(--gold);
+}
+
+.topbar-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--page-ink-soft);
+}
+
+.library-count {
+  font-size: 13px;
+  color: var(--page-ink-soft);
+  white-space: nowrap;
+}
+
+.library-count strong {
+  margin: 0 4px;
+  font-size: 20px;
+  color: var(--gold);
+}
+
+.library-intro,
+.history-intro p,
+.spread-intro-glass {
+  margin: 0 0 22px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--page-ink-soft);
+}
+
+
+/* ---------- 按鈕 ---------- */
+
+.back-button,
+.study-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--page-ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.back-button:hover,
+.study-top-btn:hover {
+  background: rgba(201, 167, 106, 0.2);
+  transform: translateY(-1px);
+}
+
+.primary-button,
+.secondary-button,
+.text-button {
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.primary-button {
+  padding: 12px 26px;
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+  border: 1px solid rgba(233, 208, 150, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 8px 20px rgba(91, 31, 58, 0.34);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(91, 31, 58, 0.44);
+}
+
+.secondary-button {
+  padding: 12px 24px;
+  color: var(--page-ink);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+}
+
+.secondary-button:hover {
+  background: rgba(201, 167, 106, 0.2);
+}
+
+.text-button {
+  padding: 4px 2px;
+  color: var(--gold);
+  background: none;
+  border: 0;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+}
+
+/* 奶油卡片裡的次要按鈕改用深色字 */
+.result-buttons .secondary-button,
+.empty-library .secondary-button {
+  color: var(--ink);
+  background: transparent;
+}
+
+
+/* ---------- 奶油紙卡片（全站共用） ---------- */
+
+.home-quick-card,
+.home-guidance-card,
+.home-recent-card,
+.preview-card,
+.spread-card,
+.reading-history-card,
+.accuracy-main-card,
+.accuracy-stat-card,
+.accuracy-breakdown,
+.study-col,
+.study-story,
+.spread-question-box,
+.result-meaning,
+.empty-library,
+.spread-complete {
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.home-quick-card h2,
+.home-guidance-card h2,
+.home-recent-card h2,
+.spread-card h2,
+.study-col h2,
+.empty-library h2 {
+  font-family: var(--serif);
+  color: var(--ink);
+}
+
+.home-guidance-card .eyebrow,
+.home-recent-card .eyebrow,
+.accuracy-main-card .eyebrow,
+.accuracy-breakdown .eyebrow,
+.spread-complete .eyebrow,
+.result-info .eyebrow {
+  color: #a07f3f;
+}
+
+
+/* ---------- 表單 ---------- */
+
+textarea,
+select,
+input[type='search'],
+input[type='text'] {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  background: rgba(255, 253, 247, 0.96);
+  border: 1px solid var(--gold-soft);
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+textarea:focus,
+select:focus,
+input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201, 167, 106, 0.22);
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: #9a8fa3;
+}
+
+img[data-reversed='true'] {
+  transform: rotate(180deg);
+}
+
+
+/* ---------- 手機導覽 ---------- */
+
+.mobile-bottom-nav,
+.mobile-more-backdrop {
+  display: none;
+}
+
+
+@media (max-width: 960px) {
+
+  .app {
+    display: block;
+    padding-bottom: 92px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .page {
+    padding: 22px 18px 40px;
+  }
+
+  .mobile-bottom-nav {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 50;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    padding: 6px;
+    background: var(--side-bg);
+    border: 1px solid var(--gold-line);
+    border-radius: 22px;
+    box-shadow: 0 10px 30px rgba(6, 8, 28, 0.4);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .mobile-bottom-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 54px;
+    color: var(--side-ink-soft);
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 16px;
+  }
+
+  .mobile-bottom-nav button span {
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .mobile-bottom-nav button small {
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  .mobile-bottom-nav button.active {
+    color: var(--side-ink);
+    background: var(--side-active-bg);
+    border-color: var(--gold-line);
+  }
+
+  .mobile-more-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 49;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 10px 86px;
+    background: rgba(6, 8, 28, 0.5);
+  }
+
+  .mobile-more-sheet {
+    width: 100%;
+    max-width: 420px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--gold-line);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+  }
+
+  .mobile-more-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 10px 14px;
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--paper-tint);
+    border: 1px solid var(--gold-soft);
+    border-radius: 14px;
+  }
+
+  .mobile-more-item.active {
+    border-color: var(--gold);
+    background: rgba(201, 167, 106, 0.22);
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .topbar h1,
+  .study-heading h1 {
+    font-size: 26px;
+  }
+}
+
+
+/* ---------- 白天版：背景上的元件改用奶油底＋深色字，維持對比 ---------- */
+
+.app[data-time-theme='day'] .eyebrow {
+  color: #8a6a2a;
+}
+
+.app[data-time-theme='day'] .back-button,
+.app[data-time-theme='day'] .study-top-btn,
+.app[data-time-theme='day'] .study-nav-btn,
+.app[data-time-theme='day'] .category-tab,
+.app[data-time-theme='day'] .secondary-button,
+.app[data-time-theme='day'] .learn-source {
+  color: var(--ink);
+  background: rgba(255, 251, 242, 0.82);
+  border-color: var(--gold-line);
+}
+
+.app[data-time-theme='day'] .hero .secondary-button {
+  color: #fff8ea;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.app[data-time-theme='day'] .category-tab.active,
+.app[data-time-theme='day'] .study-top-fav.active {
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+}
+
+.app[data-time-theme='day'] .result-keywords span {
+  color: var(--ink);
+  background: rgba(255, 251, 242, 0.85);
+}
+
+.app[data-time-theme='day'] .spread-board {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(233, 208, 150, 0.3), transparent 60%),
+    rgba(255, 250, 240, 0.55);
+}
+
+.app[data-time-theme='day'] .result-info .eyebrow {
+  color: #8a6a2a;
+}

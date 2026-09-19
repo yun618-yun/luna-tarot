@@ -1,0 +1,330 @@
+/* =====================================
+   🌙 牌陣解析：像在閱讀自己的占卜
+   夜景＋半透明煙紫灰玻璃＋淡金細框＋暖白文字（白天版為奶油白玻璃）
+===================================== */
+
+.reading-story {
+  --rs-ink: var(--ink);
+  --rs-soft: var(--ink-soft);
+  --rs-gold: #8a6a2a;
+  --rs-edge: rgba(201, 167, 106, 0.5);
+  --rs-glass: rgba(255, 251, 242, 0.84);
+  --rs-inner: rgba(255, 255, 255, 0.55);
+  --rs-foryou: rgba(201, 167, 106, 0.14);
+
+  position: relative;
+  margin-bottom: 24px;
+  padding: 30px 30px 26px;
+  overflow: hidden;
+  color: var(--rs-ink);
+  background: var(--rs-glass);
+  border: 1px solid var(--rs-edge);
+  border-radius: 24px;
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(14px) saturate(1.05);
+  -webkit-backdrop-filter: blur(14px) saturate(1.05);
+}
+
+.app[data-time-theme='night'] .reading-story {
+  --rs-ink: #f4ecdd;
+  --rs-soft: rgba(232, 226, 218, 0.74);
+  --rs-gold: #d8c08c;
+  --rs-edge: rgba(214, 190, 140, 0.3);
+  --rs-glass: linear-gradient(150deg, rgba(112, 102, 136, 0.32), rgba(66, 60, 92, 0.28));
+  --rs-inner: rgba(255, 255, 255, 0.05);
+  --rs-foryou: rgba(216, 192, 140, 0.08);
+
+  box-shadow: 0 14px 34px rgba(4, 6, 22, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* 右上角很淡的星盤線條 */
+.reading-story::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    repeating-radial-gradient(circle, transparent 0 34px, rgba(201, 167, 106, 0.16) 34px 35px),
+    repeating-conic-gradient(rgba(201, 167, 106, 0.12) 0 0.4deg, transparent 0.4deg 30deg);
+  -webkit-mask-image: radial-gradient(circle, #000 55%, transparent 72%);
+  mask-image: radial-gradient(circle, #000 55%, transparent 72%);
+  opacity: 0.6;
+}
+
+.reading-story > * {
+  position: relative;
+}
+
+.reading-story-head {
+  margin-bottom: 22px;
+  padding-bottom: 16px;
+  background: linear-gradient(90deg, rgba(201, 167, 106, 0.5), transparent 70%) left bottom / 100% 1px no-repeat;
+}
+
+.reading-story-head .eyebrow {
+  margin-bottom: 6px;
+  color: var(--rs-gold);
+}
+
+.reading-story-head h2 {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 30px;
+  color: var(--rs-ink);
+}
+
+.reading-story-head p {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: var(--rs-soft);
+}
+
+.reading-card-label {
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--rs-gold);
+}
+
+
+/* ---------- 每張牌：左（牌位）｜中（在這個位置）｜右（對你來說） ---------- */
+
+.reading-cards {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.reading-card {
+  display: grid;
+  grid-template-columns: 172px minmax(0, 1fr) minmax(0, 0.9fr);
+  overflow: hidden;
+  background: var(--rs-inner);
+  border: 1px solid var(--rs-edge);
+  border-radius: 18px;
+}
+
+.reading-card-side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: 20px 18px;
+  border-right: 1px dashed rgba(201, 167, 106, 0.32);
+}
+
+.reading-card-num {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+  border: 1px solid rgba(233, 208, 150, 0.7);
+  border-radius: 50%;
+}
+
+.reading-card-pos {
+  font-family: var(--serif);
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--rs-ink);
+}
+
+.reading-card-side small {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--rs-gold);
+}
+
+.reading-card-glyph {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--rs-gold);
+  opacity: 0.32;
+}
+
+.reading-card-body,
+.reading-card-foryou {
+  padding: 20px 22px;
+}
+
+.reading-card-body p,
+.reading-card-foryou p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--rs-ink);
+}
+
+.reading-card-foryou {
+  background: var(--rs-foryou);
+  border-left: 1px solid rgba(201, 167, 106, 0.28);
+}
+
+.reading-card-foryou p {
+  color: var(--rs-soft);
+}
+
+.app[data-time-theme='night'] .reading-card-body p {
+  color: rgba(238, 232, 224, 0.9);
+}
+
+.app[data-time-theme='night'] .reading-card-foryou p {
+  color: rgba(240, 232, 216, 0.82);
+}
+
+
+/* ---------- 整體解析、接下來可以留意 ---------- */
+
+.reading-overall {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 22px 24px;
+  background: var(--rs-foryou);
+  border: 1px solid var(--rs-edge);
+  border-radius: 18px;
+}
+
+.reading-overall-text p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 2;
+  color: var(--rs-ink);
+}
+
+.reading-overall-text p:last-child {
+  margin-bottom: 0;
+}
+
+.reading-astrolabe {
+  display: grid;
+  place-items: center;
+  width: 130px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  font-size: 42px;
+  color: var(--rs-gold);
+  border-radius: 50%;
+  text-shadow: 0 0 18px rgba(216, 192, 140, 0.45);
+  background:
+    radial-gradient(circle, rgba(216, 192, 140, 0.16), transparent 62%),
+    repeating-radial-gradient(circle, transparent 0 22px, rgba(201, 167, 106, 0.28) 22px 23px);
+}
+
+.reading-tips {
+  padding: 4px 6px 0;
+}
+
+.reading-tips ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reading-tips li {
+  position: relative;
+  margin-bottom: 8px;
+  padding-left: 22px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--rs-ink);
+}
+
+.reading-tips li::before {
+  content: '✦';
+  position: absolute;
+  left: 2px;
+  top: 0;
+  font-size: 11px;
+  color: var(--rs-gold);
+}
+
+
+@media (max-width: 960px) {
+
+  .reading-story {
+    padding: 22px 16px 20px;
+  }
+
+  .reading-story::before {
+    top: -90px;
+    right: -100px;
+    opacity: 0.45;
+  }
+
+  .reading-story-head h2 {
+    font-size: 25px;
+  }
+
+  /* 手機：牌位 → 牌名／正逆位 → 解析 → 對你來說，全部垂直排列 */
+  .reading-card {
+    grid-template-columns: 1fr;
+  }
+
+  .reading-card-side {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    padding: 16px 18px 14px;
+    border-right: 0;
+    border-bottom: 1px dashed rgba(201, 167, 106, 0.32);
+  }
+
+  .reading-card-num {
+    margin-bottom: 0;
+  }
+
+  .reading-card-pos {
+    font-size: 19px;
+  }
+
+  .reading-card-side small {
+    flex-basis: 100%;
+    padding-left: 40px;
+  }
+
+  .reading-card-glyph {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+  }
+
+  .reading-card-body,
+  .reading-card-foryou {
+    padding: 16px 18px;
+  }
+
+  .reading-card-foryou {
+    border-left: 0;
+    border-top: 1px solid rgba(201, 167, 106, 0.28);
+  }
+
+  .reading-overall {
+    grid-template-columns: 1fr;
+    padding: 20px 18px;
+  }
+
+  .reading-astrolabe {
+    display: none;
+  }
+}

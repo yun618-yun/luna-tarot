@@ -1,0 +1,310 @@
+/* =====================================
+   🌙 夜間版：全站內容面板統一為夜間玻璃
+   適用：牌陣、塔羅學習、占卜紀錄、準確度、收藏（首頁另有自己的夜間規則）
+   做法：在面板上重設文字與底色變數，裡面所有用 var(--ink) 等的元件自動跟著變；
+        只有寫死顏色的少數元件在下面個別處理。
+   白天版不在此檔，維持奶油白卡片。
+===================================== */
+
+.app[data-time-theme='night'] {
+  --night-glass: linear-gradient(145deg, rgba(48, 62, 140, 0.42), rgba(22, 30, 86, 0.5));
+  --night-glass-edge: rgba(201, 167, 106, 0.4);
+  --night-ink: #f6f0e4;
+  --night-ink-soft: rgba(246, 240, 228, 0.68);
+  --night-gold-text: #d8bd83;
+  --night-lavender: #cdb8f5;
+}
+
+/* ---------- 主要面板（玻璃底、金邊、blur） ---------- */
+
+.app[data-time-theme='night'] :is(
+  .spread-question-box,
+  .spread-complete,
+  .reading-history-card,
+  .accuracy-main-card,
+  .accuracy-stat-card,
+  .accuracy-breakdown,
+  .tarot-library-card,
+  .empty-library
+) {
+  --ink: var(--night-ink);
+  --ink-soft: var(--night-ink-soft);
+  --paper: rgba(24, 32, 92, 0.9);
+  --paper-tint: rgba(255, 255, 255, 0.06);
+  --violet: var(--night-lavender);
+
+  color: var(--night-ink);
+  background: var(--night-glass);
+  border-color: var(--night-glass-edge);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 14px 34px rgba(4, 6, 24, 0.3);
+  backdrop-filter: blur(10px) saturate(1.1);
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+}
+
+.app[data-time-theme='night'] :is(.tarot-library-card):hover {
+  border-color: rgba(233, 208, 150, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 20px rgba(233, 208, 150, 0.16),
+    0 16px 36px rgba(4, 6, 24, 0.36);
+}
+
+/* 手機版牌陣占卜：每個牌位是一張獨立卡片 */
+@media (max-width: 960px) {
+  .app[data-time-theme='night'] .spread-position {
+    --ink: var(--night-ink);
+    --ink-soft: var(--night-ink-soft);
+    --violet: var(--night-lavender);
+
+    color: var(--night-ink);
+    background: var(--night-glass);
+    border-color: var(--night-glass-edge);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 14px 34px rgba(4, 6, 24, 0.3);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  }
+}
+
+
+/* ---------- 輸入框（面板裡） ---------- */
+
+.app[data-time-theme='night'] :is(
+  .spread-question-box,
+  .reading-history-card,
+  .spread-position
+) :is(textarea, select, input) {
+  color: var(--night-ink);
+  background: rgba(10, 14, 44, 0.5);
+  border-color: rgba(201, 167, 106, 0.35);
+}
+
+.app[data-time-theme='night'] :is(
+  .spread-question-box,
+  .reading-history-card,
+  .spread-position
+) :is(textarea, input)::placeholder {
+  color: rgba(246, 240, 228, 0.45);
+}
+
+.app[data-time-theme='night'] :is(
+  .spread-question-box,
+  .reading-history-card,
+  .spread-position
+) select option {
+  color: #1b1f3b;
+  background: #f6f0e4;
+}
+
+
+/* ---------- 寫死顏色的元件 ---------- */
+
+/* 金色小標 */
+.app[data-time-theme='night'] :is(
+  .spread-complete,
+  .accuracy-main-card,
+  .accuracy-breakdown
+) .eyebrow,
+.app[data-time-theme='night'] .reading-history-date,
+.app[data-time-theme='night'] .reading-history-position {
+  color: var(--night-gold-text);
+}
+
+.app[data-time-theme='night'] .spread-private {
+  color: #f0b3c8;
+  border-color: rgba(240, 179, 200, 0.45);
+}
+
+/* 占卜紀錄 */
+.app[data-time-theme='night'] .reading-history-item {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.app[data-time-theme='night'] .reading-history-orientation {
+  background: #6b4c9a;
+}
+
+.app[data-time-theme='night'] .history-delete-button {
+  color: #f0b3c8;
+  border-color: rgba(240, 179, 200, 0.4);
+}
+
+.app[data-time-theme='night'] .history-delete-button:hover {
+  background: rgba(240, 179, 200, 0.12);
+}
+
+.app[data-time-theme='night'] .accuracy-button:hover {
+  background: rgba(201, 167, 106, 0.2);
+}
+
+/* 準確度 */
+.app[data-time-theme='night'] .accuracy-big-number {
+  color: #f0dcae;
+}
+
+.app[data-time-theme='night'] .accuracy-ring {
+  background:
+    radial-gradient(closest-side, rgba(22, 30, 86, 0.95) 74%, transparent 76%),
+    conic-gradient(#d8bd83 var(--rate), rgba(255, 255, 255, 0.14) 0);
+}
+
+.app[data-time-theme='night'] .accuracy-bar {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+
+/* =====================================
+   🌙 塔羅學習中心｜夜間：煙灰紫玻璃
+   半透明霧紫灰＋淡金細邊＋暖白文字，讓夜景透出來；
+   不用飽和藍紫、實心深藍或亮紫色文字。白天版不在此處。
+===================================== */
+
+.app[data-time-theme='night'] .learn {
+  /* 玻璃底色：一般卡（最透）／主要區塊（稍深）／重點卡 */
+  --lg-soft: linear-gradient(150deg, rgba(120, 110, 142, 0.24), rgba(84, 76, 108, 0.2));
+  --lg-main: linear-gradient(150deg, rgba(100, 90, 124, 0.38), rgba(64, 58, 88, 0.34));
+  --lg-focus: linear-gradient(150deg, rgba(132, 108, 130, 0.36), rgba(84, 68, 100, 0.32));
+  --lg-edge: rgba(214, 190, 140, 0.28);
+  --lg-shadow: 0 10px 28px rgba(4, 6, 22, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  --l-card: var(--lg-main);
+  --l-card-soft: rgba(255, 255, 255, 0.045);
+  --l-border: var(--lg-edge);
+  --l-text: rgba(238, 232, 224, 0.9);
+  --l-muted: rgba(226, 220, 212, 0.66);
+  --l-accent: #d8c08c;
+  --l-chip-bg: rgba(216, 192, 140, 0.12);
+  --l-chip-text: #f0e8d6;
+  --l-input-bg: rgba(22, 20, 38, 0.42);
+}
+
+/* 玻璃面板 */
+.app[data-time-theme='night'] .learn :is(.learn-block, .learn-step, .learn-hub-card, .learn-note) {
+  border-color: var(--lg-edge);
+  box-shadow: var(--lg-shadow);
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+}
+
+/* 學習中心首頁：課程卡（一般，較透） */
+.app[data-time-theme='night'] .learn .learn-hub-card {
+  background: var(--lg-soft);
+}
+
+.app[data-time-theme='night'] .learn .learn-hub-card:hover {
+  border-color: rgba(224, 200, 150, 0.5);
+  box-shadow: var(--lg-shadow), 0 0 18px rgba(216, 192, 140, 0.12);
+}
+
+/* 你來解牌：稍微突出，但仍是透明玻璃 */
+.app[data-time-theme='night'] .learn .learn-hub-practice {
+  background: var(--lg-focus);
+  border-color: rgba(224, 200, 150, 0.42);
+  box-shadow: var(--lg-shadow), 0 0 22px rgba(216, 192, 140, 0.1);
+}
+
+/* 模組頁：主要區塊稍深、流程卡與「我的理解」較透 */
+.app[data-time-theme='night'] .learn .learn-block {
+  background: var(--lg-main);
+}
+
+.app[data-time-theme='night'] .learn .learn-practice {
+  background: var(--lg-focus);
+  border-color: rgba(224, 200, 150, 0.4);
+}
+
+.app[data-time-theme='night'] .learn .learn-step {
+  background: var(--lg-soft);
+  border-left-color: rgba(216, 192, 140, 0.6);
+}
+
+.app[data-time-theme='night'] .learn > .learn-note {
+  background: var(--lg-soft);
+}
+
+/* 卡片裡的子卡 */
+.app[data-time-theme='night'] .learn :is(.learn-case, .learn-element, .learn-court, .learn-compare-row, .learn-major, .learn-ref-card, .learn-counter) {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(214, 190, 140, 0.22);
+}
+
+.app[data-time-theme='night'] .learn .learn-answer {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(216, 192, 140, 0.42);
+}
+
+.app[data-time-theme='night'] .learn .learn-quote {
+  background: rgba(255, 255, 255, 0.05);
+  border-left-color: rgba(216, 192, 140, 0.7);
+}
+
+.app[data-time-theme='night'] .learn :is(.learn-formula-soft, .learn-question, .learn-note-inline) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(214, 190, 140, 0.24);
+}
+
+/* 文字：標題象牙白、內文淡灰白、小標淡金 */
+.app[data-time-theme='night'] .learn :is(
+  .learn-block h3,
+  .learn-step h3,
+  .learn-hub-card strong,
+  .learn-case-head,
+  .learn-element-title strong,
+  .learn-court-body h4,
+  .learn-note-head strong,
+  .learn-question
+) {
+  color: #f8f1e2;
+}
+
+.app[data-time-theme='night'] .learn :is(.learn-hub-no, .learn-step-no, .learn-sub, .learn-formula, .learn-result strong, .learn-compare-row strong, .learn-court-formula, .learn-field span, .history-section-title) {
+  color: var(--l-accent);
+}
+
+/* 標籤與按鈕：去掉亮紫，改霧玫瑰／暖金 */
+.app[data-time-theme='night'] .learn .learn-chips span {
+  border-color: rgba(214, 190, 140, 0.3);
+}
+
+.app[data-time-theme='night'] .learn .learn-pick {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(214, 190, 140, 0.28);
+}
+
+.app[data-time-theme='night'] .learn .learn-pick-on {
+  color: #fff8ea;
+  background: linear-gradient(135deg, rgba(158, 118, 132, 0.9), rgba(112, 82, 104, 0.92));
+  border-color: rgba(224, 200, 150, 0.55);
+}
+
+.app[data-time-theme='night'] .learn .learn-major-on {
+  border-color: rgba(224, 200, 150, 0.7);
+  box-shadow: 0 0 0 2px rgba(216, 192, 140, 0.5);
+}
+
+.app[data-time-theme='night'] .learn .learn-bar div {
+  background: linear-gradient(90deg, #c9a76a, #c98a9a);
+}
+
+.app[data-time-theme='night'] .learn .learn-counter-ctrl button {
+  border-color: rgba(214, 190, 140, 0.3);
+}
+
+/* 輸入框 */
+.app[data-time-theme='night'] .learn :is(textarea, select, input:not([type='checkbox'])) {
+  color: #f0e8d8;
+  background: var(--l-input-bg);
+  border-color: rgba(214, 190, 140, 0.28);
+}
+
+.app[data-time-theme='night'] .learn :is(textarea, input)::placeholder {
+  color: rgba(238, 232, 224, 0.42);
+}
+
+.app[data-time-theme='night'] .learn select option {
+  color: #1b1f3b;
+  background: #f6f0e4;
+}

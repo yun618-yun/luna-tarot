@@ -1,0 +1,647 @@
+/* =====================================
+   🔮 牌陣：選擇中心＋牌陣桌
+===================================== */
+
+/* 牌陣示意圖與牌陣桌共用的位置網格 */
+.spread-3,
+.spread-mini-3 { --areas: "p1 p2 p3"; --rows: 1; }
+
+.spread-5,
+.spread-mini-5 {
+  --areas: ". p1 ." "p2 . p3" "p4 . p5";
+  --rows: 3;
+}
+
+.spread-9,
+.spread-mini-9 {
+  --areas: ". p6 ." "p2 . p4" "p3 p7 p5" "p8 . p9" ". p1 .";
+  --rows: 5;
+}
+
+.position-1 { grid-area: p1; }
+.position-2 { grid-area: p2; }
+.position-3 { grid-area: p3; }
+.position-4 { grid-area: p4; }
+.position-5 { grid-area: p5; }
+.position-6 { grid-area: p6; }
+.position-7 { grid-area: p7; }
+.position-8 { grid-area: p8; }
+.position-9 { grid-area: p9; }
+
+.dot-1 { grid-area: p1; }
+.dot-2 { grid-area: p2; }
+.dot-3 { grid-area: p3; }
+.dot-4 { grid-area: p4; }
+.dot-5 { grid-area: p5; }
+.dot-6 { grid-area: p6; }
+.dot-7 { grid-area: p7; }
+.dot-8 { grid-area: p8; }
+.dot-9 { grid-area: p9; }
+
+
+/* ---------- 牌陣選擇中心 ---------- */
+
+.spread-topbar-glass {
+  align-items: center;
+}
+
+.spread-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.spread-banner-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  font-size: 26px;
+  border: 1px solid var(--gold-line);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.spread-banner-heading h1 {
+  margin: 0;
+}
+
+.spread-banner-divider {
+  display: none;
+}
+
+.spread-section {
+  margin-bottom: 34px;
+}
+
+.spread-section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.spread-section-heading .eyebrow {
+  margin-bottom: 4px;
+}
+
+.spread-section-heading h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 23px;
+  color: var(--page-ink);
+}
+
+.spread-section-heading > span {
+  font-size: 13px;
+  color: var(--page-ink-soft);
+}
+
+.spread-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.spread-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon content"
+    "mini content";
+  gap: 6px 16px;
+  align-items: start;
+  padding: 20px 20px 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.2s ease;
+}
+
+.spread-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px var(--gold), 0 18px 38px rgba(6, 8, 28, 0.38);
+}
+
+.spread-icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  font-size: 22px;
+  background: var(--paper-tint);
+  border: 1px solid var(--gold-soft);
+  border-radius: 50%;
+}
+
+.spread-mini {
+  grid-area: mini;
+  display: grid;
+  grid-template-areas: var(--areas);
+  gap: 3px;
+  justify-items: center;
+  align-items: center;
+  width: 54px;
+  margin-top: 6px;
+}
+
+.spread-mini i {
+  width: 11px;
+  height: 17px;
+  background: rgba(201, 167, 106, 0.28);
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+}
+
+.spread-card-content {
+  grid-area: content;
+  min-width: 0;
+}
+
+.spread-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.spread-card-top h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.spread-private {
+  padding: 1px 10px;
+  font-size: 11px;
+  color: var(--wine);
+  border: 1px solid rgba(123, 45, 78, 0.4);
+  border-radius: 999px;
+}
+
+.spread-card-desc {
+  margin: 0 0 10px;
+  font-size: 13px;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.spread-card-positions {
+  margin: 0 0 14px;
+  padding-top: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  border-top: 1px dashed var(--gold-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spread-card-positions span {
+  margin-right: 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: #a07f3f;
+}
+
+.spread-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.spread-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.spread-card-meta span {
+  padding: 3px 11px;
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--paper-tint);
+  border: 1px solid var(--gold-soft);
+  border-radius: 999px;
+}
+
+.spread-card-cta {
+  margin-left: auto;
+  padding: 8px 18px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+  border: 1px solid rgba(233, 208, 150, 0.5);
+  border-radius: 999px;
+  transition: box-shadow 0.2s ease;
+}
+
+.spread-card:hover .spread-card-cta {
+  box-shadow: 0 6px 16px rgba(91, 31, 58, 0.34);
+}
+
+/* 分類標題：小金色標題＋淡分隔線 */
+.spread-section-heading {
+  padding-bottom: 12px;
+  background: linear-gradient(90deg, rgba(201, 167, 106, 0.5), transparent 70%) left bottom / 100% 1px no-repeat;
+}
+
+.spread-section-heading .eyebrow::before {
+  content: '✦ ';
+  letter-spacing: 0;
+}
+
+/* 夜間：煙紫灰玻璃（白天維持奶油白卡片） */
+.app[data-time-theme='night'] .spread-card {
+  color: #f4ecdd;
+  background: linear-gradient(150deg, rgba(120, 110, 142, 0.26), rgba(84, 76, 108, 0.22));
+  border-color: rgba(214, 190, 140, 0.3);
+  box-shadow: 0 10px 28px rgba(4, 6, 22, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+}
+
+.app[data-time-theme='night'] .spread-card:hover {
+  background: linear-gradient(150deg, rgba(134, 124, 156, 0.32), rgba(96, 88, 122, 0.27));
+  border-color: rgba(224, 200, 150, 0.5);
+  box-shadow: 0 14px 32px rgba(4, 6, 22, 0.3), 0 0 18px rgba(216, 192, 140, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.app[data-time-theme='night'] .spread-card h2 {
+  color: #f8f1e2;
+}
+
+.app[data-time-theme='night'] .spread-card-desc,
+.app[data-time-theme='night'] .spread-card-positions {
+  color: rgba(232, 226, 218, 0.72);
+}
+
+.app[data-time-theme='night'] .spread-card-positions span {
+  color: #d8c08c;
+}
+
+.app[data-time-theme='night'] .spread-icon,
+.app[data-time-theme='night'] .spread-card-meta span {
+  color: #f0e8d6;
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(214, 190, 140, 0.3);
+}
+
+.app[data-time-theme='night'] .spread-private {
+  color: #f0b3c8;
+  border-color: rgba(240, 179, 200, 0.45);
+}
+
+.app[data-time-theme='night'] .spread-mini i {
+  background: rgba(216, 192, 140, 0.2);
+  border-color: rgba(216, 192, 140, 0.7);
+}
+
+
+/* ---------- 占卜頁：問題與標題 ---------- */
+
+.spread-question-box {
+  margin-bottom: 22px;
+  padding: 18px 22px 20px;
+}
+
+.spread-question-box label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.spread-question-box textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.spread-reading-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.spread-reading-header h1 {
+  margin: 0 0 6px;
+  font-family: var(--serif);
+  font-size: 30px;
+  color: var(--page-ink);
+}
+
+.spread-reading-header p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--page-ink-soft);
+}
+
+.spread-reading-actions {
+  display: flex;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.spread-reading-actions button {
+  padding: 10px 22px;
+}
+
+
+/* ---------- 牌陣桌 ---------- */
+
+.spread-board {
+  display: grid;
+  grid-template-areas: var(--areas);
+  grid-template-columns: repeat(3, minmax(0, 230px));
+  justify-content: center;
+  gap: 26px 18px;
+  justify-items: center;
+  align-items: start;
+  padding: 36px 28px 40px;
+  margin-bottom: 26px;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(233, 208, 150, 0.14), transparent 60%),
+    rgba(12, 16, 42, 0.5);
+  border: 1px solid var(--gold-line);
+  border-radius: 26px;
+  box-shadow: inset 0 0 0 8px rgba(255, 255, 255, 0.02), var(--shadow);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.spread-position {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 190px;
+  text-align: center;
+}
+
+.spread-position-label {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+}
+
+.spread-card-slot {
+  width: 132px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.spread-card-slot img,
+.blank-card-preview img {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--gold);
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(6, 8, 28, 0.5);
+}
+
+.spread-card-back,
+.blank-empty-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  aspect-ratio: 300 / 500;
+  color: #f3dfae;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(243, 223, 174, 0.2), transparent 60%),
+    linear-gradient(160deg, #262a5e, #121638);
+  border: 1px dashed var(--gold);
+  border-radius: 8px;
+  transition: box-shadow 0.2s ease;
+}
+
+.spread-card-slot:hover .spread-card-back {
+  box-shadow: 0 0 22px rgba(243, 223, 174, 0.45);
+}
+
+.spread-card-back span,
+.blank-empty-card span {
+  font-size: 34px;
+}
+
+.spread-card-back small,
+.blank-empty-card small {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: rgba(243, 223, 174, 0.8);
+}
+
+.spread-position-name strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--page-ink);
+}
+
+.spread-position-name small {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--page-ink-soft);
+}
+
+.spread-drawn-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 8px;
+  font-size: 13px;
+  color: var(--page-ink);
+}
+
+.spread-drawn-info strong {
+  font-family: var(--serif);
+}
+
+.spread-drawn-info span {
+  padding: 1px 10px;
+  font-size: 11px;
+  color: #fff8ea;
+  background: var(--violet);
+  border-radius: 999px;
+}
+
+.spread-drawn-info button {
+  padding: 0;
+  font-size: 12px;
+  color: var(--gold);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.blank-card-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.blank-card-preview,
+.blank-empty-card {
+  width: 132px;
+}
+
+.blank-card-editor select {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.blank-spread-note {
+  min-height: 64px;
+  font-size: 13px;
+  resize: vertical;
+}
+
+
+.spread-reading-footer {
+  text-align: center;
+}
+
+.spread-complete {
+  padding: 20px 24px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.spread-complete p {
+  margin: 0;
+}
+
+
+/* ---------- 手機：一張一張垂直閱讀 ---------- */
+
+@media (max-width: 960px) {
+
+  .spread-reading-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .spread-reading-header h1 {
+    font-size: 26px;
+  }
+
+  .spread-reading-actions button {
+    flex: 1;
+  }
+
+  .spread-board {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 18px 14px;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .spread-position {
+    max-width: none;
+    padding: 18px 16px 20px;
+    gap: 10px;
+    background: var(--paper);
+    border: 1px solid var(--gold-line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* ① 位置 ② 牌圖 ③ 牌名／正逆位 ④ 牌位意義 ⑤ 實際解讀 */
+  .spread-position-label { order: 1; }
+  .spread-card-slot,
+  .blank-card-editor { order: 2; }
+  .spread-drawn-info { order: 3; }
+  .spread-position-name { order: 4; }
+  .blank-spread-note { order: 5; }
+
+  .spread-card-slot {
+    width: min(52vw, 200px);
+  }
+
+  .blank-card-preview,
+  .blank-empty-card {
+    width: min(52vw, 200px);
+  }
+
+  .blank-card-editor select {
+    max-width: 260px;
+  }
+
+  .spread-position-name strong {
+    color: var(--ink);
+  }
+
+  .spread-position-name small {
+    color: var(--ink-soft);
+    font-size: 12px;
+  }
+
+  .spread-drawn-info {
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  .spread-drawn-info button {
+    color: var(--violet);
+  }
+
+  .blank-spread-note {
+    order: 5;
+    max-width: none;
+  }
+
+  .spread-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .spread-card {
+    padding: 18px 16px 16px;
+    gap: 6px 14px;
+  }
+
+  .spread-card-bottom {
+    margin-top: 2px;
+  }
+
+  .spread-card-cta {
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+
+}

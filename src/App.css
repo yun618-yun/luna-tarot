@@ -10959,3 +10959,905 @@ html[data-time-theme='day'] body {
 img[data-reversed='true'] {
   transform: rotate(180deg);
 }
+
+
+
+
+/* =====================================================
+   🃏 單張牌詳情｜中央牌卡（正位＋逆位）＋左右資訊卡
+   桌機：正位資訊 | 正位牌圖・逆位牌圖＋牌卡故事 | 逆位資訊
+   平板：中央牌卡置頂，正位／逆位資訊並排
+   手機：牌名 → 兩張牌 → 牌卡故事 → 正位 → 逆位 → 導覽
+   夜間＝藍紫玻璃＋淡金／淡紫邊框；白天＝米白＋淡藍＋玫瑰金
+===================================================== */
+
+/* ---------- 頂部：返回牌庫｜牌名｜加入收藏 ---------- */
+
+.study-topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+  gap: 16px;
+
+  width: 100%;
+  margin: 0 auto 26px;
+}
+
+.study-top-back {
+  justify-self: start;
+}
+
+.study-top-fav {
+  justify-self: end;
+}
+
+.study-top-btn {
+  padding: 9px 18px;
+
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #e9defc;
+  white-space: nowrap;
+
+  border-radius: 999px;
+  border: 1px solid rgba(226, 204, 150, 0.4);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(52, 40, 108, 0.7),
+      rgba(32, 30, 78, 0.64)
+    );
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 8px 20px rgba(10, 8, 34, 0.32),
+    inset 0 1px 0 rgba(216, 190, 255, 0.16);
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.study-top-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(231, 207, 155, 0.8);
+}
+
+.study-top-fav.active {
+  color: #f3dda6;
+  border-color: rgba(231, 207, 155, 0.75);
+}
+
+.study-heading {
+  text-align: center;
+}
+
+.study-heading h1 {
+  margin: 0;
+
+  font-size: 42px;
+  letter-spacing: 0.12em;
+  color: #f4ecff;
+  text-shadow: 0 2px 14px rgba(10, 8, 34, 0.85);
+}
+
+.study-heading-no {
+  margin-right: 12px;
+
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #e7cf9b;
+}
+
+.study-heading-en {
+  margin-top: 2px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  color: #d9c6f7;
+  text-shadow: 0 1px 8px rgba(10, 8, 34, 0.9);
+}
+
+.study-heading p {
+  margin: 8px 0 0;
+
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #e7cf9b;
+  text-shadow: 0 1px 8px rgba(10, 8, 34, 0.9);
+}
+
+/* ---------- 三區版面 ---------- */
+
+.card-study {
+  display: grid;
+  grid-template-columns:
+    minmax(280px, 0.78fr)
+    minmax(460px, 1.3fr)
+    minmax(280px, 0.78fr);
+  gap: 26px;
+  align-items: center;
+
+  width: 100%;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* ---------- 中央：兩張牌＋牌卡故事 ---------- */
+
+.study-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  min-width: 0;
+}
+
+.study-pair {
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 22px;
+
+  width: 100%;
+}
+
+.study-halo {
+  position: absolute;
+  inset: -4% 6%;
+  border-radius: 50%;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(183, 148, 244, 0.38),
+      rgba(231, 207, 155, 0.12) 45%,
+      transparent 70%
+    );
+
+  filter: blur(28px);
+}
+
+.study-fig {
+  position: relative;
+
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 250px;
+  margin: 0;
+}
+
+.study-fig .detail-card-frame {
+  width: 100%;
+  max-width: none !important;
+  margin: 0;
+}
+
+.study-fig figcaption {
+  margin-top: 10px;
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #e7cf9b;
+  text-shadow: 0 1px 8px rgba(10, 8, 34, 0.9);
+}
+
+.study-story {
+  width: 100%;
+  max-width: 520px;
+  box-sizing: border-box;
+  padding: 18px 24px;
+  text-align: center;
+
+  border-radius: 20px;
+  border: 1px solid rgba(226, 204, 150, 0.3);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52, 40, 108, 0.66),
+      rgba(32, 30, 78, 0.6)
+    );
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 12px 30px rgba(10, 8, 34, 0.38),
+    inset 0 1px 0 rgba(216, 190, 255, 0.16);
+}
+
+.study-story-label {
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #e7cf9b;
+}
+
+.study-story p {
+  margin: 0;
+
+  font-size: 14px;
+  line-height: 1.95;
+  color: #e9defc;
+}
+
+/* ---------- 左右資訊卡 ---------- */
+
+.study-col {
+  box-sizing: border-box;
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  padding: 16px;
+
+  border-radius: 20px;
+  border: 1px solid rgba(226, 204, 150, 0.28);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52, 40, 108, 0.62),
+      rgba(32, 30, 78, 0.58)
+    );
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 12px 30px rgba(10, 8, 34, 0.36),
+    inset 0 1px 0 rgba(216, 190, 255, 0.16);
+}
+
+.study-col-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.study-col-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+  color: #f4ecff;
+}
+
+.study-col-title span {
+  color: #e7cf9b;
+}
+
+.study-col-title small {
+  margin-left: 2px;
+
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  color: rgba(217, 198, 247, 0.85);
+}
+
+.study-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.study-keywords span {
+  padding: 3px 11px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #f1e8fb;
+
+  background: rgba(183, 148, 244, 0.22);
+  border: 1px solid rgba(216, 190, 255, 0.42);
+}
+
+.study-meanings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.study-row {
+  display: grid;
+  grid-template-columns: 74px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+
+  padding: 9px 12px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(216, 190, 255, 0.14);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.study-row-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #f4ecff;
+  white-space: nowrap;
+}
+
+.study-row-label span {
+  font-weight: 400;
+  color: #e7cf9b;
+}
+
+.study-row p {
+  margin: 0;
+
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(233, 222, 252, 0.88);
+}
+
+/* ---------- 我的理解（精簡） ---------- */
+
+.study-note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 10px 12px;
+
+  border-radius: 12px;
+  border: 1px dashed rgba(226, 204, 150, 0.36);
+}
+
+.study-note-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 13px;
+  font-weight: 700;
+  color: #f4ecff;
+}
+
+.study-note-label span {
+  color: #e7cf9b;
+}
+
+.study-note textarea {
+  width: 100%;
+  box-sizing: border-box;
+  height: 64px;
+  resize: vertical;
+  padding: 8px 10px;
+
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #f4ecff;
+
+  background: rgba(30, 26, 76, 0.6);
+  border: 1px solid rgba(216, 190, 255, 0.25);
+  border-radius: 10px;
+  outline: none;
+}
+
+.study-note textarea::placeholder {
+  color: rgba(233, 222, 252, 0.42);
+}
+
+.study-note textarea:focus {
+  border-color: rgba(231, 207, 155, 0.6);
+}
+
+.study-note-save {
+  align-self: flex-end;
+  padding: 5px 14px;
+
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+
+  background: linear-gradient(135deg, #8e5ac5, #64409b);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.study-note-history summary {
+  cursor: pointer;
+  font-size: 12px;
+  color: rgba(233, 222, 252, 0.72);
+}
+
+.study-note-history .note-history-list {
+  margin-top: 8px;
+  max-height: 180px;
+  overflow: auto;
+}
+
+/* ---------- 底部導覽：上一張｜回到牌庫｜下一張 ---------- */
+
+.study-nav {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+
+  width: 100%;
+  max-width: 620px;
+  margin: 40px auto 24px;
+}
+
+.study-nav-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 12px 18px;
+
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #e9defc;
+  white-space: nowrap;
+
+  border-radius: 999px;
+  border: 1px solid rgba(226, 204, 150, 0.4);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(52, 40, 108, 0.7),
+      rgba(32, 30, 78, 0.64)
+    );
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    0 8px 20px rgba(10, 8, 34, 0.32),
+    inset 0 1px 0 rgba(216, 190, 255, 0.16);
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.study-nav-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: rgba(231, 207, 155, 0.8);
+}
+
+.study-nav-library {
+  color: #fff;
+  background: linear-gradient(135deg, #8e5ac5, #64409b);
+  border-color: rgba(216, 190, 255, 0.55);
+}
+
+.study-nav-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+/* ---------- 版位：桌機 正位｜中央｜逆位 ---------- */
+
+@media (min-width: 1181px) {
+
+  .study-topbar,
+  .card-study {
+    width: min(1380px, calc(100vw - 200px));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .card-study .study-col-upright {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .card-study .study-center {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .card-study .study-col-reversed {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+}
+
+/* ---------- 平板：牌卡置頂，資訊並排 ---------- */
+
+@media (max-width: 1180px) {
+
+  .card-study {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .study-center {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .study-col-upright {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .study-col-reversed {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+}
+
+/* ---------- 手機：牌名 → 兩張牌 → 故事 → 正位 → 逆位 → 導覽 ---------- */
+
+@media (max-width: 760px) {
+
+  .study-topbar {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "back fav"
+      "title title";
+    gap: 14px 10px;
+  }
+
+  .study-top-back {
+    grid-area: back;
+  }
+
+  .study-top-fav {
+    grid-area: fav;
+  }
+
+  .study-heading {
+    grid-area: title;
+  }
+
+  .study-heading h1 {
+    font-size: 36px;
+  }
+
+  .card-study {
+    grid-template-columns: 1fr;
+  }
+
+  .study-center {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .study-col-upright {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .study-col-reversed {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .study-pair {
+    gap: 12px;
+  }
+
+  .study-row {
+    grid-template-columns: 66px minmax(0, 1fr);
+  }
+
+}
+
+@media (max-width: 560px) {
+
+  .study-nav {
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 32px auto 96px;
+  }
+
+  .study-nav-library {
+    order: -1;
+    flex: 1 1 100%;
+  }
+
+  .study-nav-prev,
+  .study-nav-next {
+    flex: 1 1 calc(50% - 5px);
+  }
+
+}
+
+/* ---------- ☀️ 白天：米白＋淡藍＋玫瑰金 ---------- */
+
+.app[data-time-theme='day'] .study-top-btn,
+.app[data-time-theme='day'] .study-nav-btn {
+  color: #3e3a36;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.82),
+      rgba(230, 240, 255, 0.68)
+    );
+  border-color: rgba(212, 136, 149, 0.4);
+  box-shadow:
+    0 8px 20px rgba(62, 54, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.app[data-time-theme='day'] .study-top-btn:hover,
+.app[data-time-theme='day'] .study-nav-btn:hover:not(:disabled) {
+  border-color: rgba(212, 136, 149, 0.75);
+}
+
+.app[data-time-theme='day'] .study-top-fav.active {
+  color: #aa5d70;
+  border-color: rgba(212, 136, 149, 0.75);
+}
+
+.app[data-time-theme='day'] .study-nav-library {
+  color: #fff;
+  background: linear-gradient(135deg, #8e5ac5, #64409b);
+  border-color: rgba(110, 70, 165, 0.6);
+}
+
+.app[data-time-theme='day'] .study-heading h1 {
+  color: #3e3a36;
+  text-shadow: 0 1px 8px rgba(253, 249, 243, 0.85);
+}
+
+.app[data-time-theme='day'] .study-heading-no,
+.app[data-time-theme='day'] .study-heading p,
+.app[data-time-theme='day'] .study-fig figcaption,
+.app[data-time-theme='day'] .study-story-label {
+  color: #aa5d70;
+  text-shadow: none;
+}
+
+.app[data-time-theme='day'] .study-heading-en {
+  color: #6e655f;
+  text-shadow: none;
+}
+
+.app[data-time-theme='day'] .study-col {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.62),
+      rgba(230, 240, 255, 0.5)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.3) !important;
+
+  box-shadow:
+    0 8px 22px rgba(62, 54, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+}
+
+.app[data-time-theme='day'] .study-story {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.78),
+      rgba(230, 240, 255, 0.64)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.34) !important;
+
+  box-shadow:
+    0 9px 26px rgba(62, 54, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+}
+
+.app[data-time-theme='day'] .study-halo {
+  background:
+    radial-gradient(
+      circle,
+      rgba(183, 148, 244, 0.3),
+      rgba(212, 136, 149, 0.16) 45%,
+      transparent 70%
+    );
+}
+
+.app[data-time-theme='day'] .study-story p,
+.app[data-time-theme='day'] .study-row p {
+  color: #55504b !important;
+}
+
+.app[data-time-theme='day'] .study-col-title,
+.app[data-time-theme='day'] .study-row-label,
+.app[data-time-theme='day'] .study-note-label {
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .study-col-title span,
+.app[data-time-theme='day'] .study-row-label span,
+.app[data-time-theme='day'] .study-note-label span {
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .study-col-title small {
+  color: #6e655f;
+}
+
+.app[data-time-theme='day'] .study-keywords span {
+  color: #4a3f55 !important;
+  background: rgba(183, 148, 244, 0.16) !important;
+  border-color: rgba(142, 90, 197, 0.36) !important;
+}
+
+.app[data-time-theme='day'] .study-row {
+  background: rgba(255, 253, 248, 0.68) !important;
+  border-color: rgba(212, 136, 149, 0.24) !important;
+}
+
+.app[data-time-theme='day'] .study-note {
+  border-color: rgba(212, 136, 149, 0.4) !important;
+}
+
+.app[data-time-theme='day'] .study-note textarea {
+  color: #3e3a36 !important;
+  background: rgba(255, 253, 248, 0.75) !important;
+  border-color: rgba(212, 136, 149, 0.3) !important;
+}
+
+.app[data-time-theme='day'] .study-note textarea::placeholder {
+  color: rgba(62, 58, 54, 0.45);
+}
+
+.app[data-time-theme='day'] .study-note-history summary {
+  color: #6e655f;
+}
+
+.app[data-time-theme="day"] .study-heading h1 {
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme="day"] .study-heading-no {
+  color: #aa5d70 !important;
+}
+
+
+/* =====================================================
+   🌙☀️ 修正：卡片詳情底部導覽（上一張／回到牌庫／下一張）
+   問題：三顆深淺不統一、中間「回到牌庫」太紫太實心
+   修正：統一成同一套玻璃質感，中間只做小幅提亮，不做實色色塊
+===================================================== */
+
+/* 夜間｜統一玻璃底（上一張／下一張） */
+.study-nav-btn {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(35, 25, 70, 0.68),
+      rgba(55, 35, 85, 0.56)
+    ) !important;
+
+  border: 1px solid rgba(235, 215, 255, 0.30) !important;
+  color: #f1e9ff !important;
+
+  box-shadow:
+    0 8px 20px rgba(20, 10, 55, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+.study-nav-btn:hover:not(:disabled) {
+  border-color: rgba(235, 215, 255, 0.55) !important;
+}
+
+/* 夜間｜中間「回到牌庫」：同一套玻璃，只是稍微亮一點做主要按鈕感 */
+.study-nav-library {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(70, 45, 120, 0.72),
+      rgba(90, 55, 140, 0.62)
+    ) !important;
+
+  border: 1px solid rgba(235, 215, 255, 0.42) !important;
+  color: #fff5ff !important;
+}
+
+/* 夜間｜停用狀態（第一張沒有上一張）：淡化幅度縮小，不要差太多 */
+.study-nav-btn:disabled {
+  opacity: 0.5 !important;
+}
+
+
+/* ☀️ 白天｜統一玻璃底 */
+.app[data-time-theme='day'] .study-nav-btn {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.82),
+      rgba(230, 240, 255, 0.68)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.40) !important;
+  color: #3e3a36 !important;
+
+  box-shadow:
+    0 8px 20px rgba(62, 54, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7) !important;
+}
+
+.app[data-time-theme='day'] .study-nav-btn:hover:not(:disabled) {
+  border-color: rgba(212, 136, 149, 0.75) !important;
+}
+
+/* ☀️ 白天｜中間「回到牌庫」：柔和紫玫瑰漸層，不做整片實色 */
+.app[data-time-theme='day'] .study-nav-library {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(183, 148, 244, 0.50),
+      rgba(212, 136, 149, 0.42)
+    ) !important;
+
+  border: 1px solid rgba(183, 148, 244, 0.55) !important;
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .study-nav-btn:disabled {
+  opacity: 0.5 !important;
+}
+
+
+/* =====================================
+   ✦ 今日指引：關鍵字標籤、今日訊息、今天可以做
+===================================== */
+
+.result-section-label {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.result-guidance-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  color: #d9b8f5;
+}
+
+.result-guidance-text {
+  margin: 0 0 16px;
+}
+
+.result-guidance-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.result-guidance-list li {
+  margin-bottom: 6px;
+}
+
+.app[data-time-theme='day'] .result-guidance-title {
+  color: #8a5cc0;
+}

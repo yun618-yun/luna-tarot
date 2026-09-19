@@ -1,0 +1,293 @@
+/* =====================================
+   ☀️ 每日指引：Daily Guidance
+===================================== */
+
+.daily-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--gold-soft);
+}
+
+.daily-guidance-title-glass {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--page-ink);
+}
+
+.daily-guidance-intro-glass {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--page-ink-soft);
+}
+
+
+/* ---------- 抽牌前 ---------- */
+
+.draw-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  padding: 10px 0 30px;
+}
+
+.mystery-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 210px;
+  aspect-ratio: 300 / 500;
+  color: #f3dfae;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(243, 223, 174, 0.22), transparent 55%),
+    linear-gradient(160deg, #262a5e, #121638);
+  border: 1px solid var(--gold);
+  border-radius: 16px;
+  box-shadow: inset 0 0 0 8px rgba(12, 16, 42, 0.6), inset 0 0 0 9px var(--gold-soft), 0 20px 46px rgba(6, 8, 28, 0.5);
+}
+
+.mystery-symbol {
+  font-size: 60px;
+  text-shadow: 0 0 26px rgba(243, 223, 174, 0.6);
+}
+
+.mystery-stars {
+  font-size: 13px;
+  letter-spacing: 6px;
+  opacity: 0.85;
+}
+
+.draw-button {
+  padding: 14px 40px;
+  font-size: 15px;
+}
+
+
+/* ---------- 抽牌後 ---------- */
+
+.draw-result {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+.result-card {
+  padding: 10px;
+  background: var(--paper);
+  border: 1px solid var(--gold-line);
+  border-radius: 20px;
+  box-shadow: 0 24px 56px rgba(6, 8, 28, 0.5), 0 0 40px rgba(233, 208, 150, 0.16);
+}
+
+.result-card img {
+  display: block;
+  width: 100%;
+  border-radius: 11px;
+}
+
+.result-info {
+  min-width: 0;
+  color: var(--page-ink);
+}
+
+.result-info .eyebrow {
+  color: var(--gold);
+}
+
+.daily-date {
+  margin-bottom: 4px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--page-ink-soft);
+}
+
+.result-info h2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--page-ink);
+}
+
+.orientation-badge {
+  padding: 3px 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: #fff8ea;
+  background: linear-gradient(135deg, var(--violet), #56407e);
+  border: 1px solid var(--gold-soft);
+  border-radius: 999px;
+}
+
+.orientation-badge.reversed {
+  background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+}
+
+.result-info > p {
+  margin: 2px 0 18px;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--gold);
+}
+
+.result-section-label {
+  margin-bottom: 8px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--page-ink-soft);
+}
+
+.result-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.result-keywords span {
+  padding: 5px 14px;
+  font-size: 13px;
+  color: #fff8ea;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--gold-line);
+  border-radius: 999px;
+}
+
+.result-meaning {
+  padding: 22px 24px;
+  font-size: 14px;
+  line-height: 1.95;
+}
+
+.result-guidance-title {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #8f6f2f;
+}
+
+.result-guidance-text {
+  margin: 0 0 18px;
+  color: var(--ink);
+}
+
+.result-domains {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.result-domain {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 14px;
+  background: var(--paper-tint);
+  border: 1px solid var(--gold-soft);
+  border-radius: var(--radius-sm);
+}
+
+.result-domain strong {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--violet);
+}
+
+.result-domain span {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.result-guidance-list {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+}
+
+.result-guidance-list li {
+  margin-bottom: 6px;
+}
+
+.result-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.result-buttons .secondary-button {
+  color: var(--page-ink);
+}
+
+
+@media (max-width: 960px) {
+
+  .daily-guidance-title-glass {
+    font-size: 27px;
+  }
+
+  .draw-result {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .result-card {
+    width: min(64vw, 260px);
+    margin: 0 auto;
+  }
+
+  .result-info h2 {
+    justify-content: center;
+    font-size: 30px;
+  }
+
+  .result-info,
+  .daily-date,
+  .result-info > p,
+  .result-section-label {
+    text-align: center;
+  }
+
+  .result-keywords {
+    justify-content: center;
+  }
+
+  .result-meaning {
+    padding: 20px 18px;
+    text-align: left;
+  }
+
+  .result-domain {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .result-buttons {
+    flex-direction: column;
+  }
+
+  .result-buttons .primary-button,
+  .result-buttons .secondary-button {
+    width: 100%;
+  }
+}

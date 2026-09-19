@@ -1,6 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import './App.css'
+import './styles/base.css'
+import './styles/home.css'
+import './styles/library.css'
+import './styles/card-detail.css'
+import './styles/daily.css'
+import './styles/spreads.css'
+import './styles/journal.css'
+import './styles/reading-story.css'
+import './styles/night-panels.css'
 import { tarotCards } from './data/tarotCards'
+import { getDailyGuidance } from './dailyGuidance'
+import { buildSpreadReading } from './spreadInterpretation'
+import Learn from './learn/Learn'
 
 
 /* =====================================
@@ -232,6 +243,7 @@ const NAV_KNOWN_PAGES = [
   'spreads',
   'daily',
   'stats',
+  'learn',
 ]
 
 const buildNavHash = (targetPage, { cardId, spreadId } = {}) => {
@@ -267,6 +279,14 @@ const parseNavHash = (rawHash) => {
     }
   }
 
+  if (hash.startsWith('learn/')) {
+    return {
+      page: 'learn',
+      cardId: null,
+      spreadId: null,
+    }
+  }
+
   if (NAV_KNOWN_PAGES.includes(hash)) {
     return {
       page: hash,
@@ -280,6 +300,162 @@ const parseNavHash = (rawHash) => {
     cardId: null,
     spreadId: null,
   }
+}
+
+
+/* =====================================
+   🧭 全站導覽（桌面 Sidebar／手機底部導覽）
+===================================== */
+
+const NAV_ITEMS = [
+  { key: 'home', icon: '🏠', label: '首頁' },
+  { key: 'daily', icon: '☀️', label: '每日指引' },
+  { key: 'library', icon: '🃏', label: '牌庫' },
+  { key: 'spreads', icon: '🔮', label: '牌陣' },
+  { key: 'learn', icon: '📖', label: '塔羅學習' },
+  { key: 'history', icon: '📝', label: '占卜紀錄' },
+  { key: 'stats', icon: '📊', label: '準確度' },
+  { key: 'favorites', icon: '♡', label: '收藏' },
+]
+
+// 手機底部直接顯示的項目，其餘收在「更多」
+const MOBILE_MAIN_KEYS = ['home', 'library', 'spreads', 'learn']
+
+function Sidebar({ activeKey, items, onGo }) {
+
+  return (
+    <aside className="sidebar">
+
+      <button
+        className="sidebar-brand"
+        onClick={() => onGo('home')}
+      >
+        <span className="sidebar-moon">☾</span>
+        <span className="sidebar-brand-text">
+          <strong>Luna Tarot</strong>
+          <small>與塔羅相遇的日常</small>
+        </span>
+      </button>
+
+      <div className="sidebar-stars">✦　✧　✦</div>
+
+      <nav className="sidebar-nav">
+        {items.map((item) => (
+          <button
+            key={item.key}
+            className={
+              activeKey === item.key
+                ? 'sidebar-link active'
+                : 'sidebar-link'
+            }
+            onClick={() => onGo(item.key)}
+          >
+            <span className="sidebar-link-icon">
+              {item.icon}
+            </span>
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
+      <div className="sidebar-today">
+        <div className="sidebar-today-label">
+          TODAY'S TAROT
+        </div>
+        <div className="sidebar-today-date">
+          {new Date().toLocaleDateString('zh-TW', {
+            month: 'long',
+            day: 'numeric',
+          })}
+          <small>
+            {new Date().toLocaleDateString('zh-TW', {
+              weekday: 'long',
+            })}
+          </small>
+        </div>
+        <p>深呼吸，相信第一個直覺。</p>
+      </div>
+
+      <div className="sidebar-foot">
+        ✦ 靜下來，聽聽牌怎麼說
+      </div>
+
+    </aside>
+  )
+}
+
+function MobileNav({ activeKey, items, onGo }) {
+
+  const [moreOpen, setMoreOpen] = useState(false)
+
+  const mainItems = items.filter(
+    (item) => MOBILE_MAIN_KEYS.includes(item.key)
+  )
+
+  const moreItems = items.filter(
+    (item) => !MOBILE_MAIN_KEYS.includes(item.key)
+  )
+
+  const moreActive = moreItems.some(
+    (item) => item.key === activeKey
+  )
+
+  const go = (key) => {
+    setMoreOpen(false)
+    onGo(key)
+  }
+
+  return (
+    <>
+      {moreOpen && (
+        <div
+          className="mobile-more-backdrop"
+          onClick={() => setMoreOpen(false)}
+        >
+          <div
+            className="mobile-more-sheet"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {moreItems.map((item) => (
+              <button
+                key={item.key}
+                className={
+                  activeKey === item.key
+                    ? 'mobile-more-item active'
+                    : 'mobile-more-item'
+                }
+                onClick={() => go(item.key)}
+              >
+                <span>{item.icon}</span>
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <nav className="mobile-bottom-nav">
+        {mainItems.map((item) => (
+          <button
+            key={item.key}
+            className={activeKey === item.key ? 'active' : ''}
+            onClick={() => go(item.key)}
+          >
+            <span>{item.icon}</span>
+            <small>{item.label}</small>
+          </button>
+        ))}
+
+        <button
+          className={moreActive || moreOpen ? 'active' : ''}
+          onClick={() => setMoreOpen(!moreOpen)}
+        >
+          <span>✦</span>
+          <small>更多</small>
+        </button>
+      </nav>
+    </>
+  )
 }
 
 
@@ -376,7 +552,9 @@ function App() {
         spreadId: initial.spreadId,
       },
       '',
-      buildNavHash(initial.page, initial)
+      initial.page === 'learn'
+        ? window.location.hash
+        : buildNavHash(initial.page, initial)
     )
 
     if (initial.page !== 'home') {
@@ -496,6 +674,11 @@ function App() {
   }
 
 
+  const goLearn = () => {
+    navigate('learn')
+  }
+
+
   const openSpread = (spread) => {
     navigate('spread', { spread })
   }
@@ -526,6 +709,32 @@ function App() {
   }
 
 
+  // 目前頁面對應到 Sidebar 的哪一項
+  const activeNavKey =
+    page === 'card' ? 'library'
+      : page === 'spread' ? 'spreads'
+        : page
+
+  const navActions = {
+    home: goHome,
+    daily: goDaily,
+    library: goLibrary,
+    spreads: goSpreads,
+    learn: goLearn,
+    history: goHistory,
+    stats: goStats,
+    favorites: goFavorites,
+  }
+
+  const handleNav = (key) => {
+    if (key !== page) {
+      navActions[key]()
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }
+
+
   return (
     <div
   className={`app ${timeTheme}`}
@@ -533,6 +742,12 @@ function App() {
 >
 
 
+
+      <Sidebar
+        activeKey={activeNavKey}
+        items={NAV_ITEMS}
+        onGo={handleNav}
+      />
 
       <main className="main">
 
@@ -544,6 +759,7 @@ function App() {
   onSpreads={goSpreads}
   onHistory={goHistory}
   onStats={goStats}
+  onLearn={goLearn}
 />
         )}
 
@@ -608,33 +824,21 @@ function App() {
         )}
 
 
+        {page === 'learn' && (
+          <Learn onBack={goHome} />
+        )}
+
         {page === 'daily' && (
           <Daily
             onCard={openCard}
             onBack={() => goBack(goHome)}
           />
         )}
-<nav className="mobile-bottom-nav">
-  <button onClick={goHome}>
-    <span>⌂</span>
-    <small>首頁</small>
-  </button>
-
-  <button onClick={goLibrary}>
-    <span>▣</span>
-    <small>牌庫</small>
-  </button>
-
-  <button onClick={goSpreads}>
-    <span>🔮</span>
-    <small>占卜</small>
-  </button>
-
-  <button onClick={goHistory}>
-    <span>▤</span>
-    <small>我的</small>
-  </button>
-</nav>
+<MobileNav
+          activeKey={activeNavKey}
+          items={NAV_ITEMS}
+          onGo={handleNav}
+        />
       </main>
 
     </div>
@@ -653,6 +857,7 @@ function Home({
   onSpreads,
   onHistory,
   onStats,
+  onLearn,
 }) {
 
   const previewCards = [
@@ -746,11 +951,11 @@ const recentRecords = JSON.parse(
           </div>
 
           <h2 className="hero-title">
-  <span>在未知之中，</span>
-  <span className="hero-title-offset">與自己相遇。</span>
+  <span>Luna Tarot</span>
+  <span className="hero-title-offset">與塔羅相遇的日常</span>
 </h2>
 <p className="hero-description">
-  當不知道答案，讓牌替你照亮方向。
+  在未知之中與自己相遇。當不知道答案，讓牌替你照亮方向。
 </p>
           <div className="hero-buttons">
 
@@ -827,6 +1032,15 @@ const recentRecords = JSON.parse(
     <div className="quick-text">
       <strong>我的紀錄</strong>
       <span>回顧過去的軌跡</span>
+    </div>
+    <span className="quick-arrow">›</span>
+  </button>
+
+  <button className="home-quick-card" onClick={onLearn}>
+    <div className="quick-icon">📖</div>
+    <div className="quick-text">
+      <strong>塔羅學習</strong>
+      <span>學方法・練習解牌</span>
     </div>
     <span className="quick-arrow">›</span>
   </button>
@@ -1923,6 +2137,16 @@ function SpreadLibrary({
               <div className="spread-icon">
                 {spread.icon}
               </div>
+              <div
+                className={`spread-mini spread-mini-${spread.count}`}
+                aria-hidden="true"
+              >
+                {Array.from({ length: spread.count }).map(
+                  (_, dot) => (
+                    <i key={dot} className={`dot-${dot + 1}`} />
+                  )
+                )}
+              </div>
 
 
               <div className="spread-card-content">
@@ -1943,21 +2167,28 @@ function SpreadLibrary({
                 </div>
 
 
-                <p>
+                <p className="spread-card-desc">
                   {spread.description}
                 </p>
 
+                <div className="spread-card-positions">
+                  <span>牌位</span>
+                  {spread.positions.join('・')}
+                </div>
 
                 <div className="spread-card-bottom">
+                  <div className="spread-card-meta">
+                    <span>{spread.count} 張牌</span>
+                    <span>
+                      {spread.mode === 'draw'
+                        ? '自動抽牌'
+                        : '自己填牌'}
+                    </span>
+                  </div>
 
-                  <span>
-                    {spread.count} 張牌
-                  </span>
-
-                  <span>
+                  <span className="spread-card-cta">
                     開始 →
                   </span>
-
                 </div>
 
               </div>
@@ -2378,208 +2609,6 @@ function SpreadReading({
       }
 
       return null
-    }
-
-
-  const buildInterpretation =
-    (
-      card,
-      orientation,
-      positionName,
-      positionDescription,
-      category
-    ) => {
-
-      if (!card) {
-        return ''
-      }
-
-
-      const keywords =
-        orientation === '正位'
-          ? card.upright
-          : card.reversed
-
-
-      const keywordText =
-        keywords
-          .slice(0, 3)
-          .join('、')
-
-
-      let text =
-        `${positionName}出現${card.name}${orientation}，目前特別值得留意「${keywordText}」這幾個主題。`
-
-
-      if (positionName.includes('現在')) {
-
-        text +=
-          '這代表目前的核心狀態，可以先觀察事情真正正在發生的部分。'
-
-      } else if (positionName.includes('過去')) {
-
-        text +=
-          '這張牌比較像是在指出過去留下的背景、經驗或情緒，可能仍然影響現在。'
-
-      } else if (
-        positionName.includes('未來') ||
-        positionName.includes('發展') ||
-        positionName.includes('結果')
-      ) {
-
-        text +=
-          '這比較像是一個發展方向，而不是百分之百固定的結果。'
-
-      } else if (
-        positionName.includes('心態') ||
-        positionName.includes('占卜者') ||
-        positionName.includes('被占卜者')
-      ) {
-
-        text +=
-          '放在這個位置時，比較需要注意內在想法、態度與看事情的方式。'
-
-      } else if (positionName.includes('感受')) {
-
-        text +=
-          '放在感受的位置，這裡更偏向內在情緒，而不一定等於已經做出的行動。'
-
-      } else if (
-        positionName.includes('付出')
-      ) {
-
-        text +=
-          '放在付出的位置，需要觀察實際投入了什麼，而不只是嘴上說了什麼。'
-
-      } else if (
-        positionName.includes('顧慮') ||
-        positionName.includes('阻礙')
-      ) {
-
-        text +=
-          '這個位置代表需要留意的壓力、顧慮或卡住事情發展的因素。'
-
-      } else if (
-        positionName.includes('行動')
-      ) {
-
-        text +=
-          '這個位置比較偏向實際行動，因此需要區分內心想法與最後做出的選擇。'
-
-      } else if (
-        positionName.includes('建議')
-      ) {
-
-        text +=
-          '這裡比較適合作為參考方向，而不是絕對命令。'
-
-      }
-
-
-      if (positionDescription) {
-
-        text +=
-          ` 這個牌位主要是在看：${positionDescription}`
-
-      }
-
-
-      if (category && card[category]) {
-
-        text +=
-          ` 從你問的方向來看：${card[category]}`
-
-      }
-
-
-      return text
-    }
-
-
-  const buildOverallInterpretation =
-    (question, category) => {
-
-      const drawnCards =
-        slots
-          .map(
-            (slot) => ({
-              card: getCardById(slot.cardId),
-              orientation: slot.orientation,
-            })
-          )
-          .filter(
-            (item) => item.card
-          )
-
-      if (!drawnCards.length) {
-        return ''
-      }
-
-      const allKeywords =
-        drawnCards.flatMap(
-          ({ card, orientation }) =>
-            (
-              orientation === '正位'
-                ? card.upright
-                : card.reversed
-            ).slice(0, 2)
-        )
-
-      const keywordCount = {}
-
-      allKeywords.forEach(
-        (word) => {
-          keywordCount[word] =
-            (keywordCount[word] || 0) + 1
-        }
-      )
-
-      const repeatedKeywords =
-        Object.keys(keywordCount)
-          .filter(
-            (word) => keywordCount[word] > 1
-          )
-
-      let text =
-        '這個牌陣可以先從各個位置的訊息分開理解，再把不同牌面的共同主題串起來。'
-
-      if (repeatedKeywords.length) {
-
-        text +=
-          `這次牌陣裡「${repeatedKeywords.slice(0, 3).join('、')}」重複出現，可能是目前特別需要注意的主題。`
-
-      } else {
-
-        text +=
-          '建議特別留意重複出現的關鍵字、相似元素，以及正逆位之間形成的差異。'
-
-      }
-
-      if (question) {
-
-        const categoryTexts =
-          drawnCards
-            .map(
-              ({ card }) =>
-                category ? card[category] : ''
-            )
-            .filter(Boolean)
-
-        if (categoryTexts.length) {
-
-          text +=
-            ` 針對你問的「${question}」，綜合這幾張牌來看：${categoryTexts.join('；')}`
-
-        } else {
-
-          text +=
-            ` 針對你問的「${question}」，可以把上面每個位置的重點，對照你問題裡實際在意的部分，看看哪一張牌最貼近你現在的心情。`
-
-        }
-
-      }
-
-      return text
     }
 
 
@@ -3049,124 +3078,107 @@ function SpreadReading({
       </div>
 
 
-      {!isBlank &&
-        allFilled && (
+      {!isBlank && allFilled && (() => {
 
-        <section className="tarot-interpretation">
+        const reading = buildSpreadReading({
+          question,
+          category: detectQuestionCategory(question),
+          spread,
+          drawn: slots.map((slot) => ({
+            card: getCardById(slot.cardId),
+            orientation: slot.orientation,
+          })),
+        })
 
-          <div className="eyebrow">
-            LUNA TAROT INTERPRETATION
-          </div>
+        return (
+          <section className="reading-story">
 
+            <header className="reading-story-head">
+              <div className="eyebrow">
+                LUNA TAROT INTERPRETATION
+              </div>
+              <h2>
+                🌙 牌陣解析
+              </h2>
+              <p>
+                從牌的訊息，看見你與這件事之間的故事。
+              </p>
+            </header>
 
-          <h2>
-            🌙 牌陣解析
-          </h2>
+            <div className="reading-cards">
+              {reading.cards.map((item) => (
+                <article
+                  className="reading-card"
+                  key={item.index}
+                >
 
-
-          <div className="interpretation-list">
-
-            {slots.map(
-              (slot, index) => {
-
-                const card =
-                  getCardById(
-                    slot.cardId
-                  )
-
-
-                if (!card) {
-                  return null
-                }
-
-
-                const questionCategory =
-                  detectQuestionCategory(
-                    question
-                  )
-
-
-                const interpretation =
-                  buildInterpretation(
-                    card,
-                    slot.orientation,
-                    spread.positions[index],
-                    spread.positionDescriptions
-                      ? spread.positionDescriptions[index]
-                      : '',
-                    questionCategory
-                  )
-
-
-                return (
-
-                  <div
-                    className="interpretation-item"
-                    key={index}
-                  >
-
-                    <div className="interpretation-heading">
-
-                      <span className="interpretation-number">
-                        {index + 1}
-                      </span>
-
-
-                      <div>
-
-                        <strong>
-                          {spread.positions[index]}
-                        </strong>
-
-
-                        <small>
-                          {card.name}・{slot.orientation}
-                        </small>
-
-                      </div>
-
-                    </div>
-
-
-                    <p>
-                      {interpretation}
-                    </p>
-
+                  <div className="reading-card-side">
+                    <span className="reading-card-num">
+                      {item.index + 1}
+                    </span>
+                    <strong className="reading-card-pos">
+                      {item.position}
+                    </strong>
+                    <small>
+                      {item.card.name}・{item.orientation}
+                    </small>
+                    <span
+                      className="reading-card-glyph"
+                      aria-hidden="true"
+                    >
+                      {item.glyph}
+                    </span>
                   </div>
 
-                )
-              }
-            )}
+                  <div className="reading-card-body">
+                    <div className="reading-card-label">
+                      ✦ 這張牌在這個位置
+                    </div>
+                    <p>{item.text}</p>
+                  </div>
 
-          </div>
+                  <aside className="reading-card-foryou">
+                    <div className="reading-card-label">
+                      👤 對你來說
+                    </div>
+                    <p>{item.foryou}</p>
+                  </aside>
 
-
-          <div className="overall-interpretation">
-
-            <div className="meaning-title">
-
-              <span>
-                ✦
-              </span>
-
-              整體解析
-
+                </article>
+              ))}
             </div>
 
+            <div className="reading-overall">
+              <div className="reading-overall-text">
+                <div className="reading-card-label">
+                  ✦ 整體解析
+                </div>
+                {reading.overall.map((paragraph, index) => (
+                  <p key={index}>{paragraph}</p>
+                ))}
+              </div>
+              <div
+                className="reading-astrolabe"
+                aria-hidden="true"
+              >
+                ☾
+              </div>
+            </div>
 
-            <p>
-              {buildOverallInterpretation(
-                question,
-                detectQuestionCategory(question)
-              )}
-            </p>
+            <div className="reading-tips">
+              <div className="reading-card-label">
+                ✦ 接下來可以留意
+              </div>
+              <ul>
+                {reading.tips.map((tip, index) => (
+                  <li key={index}>{tip}</li>
+                ))}
+              </ul>
+            </div>
 
-          </div>
-
-        </section>
-
-      )}
-
+          </section>
+        )
+      })()}
 
       <div className="spread-reading-footer">
 
@@ -3226,6 +3238,27 @@ function SpreadReading({
    📜 占卜紀錄
 ===================================== */
 
+// 占卜紀錄分類：只用問題文字做簡單判斷，僅供篩選顯示，不會寫入紀錄
+const HISTORY_FILTERS = ['全部', '感情', '工作', '人際', '其他']
+
+const HISTORY_KEYWORDS = {
+  '感情': ['感情', '愛', '喜歡', '對方', '關係', '曖昧', '復合', '前任', '戀', '交往'],
+  '工作': ['工作', '事業', '面試', '老闆', '職', '薪', '升遷', '轉職', '公司', '創業', '考試', '學業'],
+  '人際': ['朋友', '同事', '家人', '人際', '母親', '父親', '室友', '同學'],
+}
+
+const getHistoryCategory = (record) => {
+
+  const text = String(record.question || '')
+
+  const found = ['工作', '人際', '感情'].find((name) =>
+    HISTORY_KEYWORDS[name].some((word) => text.includes(word))
+  )
+
+  return found || '其他'
+}
+
+
 function ReadingHistory({ onBack }) {
 
   const [records, setRecords] =
@@ -3248,6 +3281,9 @@ function ReadingHistory({ onBack }) {
 
     })
 
+
+  const [historySearch, setHistorySearch] = useState('')
+  const [historyFilter, setHistoryFilter] = useState('全部')
 
   const updateRecord = (
     id,
@@ -3414,9 +3450,53 @@ function ReadingHistory({ onBack }) {
       </div>
 
 
+      <div className="history-search">
+        <input
+          type="search"
+          value={historySearch}
+          onChange={(e) => setHistorySearch(e.target.value)}
+          placeholder="搜尋問題、牌陣或牌名……"
+        />
+      </div>
+
+
+      <div className="history-filters">
+        {HISTORY_FILTERS.map((name) => (
+          <button
+            key={name}
+            className={
+              historyFilter === name
+                ? 'category-tab active'
+                : 'category-tab'
+            }
+            onClick={() => setHistoryFilter(name)}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+
+
       <div className="reading-history-list">
 
-        {records.map((record) => (
+        {records.filter((record) => {
+
+          if (
+            historyFilter !== '全部' &&
+            getHistoryCategory(record) !== historyFilter
+          ) {
+            return false
+          }
+
+          const keyword = historySearch.trim()
+
+          if (!keyword) {
+            return true
+          }
+
+          return JSON.stringify(record).includes(keyword)
+
+        }).map((record) => (
 
           <div
             className="reading-history-card"
@@ -3685,6 +3765,15 @@ function Daily({
     useState(null)
 
 
+  const guidance =
+    drawnCard
+      ? getDailyGuidance(
+          drawnCard,
+          drawnCard.orientation
+        )
+      : null
+
+
   const drawCard =
     () => {
 
@@ -3790,8 +3879,26 @@ function Daily({
               TODAY'S CARD
             </div>
 
+            <div className="daily-date">
+              {new Date().toLocaleDateString('zh-TW', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long',
+              })}
+            </div>
+
             <h2>
               {drawnCard.name}
+              <span
+                className={
+                  drawnCard.orientation === '逆位'
+                    ? 'orientation-badge reversed'
+                    : 'orientation-badge'
+                }
+              >
+                {drawnCard.orientation}
+              </span>
             </h2>
 
             <p>
@@ -3799,14 +3906,13 @@ function Daily({
             </p>
 
 
+            <div className="result-section-label">
+              關鍵字
+            </div>
+
             <div className="result-keywords">
 
-              {(
-                drawnCard.orientation ===
-                '正位'
-                  ? drawnCard.upright
-                  : drawnCard.reversed
-              ).map(
+              {guidance.keywords.map(
                 (word, index) => (
 
                   <span key={index}>
@@ -3821,11 +3927,36 @@ function Daily({
 
             <div className="result-meaning">
 
-              {drawnCard.orientation ===
-              '正位'
-                ? drawnCard.love
-                : drawnCard.reversed.join('、')
-              }
+              <div className="result-guidance-title">
+                ✦ 今日訊息
+              </div>
+
+              <p className="result-guidance-text">
+                {guidance.message}
+              </p>
+
+              <div className="result-domains">
+                {guidance.domains.map((item) => (
+                  <div className="result-domain" key={item.label}>
+                    <strong>{item.label}</strong>
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="result-guidance-title">
+                ✦ 今日提醒｜今天可以做
+              </div>
+
+              <ul className="result-guidance-list">
+                {guidance.actions.map(
+                  (action, index) => (
+                    <li key={index}>
+                      {action}
+                    </li>
+                  )
+                )}
+              </ul>
 
             </div>
 
@@ -4022,8 +4153,13 @@ function AccuracyStats({ onBack }) {
               </div>
 
 
-              <div className="accuracy-big-number">
-                {rateText}%
+              <div
+                className="accuracy-ring"
+                style={{ '--rate': `${matchRate}%` }}
+              >
+                <div className="accuracy-big-number">
+                  {rateText}%
+                </div>
               </div>
 
 
