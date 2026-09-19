@@ -1054,7 +1054,7 @@ filter: blur(0.8px);
 }
 
 .result-info > p {
-  color: #83768e;
+  color: #c9bfd1;
   margin-bottom: 20px;
 }
 
@@ -9834,4 +9834,506 @@ html[data-time-theme='night'] body::before {
     max-width: 260px !important;
   }
 
+}
+
+
+/* =========================================
+   今日指引抽牌結果｜文字對比與按鈕統一
+   ========================================= */
+
+.result-buttons .primary-button,
+.result-buttons .secondary-button {
+  flex: 1;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.result-buttons .secondary-button {
+  color: #f1e8fb;
+  background: rgba(142, 90, 197, 0.16);
+  border: 1px solid rgba(190, 150, 235, 0.65);
+  box-shadow: none;
+}
+
+.result-buttons .secondary-button:hover {
+  background: rgba(142, 90, 197, 0.3);
+  transform: translateY(-2px);
+}
+
+/* ☀️ 白天 */
+
+.app[data-time-theme='day'] .result-info h2 {
+  color: #3f3745 !important;
+}
+
+.app[data-time-theme='day'] .result-info > p {
+  color: #6a606f !important;
+}
+
+.app[data-time-theme='day'] .result-info .eyebrow {
+  color: #8a6a3a !important;
+}
+
+.app[data-time-theme='day'] .result-keywords span {
+  color: #4a3f55 !important;
+  background: rgba(142, 90, 197, 0.14);
+  border: 1px solid rgba(142, 90, 197, 0.38);
+  font-weight: 600;
+}
+
+.app[data-time-theme='day'] .result-meaning {
+  color: #4a4250 !important;
+  background: rgba(255, 250, 239, 0.85) !important;
+  border-color: rgba(181, 145, 91, 0.4) !important;
+  box-shadow: 0 10px 26px rgba(82, 71, 52, 0.14) !important;
+}
+
+.app[data-time-theme='day'] .result-buttons .primary-button {
+  color: #fff;
+  background: linear-gradient(135deg, #8e5ac5, #64409b);
+}
+
+.app[data-time-theme='day'] .result-buttons .secondary-button {
+  color: #5a3a86;
+  background: rgba(142, 90, 197, 0.1);
+  border: 1px solid rgba(110, 70, 165, 0.6);
+}
+
+.app[data-time-theme='day'] .result-buttons .secondary-button:hover {
+  background: rgba(142, 90, 197, 0.2);
+}
+
+/* 🌙 夜晚：關鍵字對比加強 */
+
+.app[data-time-theme='night'] .result-keywords span {
+  background: rgba(155, 105, 203, 0.26);
+  border: 1px solid rgba(200, 165, 240, 0.45);
+  font-weight: 600;
+}
+
+
+/* =====================================================
+   ☀️🌙 全站玻璃框｜日夜配色統一（新版配色）
+   Day  primary #FDF9F3 / secondary #E6F0FF / accent #D48895 / brand #B794F4 / text #3E3A36
+   Night primary #1A1B3A / secondary #202955 / accent #D48895 / brand #B794F4 / text #F5F3FF
+   涵蓋：全站共用玻璃框（返回鍵、各頁標題玻璃、牌陣說明、占卜紀錄、今日指引、牌陣桌、提問框）
+===================================================== */
+
+
+/* -----------------------------------------------------
+   新增：牌陣頁「這次想問什麼」提問框
+   （原本完全沒有樣式，直接套用玻璃風格，並補上日夜版本）
+----------------------------------------------------- */
+
+.spread-question-box {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+
+  width: 100% !important;
+  max-width: 720px !important;
+  box-sizing: border-box !important;
+
+  margin: 0 0 24px !important;
+  padding: 18px 22px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(35, 25, 70, 0.62),
+      rgba(55, 35, 85, 0.50)
+    ) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+
+  border: 1px solid rgba(235, 215, 255, 0.26) !important;
+  border-radius: 18px !important;
+
+  box-shadow:
+    0 10px 26px rgba(20, 10, 55, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+}
+
+.spread-question-box label {
+  color: #d6a8ff !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+}
+
+.spread-question-box textarea {
+  width: 100% !important;
+  min-height: 64px !important;
+  resize: vertical !important;
+
+  padding: 10px 14px !important;
+
+  background: rgba(20, 12, 38, 0.45) !important;
+  border: 1px solid rgba(235, 215, 255, 0.20) !important;
+  border-radius: 12px !important;
+
+  color: #f5efff !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+}
+
+.spread-question-box textarea::placeholder {
+  color: rgba(245, 239, 255, 0.42) !important;
+}
+
+.spread-question-box textarea:focus {
+  outline: none !important;
+  border-color: rgba(235, 215, 255, 0.5) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜提問框
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .spread-question-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.80),
+      rgba(230, 240, 255, 0.64)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.38) !important;
+
+  box-shadow:
+    0 10px 26px rgba(62, 54, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.70) !important;
+}
+
+.app[data-time-theme='day'] .spread-question-box label {
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .spread-question-box textarea {
+  background: rgba(255, 255, 255, 0.55) !important;
+  border: 1px solid rgba(212, 136, 149, 0.24) !important;
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .spread-question-box textarea::placeholder {
+  color: rgba(62, 58, 54, 0.45) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜強玻璃（各頁頂部標題／返回鍵）
+   .spread-topbar-glass / .home-topbar-glass / .library-topbar-glass
+   / .page > .topbar / .reading-record-heading-glass / .back-button
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .spread-topbar-glass,
+.app[data-time-theme='day'] .home-topbar-glass,
+.app[data-time-theme='day'] .library-topbar-glass,
+.app[data-time-theme='day'] .page > .topbar,
+.app[data-time-theme='day'] .reading-record-heading-glass,
+.app[data-time-theme='day'] .back-button {
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.82),
+      rgba(230, 240, 255, 0.66)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.40) !important;
+
+  box-shadow:
+    0 10px 30px rgba(62, 54, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+
+  backdrop-filter: blur(18px) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+}
+
+.app[data-time-theme='day'] .back-button {
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .back-button:hover {
+  color: #2f2b27 !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 253, 248, 0.90),
+      rgba(230, 240, 255, 0.78)
+    ) !important;
+
+  box-shadow:
+    0 14px 34px rgba(62, 54, 48, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+.app[data-time-theme='day'] .spread-topbar-glass .eyebrow,
+.app[data-time-theme='day'] .home-topbar-glass .eyebrow,
+.app[data-time-theme='day'] .library-topbar-glass .eyebrow,
+.app[data-time-theme='day'] .page > .topbar .eyebrow,
+.app[data-time-theme='day'] .reading-record-heading-glass .eyebrow,
+.app[data-time-theme='day'] .reading-record-thin-glass .eyebrow {
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .spread-topbar-glass h1,
+.app[data-time-theme='day'] .home-topbar-glass h1,
+.app[data-time-theme='day'] .library-topbar-glass h1,
+.app[data-time-theme='day'] .page > .topbar h1,
+.app[data-time-theme='day'] .reading-record-heading-glass h2,
+.app[data-time-theme='day'] .reading-record-thin-glass h2 {
+  color: #3e3a36 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.app[data-time-theme='day'] .reading-record-heading-glass .reading-history-date,
+.app[data-time-theme='day'] .reading-record-thin-glass .reading-history-date {
+  color: #6e655f !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜牌陣標題玻璃（較厚重）
+   .spread-heading-glass
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .spread-heading-glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.88),
+      rgba(230, 240, 255, 0.74)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.46) !important;
+
+  box-shadow:
+    0 14px 38px rgba(62, 54, 48, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78) !important;
+}
+
+.app[data-time-theme='day'] .spread-intro-glass {
+  color: #4a453f !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜牌陣名稱／今日指引標題（實心玻璃）
+   .reading-record-spread-glass / .daily-guidance-title-glass
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .reading-record-spread-glass,
+.app[data-time-theme='day'] .daily-guidance-title-glass {
+  background: rgba(253, 249, 243, 0.86) !important;
+  border: 1px solid rgba(212, 136, 149, 0.44) !important;
+  color: #3e3a36 !important;
+
+  box-shadow:
+    0 6px 18px rgba(62, 54, 48, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜細版說明玻璃
+   .reading-record-thin-glass / .reading-history-intro-glass
+   / .daily-guidance-intro-glass
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .reading-record-thin-glass,
+.app[data-time-theme='day'] .reading-history-intro-glass,
+.app[data-time-theme='day'] .daily-guidance-intro-glass {
+  background: rgba(253, 249, 243, 0.66) !important;
+  border: 1px solid rgba(212, 136, 149, 0.28) !important;
+  color: #55504b !important;
+
+  box-shadow:
+    0 5px 15px rgba(62, 54, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜牌陣桌
+   .spread-board
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .spread-board {
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(212, 136, 149, 0.14),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(183, 148, 244, 0.10),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(253, 249, 243, 0.94),
+      rgba(230, 240, 255, 0.90)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.22) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 22px 55px rgba(62, 54, 48, 0.10) !important;
+}
+
+.app[data-time-theme='day'] .spread-board::before {
+  color: rgba(183, 148, 244, 0.28) !important;
+}
+
+.app[data-time-theme='day'] .spread-board::after {
+  border-color: rgba(212, 136, 149, 0.18) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜首頁玻璃卡片｜換成新配色（取代舊的暖金霧藍）
+   .topbar / .home-quick-card / .home-guidance-card
+   / .home-recent-card / .preview-card / .home-recent-action
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .topbar,
+.app[data-time-theme='day'] .home-quick-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.78),
+      rgba(230, 240, 255, 0.62)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.34) !important;
+
+  box-shadow:
+    0 9px 26px rgba(62, 54, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.app[data-time-theme='day'] .home-quick-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 253, 248, 0.86),
+      rgba(230, 240, 255, 0.72)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.46) !important;
+
+  box-shadow:
+    0 14px 30px rgba(62, 54, 48, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+}
+
+.app[data-time-theme='day'] .home-guidance-card,
+.app[data-time-theme='day'] .home-recent-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(253, 249, 243, 0.82),
+      rgba(230, 240, 255, 0.68)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.38) !important;
+
+  box-shadow:
+    0 15px 34px rgba(62, 54, 48, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+
+  backdrop-filter: blur(17px) !important;
+  -webkit-backdrop-filter: blur(17px) !important;
+}
+
+.app[data-time-theme='day'] .preview-card {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.78),
+      rgba(230, 240, 255, 0.62)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.34) !important;
+
+  box-shadow:
+    0 9px 24px rgba(62, 54, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65) !important;
+}
+
+.app[data-time-theme='day'] .preview-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 253, 248, 0.88),
+      rgba(230, 240, 255, 0.74)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.46) !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(253, 249, 243, 0.55),
+      rgba(230, 240, 255, 0.46)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.24) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55) !important;
+}
+
+.app[data-time-theme='day'] .home-recent-action:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 253, 248, 0.68),
+      rgba(230, 240, 255, 0.58)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.36) !important;
+}
+
+.app[data-time-theme='day'] .topbar .eyebrow,
+.app[data-time-theme='day'] .home-quick-card strong,
+.app[data-time-theme='day'] .home-recent-action-arrow {
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .topbar h1,
+.app[data-time-theme='day'] .home-guidance-card h2,
+.app[data-time-theme='day'] .home-recent-card h2,
+.app[data-time-theme='day'] .preview-card h3,
+.app[data-time-theme='day'] .home-guidance-card-name strong,
+.app[data-time-theme='day'] .home-recent-action strong {
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .topbar-date,
+.app[data-time-theme='day'] .home-quick-card span,
+.app[data-time-theme='day'] .home-guidance-card p,
+.app[data-time-theme='day'] .home-recent-card p,
+.app[data-time-theme='day'] .preview-card p,
+.app[data-time-theme='day'] .preview-card small,
+.app[data-time-theme='day'] .home-guidance-card-name span,
+.app[data-time-theme='day'] .home-guidance-keywords,
+.app[data-time-theme='day'] .home-guidance-text,
+.app[data-time-theme='day'] .home-recent-action span {
+  color: #6e655f !important;
 }
