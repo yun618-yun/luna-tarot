@@ -10337,3 +10337,397 @@ html[data-time-theme='night'] body::before {
 .app[data-time-theme='day'] .home-recent-action span {
   color: #6e655f !important;
 }
+
+
+/* -----------------------------------------------------
+   🌙 夜晚｜牌陣頁（提問框 / 牌陣桌 / 牌位）改用新配色
+   Night primary #1A1B3A / secondary #202955 / accent #D48895 / brand #B794F4
+----------------------------------------------------- */
+
+.app[data-time-theme='night'] .spread-question-box {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 41, 85, 0.66),
+      rgba(26, 27, 58, 0.58)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.30) !important;
+}
+
+.app[data-time-theme='night'] .spread-question-box label {
+  color: #e3a3b0 !important;
+}
+
+.app[data-time-theme='night'] .spread-board {
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      rgba(183, 148, 244, 0.10),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(212, 136, 149, 0.07),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(32, 41, 85, 0.92),
+      rgba(26, 27, 58, 0.96)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.26) !important;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 22px 55px rgba(8, 10, 30, 0.35) !important;
+}
+
+.app[data-time-theme='night'] .spread-board::before {
+  color: rgba(212, 136, 149, 0.26) !important;
+}
+
+.app[data-time-theme='night'] .spread-board::after {
+  border-color: rgba(212, 136, 149, 0.14) !important;
+}
+
+.app[data-time-theme='night'] .spread-position-label {
+  background: #202955 !important;
+  border-color: rgba(212, 136, 149, 0.5) !important;
+  color: #f0c0ca !important;
+}
+
+.app[data-time-theme='night'] .spread-card-slot {
+  border-color: rgba(212, 136, 149, 0.30) !important;
+}
+
+.app[data-time-theme='night'] .spread-card-slot:hover {
+  border-color: rgba(212, 136, 149, 0.7) !important;
+  box-shadow:
+    0 15px 35px rgba(8, 10, 30, 0.4),
+    0 0 20px rgba(212, 136, 149, 0.15) !important;
+}
+
+.app[data-time-theme='night'] .spread-card-back {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(183, 148, 244, 0.18),
+      transparent 48%
+    ),
+    linear-gradient(145deg, #202955, #1A1B3A) !important;
+}
+
+/* ☀️ 白天：牌位與牌背 */
+
+.app[data-time-theme='day'] .spread-position-label {
+  background: #FDF9F3 !important;
+  border-color: rgba(212, 136, 149, 0.6) !important;
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .spread-card-slot {
+  border-color: rgba(212, 136, 149, 0.4) !important;
+  box-shadow: 0 10px 24px rgba(62, 54, 48, 0.14) !important;
+}
+
+.app[data-time-theme='day'] .spread-card-back {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(183, 148, 244, 0.22),
+      transparent 48%
+    ),
+    linear-gradient(145deg, #E6F0FF, #FDF9F3) !important;
+}
+
+.app[data-time-theme='day'] .spread-card-back::before {
+  border-color: rgba(212, 136, 149, 0.35) !important;
+}
+
+.app[data-time-theme='day'] .spread-card-back span {
+  color: #B794F4 !important;
+  text-shadow: none !important;
+}
+
+.app[data-time-theme='day'] .spread-card-back small {
+  color: #8a7f78 !important;
+}
+
+.app[data-time-theme='night'] .spread-card-back::before {
+  border-color: rgba(212, 136, 149, 0.25) !important;
+}
+
+.app[data-time-theme='night'] .spread-card-back span {
+  color: #d9b8f8 !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜其餘頁面框框統一成首頁框樣式
+   （牌義庫 / 牌卡詳情 / 牌陣 / 占卜紀錄 / 準確度 / 抽牌）
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .tarot-library-card,
+.app[data-time-theme='day'] .spread-card,
+.app[data-time-theme='day'] .search-box,
+.app[data-time-theme='day'] .library-tools,
+.app[data-time-theme='day'] .library-intro,
+.app[data-time-theme='day'] .category-tabs,
+.app[data-time-theme='day'] .card-detail,
+.app[data-time-theme='day'] .detail-card-frame,
+.app[data-time-theme='day'] .meaning-block,
+.app[data-time-theme='day'] .meaning-item,
+.app[data-time-theme='day'] .personal-note,
+.app[data-time-theme='day'] .note-history,
+.app[data-time-theme='day'] .note-history-item,
+.app[data-time-theme='day'] .reading-history-item,
+.app[data-time-theme='day'] .reading-history-card,
+.app[data-time-theme='day'] .history-intro,
+.app[data-time-theme='day'] .accuracy-main-card,
+.app[data-time-theme='day'] .accuracy-stat-card,
+.app[data-time-theme='day'] .accuracy-breakdown,
+.app[data-time-theme='day'] .draw-area,
+.app[data-time-theme='day'] .result-card,
+.app[data-time-theme='day'] .overall-interpretation,
+.app[data-time-theme='day'] .interpretation-item,
+.app[data-time-theme='day'] .spread-drawn-info,
+.app[data-time-theme='day'] .spread-complete,
+.app[data-time-theme='day'] .spread-reading-footer,
+.app[data-time-theme='day'] .blank-card-editor,
+.app[data-time-theme='day'] .blank-spread-note {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.78),
+      rgba(230, 240, 255, 0.62)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.34) !important;
+
+  box-shadow:
+    0 9px 26px rgba(62, 54, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+
+  color: #55504b;
+}
+
+.app[data-time-theme='day'] .tarot-library-card:hover,
+.app[data-time-theme='day'] .spread-card:hover {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 253, 248, 0.86),
+      rgba(230, 240, 255, 0.72)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.46) !important;
+}
+
+.app[data-time-theme='day'] .tarot-library-card :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .spread-card :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .card-detail :is(h1, h2, h3, h4, strong),
+.app[data-time-theme='day'] .meaning-block :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .meaning-item :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .personal-note :is(h2, h3, h4, strong, label),
+.app[data-time-theme='day'] .note-history :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .reading-history-item :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .accuracy-dashboard :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .overall-interpretation :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .interpretation-item :is(h2, h3, h4, strong),
+.app[data-time-theme='day'] .spread-drawn-info strong {
+  color: #3e3a36 !important;
+}
+
+.app[data-time-theme='day'] .tarot-library-card :is(p, span, small),
+.app[data-time-theme='day'] .spread-card :is(p, span, small),
+.app[data-time-theme='day'] .card-detail :is(p, span, small),
+.app[data-time-theme='day'] .meaning-block :is(p, span, small),
+.app[data-time-theme='day'] .meaning-item :is(p, span, small),
+.app[data-time-theme='day'] .note-history :is(p, span, small),
+.app[data-time-theme='day'] .reading-history-item :is(p, span, small),
+.app[data-time-theme='day'] .accuracy-dashboard :is(p, span, small),
+.app[data-time-theme='day'] .overall-interpretation :is(p, span),
+.app[data-time-theme='day'] .interpretation-item :is(p, span),
+.app[data-time-theme='day'] .spread-drawn-info span,
+.app[data-time-theme='day'] .spread-reading-header p,
+.app[data-time-theme='day'] .library-intro,
+.app[data-time-theme='day'] .history-intro {
+  color: #6e655f !important;
+}
+
+.app[data-time-theme='day'] .search-box input,
+.app[data-time-theme='day'] .personal-note textarea {
+  color: #3e3a36 !important;
+  background: rgba(255, 253, 248, 0.7) !important;
+  border-color: rgba(212, 136, 149, 0.3) !important;
+}
+
+.app[data-time-theme='day'] .spread-reading-header h1 {
+  color: #3e3a36 !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜牌陣頁層次調整
+   外層＝輕透（讓背景透出）／分類標題＝細分隔線／牌陣卡＝浮起
+----------------------------------------------------- */
+
+/* 頂部橫幅：降低白度 */
+.app[data-time-theme='day'] .spread-topbar-glass {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(253, 249, 243, 0.46),
+      rgba(230, 240, 255, 0.32)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.26) !important;
+
+  box-shadow:
+    0 6px 20px rgba(62, 54, 48, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+/* DRAW / BLANK / PRIVATE：不再是大玻璃塊，改成分類標題＋分隔線 */
+.app[data-time-theme='day'] .spread-heading-glass {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+
+  border: none !important;
+  border-bottom: 1px solid rgba(212, 136, 149, 0.34) !important;
+  border-radius: 0 !important;
+
+  padding: 4px 4px 12px !important;
+}
+
+.app[data-time-theme='day'] .spread-heading-glass .eyebrow,
+.app[data-time-theme='day'] .spread-heading-glass > div > div {
+  color: #aa5d70 !important;
+}
+
+.app[data-time-theme='day'] .spread-heading-glass h2 {
+  color: #3e3a36 !important;
+  text-shadow: 0 1px 8px rgba(253, 249, 243, 0.8);
+}
+
+.app[data-time-theme='day'] .spread-heading-glass > span {
+  color: #6e655f !important;
+  text-shadow: 0 1px 6px rgba(253, 249, 243, 0.8);
+}
+
+/* 可點擊牌陣卡：比外層更實、更有陰影 */
+.app[data-time-theme='day'] .spread-card {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 253, 248, 0.94),
+      rgba(240, 246, 255, 0.88)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.5) !important;
+
+  box-shadow:
+    0 14px 30px rgba(62, 54, 48, 0.18),
+    0 3px 8px rgba(62, 54, 48, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.app[data-time-theme='day'] .spread-card:hover {
+  transform: translateY(-4px);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 252, 0.98),
+      rgba(240, 246, 255, 0.94)
+    ) !important;
+
+  border-color: rgba(212, 136, 149, 0.75) !important;
+
+  box-shadow:
+    0 22px 42px rgba(62, 54, 48, 0.22),
+    0 6px 14px rgba(212, 136, 149, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜每日指引牌背：霧藍／藍紫（夜間不變）
+----------------------------------------------------- */
+
+.app[data-time-theme='day'] .mystery-card {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  background:
+    radial-gradient(
+      circle at 25% 20%,
+      rgba(255, 220, 232, 0.4),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(183, 148, 244, 0.32),
+      transparent 40%
+    ),
+    linear-gradient(
+      145deg,
+      #b9c8ee,
+      #a3aee0 52%,
+      #9a9ad6
+    );
+
+  box-shadow:
+    0 22px 44px rgba(96, 104, 160, 0.28),
+    inset 0 0 0 6px rgba(255, 255, 255, 0.14),
+    inset 0 0 40px rgba(255, 255, 255, 0.22);
+}
+
+.app[data-time-theme='day'] .mystery-symbol {
+  color: #fdf9f3;
+  opacity: 0.95;
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+}
+
+.app[data-time-theme='day'] .mystery-stars {
+  color: rgba(253, 249, 243, 0.85);
+}
+
+
+/* -----------------------------------------------------
+   ☀️ 白天｜桌機版鋪滿視窗
+   index.css 的 #root 固定 1126px 置中，白天湖景又畫在 .app 上，
+   導致左右露出深紫色 body 底色。白天改為 #root 全寬。
+----------------------------------------------------- */
+
+html[data-time-theme='day'] #root {
+  width: 100%;
+  max-width: none;
+  border-inline: none;
+}
+
+html[data-time-theme='day'],
+html[data-time-theme='day'] body {
+  background-color: #ece7dc !important;
+}
+
+.app[data-time-theme='day'] {
+  background-size: cover, cover !important;
+  background-position: center center, center center !important;
+  background-repeat: no-repeat, no-repeat !important;
+  background-attachment: fixed, fixed !important;
+}
