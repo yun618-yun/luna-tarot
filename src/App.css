@@ -10827,3 +10827,71 @@ html[data-time-theme='day'] body {
 .app[data-time-theme='night'] .spread-section-heading :is(h2, .eyebrow, span) {
   text-shadow: 0 1px 8px rgba(10, 10, 30, 0.85), 0 0 3px rgba(10, 10, 30, 0.6);
 }
+
+
+/* -----------------------------------------------------
+   🌙 夜晚｜空狀態框（占卜紀錄 / 統計 / 收藏）與牌義庫提示文字
+----------------------------------------------------- */
+
+.app[data-time-theme='night'] .empty-library {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 41, 85, 0.66),
+      rgba(26, 27, 58, 0.58)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.28) !important;
+
+  box-shadow:
+    0 10px 26px rgba(8, 10, 30, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+
+.app[data-time-theme='night'] .empty-library :is(h2, h3, strong) {
+  color: #f5f3ff !important;
+}
+
+.app[data-time-theme='night'] .empty-library :is(p, span, small) {
+  color: rgba(245, 243, 255, 0.78) !important;
+}
+
+.app[data-time-theme='night'] .library-intro {
+  color: rgba(245, 243, 255, 0.85) !important;
+  text-shadow: 0 1px 8px rgba(10, 10, 30, 0.85);
+}
+
+/* 🌙 卡牌詳情：我的理解 / 關鍵字框 */
+
+.app[data-time-theme='night'] .personal-note {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 41, 85, 0.72),
+      rgba(26, 27, 58, 0.66)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.28) !important;
+}
+
+.app[data-time-theme='night'] .personal-note textarea {
+  background: rgba(20, 22, 50, 0.7) !important;
+  border-color: rgba(212, 136, 149, 0.25) !important;
+}
+
+.app[data-time-theme='night'] .meaning-block {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(32, 41, 85, 0.72),
+      rgba(26, 27, 58, 0.66)
+    ) !important;
+
+  border: 1px solid rgba(212, 136, 149, 0.26) !important;
+
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
