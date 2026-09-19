@@ -10952,3 +10952,10 @@ html[data-time-theme='day'] body {
 .reading-history-question {
   margin-bottom: 20px;
 }
+
+
+/* 逆位：牌圖倒轉 180°（牌陣、空白牌陣預覽、占卜紀錄、今日指引） */
+
+img[data-reversed='true'] {
+  transform: rotate(180deg);
+}

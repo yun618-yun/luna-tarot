@@ -2761,6 +2761,7 @@ function SpreadReading({
                         <img
                           src={card.image}
                           alt={card.name}
+                          data-reversed={slot.orientation === '逆位'}
                           onClick={() =>
                             onCard(card)
                           }
@@ -2860,6 +2861,7 @@ function SpreadReading({
                       <img
                         src={card.image}
                         alt={card.name}
+                        data-reversed={slot.orientation === '逆位'}
                       />
 
                     ) : (
@@ -3404,6 +3406,7 @@ function ReadingHistory({ onBack }) {
                         <img
                           src={card.image}
                           alt={card.name}
+                          data-reversed={savedCard.orientation === '逆位'}
                           className="reading-history-image"
                         />
 
@@ -3684,6 +3687,7 @@ function Daily({
             <img
               src={drawnCard.image}
               alt={drawnCard.name}
+              data-reversed={drawnCard.orientation === '逆位'}
             />
 
           </div>
